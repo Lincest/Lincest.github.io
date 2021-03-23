@@ -1,0 +1,614 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;light&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
+  <meta name="author" content="RoccoShi">
+  <meta name="keywords" content="roccoshi,shootzone">
+  <title>python数据科学(六) Pandas(一) Pandas基本数据结构 - ShootZone</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="ShootZone" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>ShootZone</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://youpai.roccoshi.top/img/wallhaven1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="python数据科学(六) Pandas(一) Pandas基本数据结构">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-19 15:58" pubdate>
+        2021年1月19日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">python数据科学(六) Pandas(一) Pandas基本数据结构</h1>
+            
+            <div class="markdown-body">
+              <h1 id="python数据科学-六-Pandas-一"><a href="#python数据科学-六-Pandas-一" class="headerlink" title="python数据科学(六) Pandas(一)"></a>python数据科学(六) Pandas(一)</h1><blockquote>
+<p>Pandas是在NumPy的基础上建立的新程序库, 提供了一种高效的DataFrame数据结构, DataFrame本质上是一种带行标签和列标签, 支持相同类型数据和缺失值的多维数组</p>
+</blockquote>
+<h2 id="1-Pandas的Series对象"><a href="#1-Pandas的Series对象" class="headerlink" title="1 | Pandas的Series对象"></a>1 | Pandas的Series对象</h2><p>Pandas的Series对象是一个带索引数据构成的一维数组, 可以一个数组创建Series对象</p>
+<p><img src="https://youpai.roccoshi.top/img/20210119160720.png" srcset="/img/loading.gif" alt=""></p>
+<p>values和index:</p>
+<p><img src="https://youpai.roccoshi.top/img/20210119160853.png" srcset="/img/loading.gif" alt=""></p>
+<p>和NumPy数组一样, 数据可以通过Python的中括号索引标签获取</p>
+<p>Series和NumPy数组的本质差异其实是<strong>索引</strong></p>
+<p>NumPy数组通过<strong>隐式定义</strong>的整数索引获取数值, 而Pandas的Series对象用一种<strong>显式定义</strong>的索引与数值关联</p>
+<p>显式索引的定义让Series可以让索引为任意想要的类型</p>
+<p>如用字符串定义索引: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">data = pd.Series([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>],<br>                index = [<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>])<br>data[<span class="hljs-string">&#x27;a&#x27;</span>]  <span class="hljs-comment"># 1</span><br></code></pre></td></tr></table></figure>
+<h3 id="特殊的字典"><a href="#特殊的字典" class="headerlink" title="特殊的字典"></a>特殊的字典</h3><p>Series对象可以被看成一种特殊的python字典, 可以直接用python字典创建一个Series对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">population_dict = &#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">1</span>,<br>                  <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-number">2</span>,<br>                  <span class="hljs-string">&#x27;c&#x27;</span>: <span class="hljs-number">3</span>&#125;<br>population = pd.Series(population_dict)<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">a    1</span><br><span class="hljs-string">b    2</span><br><span class="hljs-string">c    3</span><br><span class="hljs-string">dtype: int64</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<p>典型的获取字典值方式仍然有效: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">population[<span class="hljs-string">&#x27;b&#x27;</span>]  <span class="hljs-comment"># 2</span><br></code></pre></td></tr></table></figure>
+<p>Series对象和字典不同的是, 还支持数组形式的操作, 如切片: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">population[<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-string">&#x27;b&#x27;</span>]<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">a    1</span><br><span class="hljs-string">b    2</span><br><span class="hljs-string">dtype: int64</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h3 id="Series对象的创建方式"><a href="#Series对象的创建方式" class="headerlink" title="Series对象的创建方式"></a>Series对象的创建方式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 列表或numpy数组</span><br>pd.Series([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br><br><span class="hljs-comment"># 2. 标量</span><br>pd.Series(<span class="hljs-number">5</span>, index = [<span class="hljs-number">100</span>, <span class="hljs-number">200</span>, <span class="hljs-number">300</span>])<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">100    5</span><br><span class="hljs-string">200    5</span><br><span class="hljs-string">300    5</span><br><span class="hljs-string">dtype: int64</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 3. 字典</span><br>pd.Series(&#123;<span class="hljs-number">2</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-number">1</span>: <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-number">3</span>: <span class="hljs-string">&#x27;c&#x27;</span>&#125;)<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">2    a</span><br><span class="hljs-string">1    b</span><br><span class="hljs-string">3    c</span><br><span class="hljs-string">dtype: object</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 4. Series对象只会保留显式定义的键值对</span><br>pd.Series(&#123;<span class="hljs-number">2</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-number">1</span>: <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-number">3</span>: <span class="hljs-string">&#x27;c&#x27;</span>&#125;, index = [<span class="hljs-number">3</span>, <span class="hljs-number">2</span>])<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">3    c</span><br><span class="hljs-string">2    a</span><br><span class="hljs-string">dtype: object</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h2 id="2-Pandas的DataFrame对象"><a href="#2-Pandas的DataFrame对象" class="headerlink" title="2 | Pandas的DataFrame对象"></a>2 | Pandas的DataFrame对象</h2><p>Series: 一维</p>
+<p>DataFrame: 二维</p>
+<blockquote>
+<p>可以将DataFrame看作有序排列的若干Series对象</p>
+</blockquote>
+<p>Series中一个键映射一个值, DataFrame中一个键映射一个Series</p>
+<p><img src="https://youpai.roccoshi.top/img/20210119164122.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="创建DataFrame对象"><a href="#创建DataFrame对象" class="headerlink" title="创建DataFrame对象"></a>创建DataFrame对象</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 通过单个Series对象创建</span><br>population = pd.Series(dict_population)<br>pd.DataFrame(population, columns = [<span class="hljs-string">&#x27;population&#x27;</span>])<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">	population</span><br><span class="hljs-string">湖南	1000</span><br><span class="hljs-string">广东	2000</span><br><span class="hljs-string">上海	10000</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 2. 通过字典列表创建, 如果有些键不存在, Pandas也会用NaN代替(not a number)</span><br>pd.DataFrame([&#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-number">2</span>&#125;, &#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;c&#x27;</span>: <span class="hljs-number">3</span>&#125;])<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">	a	b	c</span><br><span class="hljs-string">0	1	2.0	NaN</span><br><span class="hljs-string">1	2	NaN	3.0</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 3. 通过Series对象字典创建</span><br>dict_population = &#123;<span class="hljs-string">&quot;湖南&quot;</span>: <span class="hljs-number">1000</span>, <span class="hljs-string">&quot;广东&quot;</span>: <span class="hljs-number">2000</span>, <span class="hljs-string">&quot;上海&quot;</span>: <span class="hljs-number">10000</span>&#125;<br>dict_area = &#123;<span class="hljs-string">&quot;湖南&quot;</span>: <span class="hljs-string">&quot;1A&quot;</span>, <span class="hljs-string">&quot;广东&quot;</span>: <span class="hljs-string">&quot;2B&quot;</span>, <span class="hljs-string">&quot;上海&quot;</span>: <span class="hljs-string">&quot;3C&quot;</span>&#125;<br>population = pd.Series(dict_population)<br>area = pd.Series(dict_area)<br>state = pd.DataFrame(&#123;<span class="hljs-string">&#x27;population&#x27;</span>: population, <span class="hljs-string">&#x27;area&#x27;</span>: area&#125;)<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">population	area</span><br><span class="hljs-string">湖南	1000	1A</span><br><span class="hljs-string">广东	2000	2B</span><br><span class="hljs-string">上海	10000	3C</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 4. 通过NumPy二维数组创建, 如果行列不指定索引值, 那么都是整数索引</span><br>pd.DataFrame(np.random.rand(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>))<br><span class="hljs-string">&quot;&quot;&quot;	</span><br><span class="hljs-string">		0			1</span><br><span class="hljs-string">0	0.931631	0.727243</span><br><span class="hljs-string">1	0.796623	0.715634</span><br><span class="hljs-string">2	0.730584	0.020360</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>pd.DataFrame(np.random.rand(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>), columns = [<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>], index = [<span class="hljs-string">&#x27;aaa&#x27;</span>, <span class="hljs-string">&#x27;bbb&#x27;</span>])<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">		A			B			C</span><br><span class="hljs-string">aaa	0.608391	0.362048	0.865072</span><br><span class="hljs-string">bbb	0.768997	0.457158	0.885170</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 5. 通过NumPy结构化数组创建</span><br>a = np.zeros(<span class="hljs-number">3</span>, dtype=[(<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;i8&#x27;</span>), (<span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;f8&#x27;</span>)])<br>a <span class="hljs-comment"># array([(0, 0.), (0, 0.), (0, 0.)], dtype=[(&#x27;a&#x27;, &#x27;&lt;i8&#x27;), (&#x27;b&#x27;, &#x27;&lt;f8&#x27;)])</span><br>pd.DataFrame(a)<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">	a	b</span><br><span class="hljs-string">0	0	0.0</span><br><span class="hljs-string">1	0	0.0</span><br><span class="hljs-string">2	0	0.0</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h2 id="3-Pandas的Index对象"><a href="#3-Pandas的Index对象" class="headerlink" title="3 | Pandas的Index对象"></a>3 | Pandas的Index对象</h2><blockquote>
+<p>可以将Pandas的Index对象看作是一个不可变数组或有序集合(实际上是一个多集, 因为index对象可能会包含重复值)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">ind = pd.Index(np.arange(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>))<br>ind<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">Int64Index([1, 2, 3], dtype=&#x27;int64&#x27;)</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<p>Index对象和numpy数组之间的差别是: Index对象的索引是不可变的, 也就是说不能通过通常的方式进行调整</p>
+<h3 id="将Index对象看成有序集合"><a href="#将Index对象看成有序集合" class="headerlink" title="将Index对象看成有序集合"></a>将Index对象看成有序集合</h3><p>Pandas对象涉及很多集合操作, Index对象遵循python标准库的集合数据结构的很多种习惯用法, 包括并, 交, 差等</p>
+<p><img src="https://youpai.roccoshi.top/img/20210119165607.png" srcset="/img/loading.gif" alt=""></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/python/">python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/">数据科学</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%83)%20Pandas(%E4%BA%8C)/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">python数据科学(七) Pandas(二) 数据取值与选择</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E3%80%8C%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E3%80%8D(%E4%BA%8C)%E5%88%86%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA/">
+                        <span class="hidden-mobile">「算法笔记」(一) 算法初步</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '334a894b9dc165e734f9',
+          clientSecret: '2682f62ff5c94d84323e7fbab37d41fad18f70a1',
+          repo: 'Lincest.github.io',
+          owner: 'Lincest',
+          admin: ["Lincest"],
+          id: '00a42b10c4b8df434bc41e777c2b2f74',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://home.roccoshi.top" target="_blank" rel="nofollow noopener"><span>roccoshi</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f31390029ab05a47052152645c759b9c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21044765.js"></script>
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,621 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;light&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
+  <meta name="author" content="RoccoShi">
+  <meta name="keywords" content="roccoshi,shootzone">
+  <title>python数据科学(八) matplotlib图例风格与配色方案 - ShootZone</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="ShootZone" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>ShootZone</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://youpai.roccoshi.top/img/wallhaven1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="python数据科学(八) matplotlib图例风格与配色方案">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-26 17:28" pubdate>
+        2021年1月26日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      923 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">python数据科学(八) matplotlib图例风格与配色方案</h1>
+            
+            <div class="markdown-body">
+              <h2 id="1-配置图例"><a href="#1-配置图例" class="headerlink" title="1 | 配置图例"></a>1 | 配置图例</h2><p><code>plt.legend()</code>用于创建最简单的图例, 下面展示图例的默认配置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">x = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>, <span class="hljs-number">1000</span>)<br>fig, ax = plt.subplots()<br>ax.plot(x, np.sin(x), <span class="hljs-string">&#x27;-b&#x27;</span>, label = <span class="hljs-string">&#x27;Sine&#x27;</span>)<br>ax.plot(x, np.cos(x), <span class="hljs-string">&#x27;--r&#x27;</span>, label = <span class="hljs-string">&#x27;Cosine&#x27;</span>)<br>ax.axis(<span class="hljs-string">&#x27;equal&#x27;</span>)<br>leg = ax.legend()<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210126173219.png" srcset="/img/loading.gif" alt=""></p>
+<p>我们经常需要对图例进行各种个性化的配置, 下面给出几个例子:</p>
+<p><strong>1 | 左上角, 取消外边框</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ax.legend(loc = <span class="hljs-string">&#x27;upper left&#x27;</span>, frameon = <span class="hljs-literal">False</span>)<br>fig<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210126173350.png" srcset="/img/loading.gif" alt=""></p>
+<p><strong>2 | 下端居中, 分两列显示(<code>ncol</code>)</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ax.legend(frameon = <span class="hljs-literal">False</span>, loc = <span class="hljs-string">&#x27;lower center&#x27;</span>, ncol = <span class="hljs-number">2</span>)<br>fig<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210126173538.png" srcset="/img/loading.gif" alt=""></p>
+<p><strong>3 | 定义圆角边框<code>fancybox</code>并指定大小<code>borderpad</code>, 增加阴影<code>shadow</code>, 改变外边框透明度<code>framealpha</code></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ax.legend(fancybox = <span class="hljs-literal">True</span>, framealpha = <span class="hljs-number">1</span>, shadow = <span class="hljs-literal">True</span>, borderpad = <span class="hljs-number">1</span>)<br>fig<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210126173817.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="1-1-选择图例显示的元素"><a href="#1-1-选择图例显示的元素" class="headerlink" title="1-1 | 选择图例显示的元素"></a>1-1 | 选择图例显示的元素</h3><p>图例会默认显示所有元素的标签, 如果想只显示部分, 可以采用如下方法:</p>
+<p><strong>方法1: 将需要显示的线条传入<code>plt.legend</code></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">y = np.sin(x[:, np.newaxis] + np.pi * np.arange(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0.5</span>))<br>lines = plt.plot(x, y)<br>plt.legend(lines[:<span class="hljs-number">2</span>], [<span class="hljs-string">&#x27;first&#x27;</span>, <span class="hljs-string">&#x27;second&#x27;</span>])  <span class="hljs-comment"># 一共四条线, 给前两条设置图例</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210126174723.png" srcset="/img/loading.gif" alt=""></p>
+<p><strong>方法2: 只为需要在图例中显示的元素设置label</strong></p>
+<p>因为legend只显示有label的线</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">plt.plot(x, y[:, <span class="hljs-number">0</span>], label = <span class="hljs-string">&quot;first&quot;</span>)<br>plt.plot(x, y[:, <span class="hljs-number">1</span>])<br>plt.plot(x, y[:, <span class="hljs-number">2</span>], label = <span class="hljs-string">&quot;third&quot;</span>)<br>plt.legend()<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210126174934.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="1-2-在图例中显示不同尺寸的点"><a href="#1-2-在图例中显示不同尺寸的点" class="headerlink" title="1-2 | 在图例中显示不同尺寸的点"></a>1-2 | 在图例中显示不同尺寸的点</h3><p>比如我们有一个人口统计图, 想用不同尺寸的点表示不同人口数量级</p>
+<p>首先创建一个<strong>不带标签的散点图</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">cities = pd.read_csv(<span class="hljs-string">&#x27;./california_cities.csv&#x27;</span>)<br>lat, lon = cities[<span class="hljs-string">&#x27;latd&#x27;</span>], cities[<span class="hljs-string">&#x27;longd&#x27;</span>]  <span class="hljs-comment"># 经纬度</span><br>population, area = cities[<span class="hljs-string">&#x27;population_total&#x27;</span>], cities[<span class="hljs-string">&#x27;area_total_km2&#x27;</span>] <span class="hljs-comment"># 人口地区</span><br>fig, ax = plt.subplots()<br><span class="hljs-comment"># 用不同尺寸散点图表示数据, 但是不带标签</span><br>ax0 = ax.scatter(lon, lat, label = <span class="hljs-literal">None</span>, c = np.log10(population), cmap = <span class="hljs-string">&#x27;viridis&#x27;</span>, s = area, linewidth = <span class="hljs-number">0</span>, alpha = <span class="hljs-number">0.5</span>)<br>ax.axis(aspect = <span class="hljs-string">&#x27;equal&#x27;</span>)  <span class="hljs-comment"># 宽高相等</span><br>ax.set_xlabel(<span class="hljs-string">&#x27;longitude&#x27;</span>)<br>ax.set_ylabel(<span class="hljs-string">&#x27;latitude&#x27;</span>)<br>fig.colorbar(ax0, label = <span class="hljs-string">&#x27;log$_&#123;10&#125;$(population)&#x27;</span>)<br>ax0.set_clim(<span class="hljs-number">3</span>, <span class="hljs-number">7</span>)<br></code></pre></td></tr></table></figure>
+<p>然后<strong>创建图例</strong>, 将两张图叠在一起(利用ax)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 下面创建图例</span><br><span class="hljs-keyword">for</span> area <span class="hljs-keyword">in</span> [<span class="hljs-number">100</span>, <span class="hljs-number">300</span>, <span class="hljs-number">500</span>]:<br>    ax.scatter([], [], c = <span class="hljs-string">&#x27;k&#x27;</span>, alpha = <span class="hljs-number">0.3</span>, s = area, label = <span class="hljs-built_in">str</span>(area) + <span class="hljs-string">&#x27; km$^2$&#x27;</span>)<br>ax.legend(scatterpoints = <span class="hljs-number">1</span>, frameon = <span class="hljs-literal">False</span>, labelspacing = <span class="hljs-number">1</span>, title = <span class="hljs-string">&#x27;city area&#x27;</span>)<br>fig<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210126183317.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="2-配置颜色条"><a href="#2-配置颜色条" class="headerlink" title="2 | 配置颜色条"></a>2 | 配置颜色条</h2><p><code>plt.colorbar()</code>可以创建最简单的颜色条</p>
+<p><img src="https://youpai.roccoshi.top/img/20210126185133.png" srcset="/img/loading.gif" alt=""></p>
+<p>可以用<code>cmap</code>设置不同配色方案, 如<code>cmap = ‘gray&#39;</code>设置灰度配色方案:</p>
+<p><img src="https://youpai.roccoshi.top/img/20210126185213.png" srcset="/img/loading.gif" alt=""></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuchengzimozigreat/article/details/90477501">配色</a>    </p>
+<h3 id="2-1-颜色条扩展"><a href="#2-1-颜色条扩展" class="headerlink" title="2-1 | 颜色条扩展"></a>2-1 | 颜色条扩展</h3><p>可以通过clim指定颜色条的范围(上下限), 并用<code>extend</code>参数表示超过上下限的数</p>
+<p>e.g.</p>
+<p>通过增加一些噪点(远大于平均数据/远小于平均数据)来展示extend的作用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">speckles = (np.random.random(I.shape) &lt; <span class="hljs-number">0.01</span>)<br>I[speckles] = np.random.normal(<span class="hljs-number">0</span>, <span class="hljs-number">3</span>, np.count_nonzero(speckles))<br>plt.figure(figsize = (<span class="hljs-number">15</span>, <span class="hljs-number">4</span>))<br>plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>)<br>plt.imshow(I, cmap = <span class="hljs-string">&#x27;RdBu&#x27;</span>)<br>plt.colorbar()<br>plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>)<br>plt.imshow(I, cmap = <span class="hljs-string">&#x27;RdBu&#x27;</span>)<br>plt.colorbar(extend = <span class="hljs-string">&#x27;both&#x27;</span>)  <span class="hljs-comment"># both / max / min / neither</span><br>plt.clim(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>)<br>plt.imshow(I, cmap = <span class="hljs-string">&#x27;RdBu&#x27;</span>)<br>plt.colorbar(extend = <span class="hljs-string">&#x27;max&#x27;</span>)<br>plt.clim(-<span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210126192154.png" srcset="/img/loading.gif" alt=""></p>
+<p>可以看到最左边一张图显示噪点的范围完全覆盖了我们感兴趣的数据, 我们可以通过<code>plt.colorbar(extend = &#39;both&#39;)</code>来进行扩展, 并用clim设置颜色条的上下限, 当超过上限或者低于下限时, 如果设置扩展, 将以一种颜色表示(比如上图超过1都用深蓝色表示, 低于-1都用深红色表示)</p>
+<h3 id="2-2-离散型颜色条"><a href="#2-2-离散型颜色条" class="headerlink" title="2-2 | 离散型颜色条"></a>2-2 | 离散型颜色条</h3><p>利用<code>plt.cm.get_cmap()</code>函数将<strong>配色方案</strong>和需要的<strong>离散区间数量</strong>传入即可</p>
+<p>e.g.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">plt.imshow(I, cmap = plt.cm.get_cmap(<span class="hljs-string">&#x27;Blues&#x27;</span>, <span class="hljs-number">6</span>))<br>plt.colorbar()<br>plt.clim(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210126193236.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/python/">python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/">数据科学</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/leetcode/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">「leetcode刷题」二叉树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%83)%20Pandas(%E4%BA%8C)/">
+                        <span class="hidden-mobile">python数据科学(七) Pandas(二) 数据取值与选择</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '334a894b9dc165e734f9',
+          clientSecret: '2682f62ff5c94d84323e7fbab37d41fad18f70a1',
+          repo: 'Lincest.github.io',
+          owner: 'Lincest',
+          admin: ["Lincest"],
+          id: 'db8384656ed594227163c5021f3c6969',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://home.roccoshi.top" target="_blank" rel="nofollow noopener"><span>roccoshi</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f31390029ab05a47052152645c759b9c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21044765.js"></script>
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,633 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;light&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
+  <meta name="author" content="RoccoShi">
+  <meta name="keywords" content="roccoshi,shootzone">
+  <title>数学模型(一) 如何施救药物中毒 - ShootZone</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="ShootZone" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>ShootZone</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://youpai.roccoshi.top/img/wallhaven1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="数学模型(一) 如何施救药物中毒">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-14 11:00" pubdate>
+        2021年1月14日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      927 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">数学模型(一) 如何施救药物中毒</h1>
+            
+            <div class="markdown-body">
+              <div class="note note-info">
+            <p>题目来源姜启源《数学模型 第四版》。</p><p>意在练习python的matplotlib库和使用latex进行数学公式编辑。</p>
+          </div>
+<h1 id="数学模型-一-如何施救药物中毒"><a href="#数学模型-一-如何施救药物中毒" class="headerlink" title="数学模型(一) 如何施救药物中毒"></a>数学模型(一) 如何施救药物中毒</h1><h2 id="1-题目描述"><a href="#1-题目描述" class="headerlink" title="1 | 题目描述"></a>1 | 题目描述</h2><p><img src="https://youpai.roccoshi.top/img/20210114110735.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210114111552.png" srcset="/img/loading.gif" alt=""></p>
+<p>已知条件:</p>
+<ul>
+<li>孩子一口气服下$1100 \mathrm{mg}$药物</li>
+<li>孩子有2000ml的血液</li>
+<li>血药浓度达到$100\mu \mathrm{g}/\mathrm{ml}$时将出现严重中毒, 达到$200\mu \mathrm{g}/\mathrm{ml}$将致命</li>
+<li>药物吸收的半衰期为5h(胃肠道浓度), 排除的半衰期为6h(血液浓度)</li>
+</ul>
+<h2 id="2-模型建立"><a href="#2-模型建立" class="headerlink" title="2 | 模型建立"></a>2 | 模型建立</h2><p>记: </p>
+<script type="math/tex; mode=display">
+\mathrm{x}\left( \mathrm{t} \right) : \text{胃肠道中药量}
+\\
+\mathrm{y}\left( \mathrm{t} \right) : \text{血液系统中药量}</script><p>做出如下假设: </p>
+<ol>
+<li>胃肠道中药物向血液系统的<strong>转移率</strong>与$\mathrm{x}\left( \mathrm{t} \right) $成正比, 比例系数记为$\lambda $, 总剂量1100mg的药物在t=0瞬间进入胃肠道</li>
+<li>血液系统中药物<strong>排除率</strong>与药量$\mathrm{y}\left( \mathrm{t} \right) $成正比, 比例系数记为$\mu $, t=0时血液中无药物</li>
+</ol>
+<p>根据假设1, $\mathrm{x}\left( \mathrm{t} \right) $满足微分方程: </p>
+<script type="math/tex; mode=display">
+\frac{\mathrm{dx}}{\mathrm{dt}}=-\lambda \mathrm{x},\mathrm{x}\left( 0 \right) =1100 \tag{1}</script><p>根据假设2, $\mathrm{y}\left( \mathrm{t} \right) $满足微分方程:</p>
+<script type="math/tex; mode=display">
+\frac{\mathrm{dy}}{\mathrm{dt}}=\lambda \mathrm{x}-\mu \mathrm{y},\mathrm{y}\left( 0 \right) =0 \tag{2}</script><p>其中参数$\mu $和参数$\lambda $可以由半衰期确定</p>
+<h2 id="3-模型求解"><a href="#3-模型求解" class="headerlink" title="3 | 模型求解"></a>3 | 模型求解</h2><p>微分方程(1)是可分离变量方程, 易得</p>
+<script type="math/tex; mode=display">
+\mathrm{x}\left( \mathrm{t} \right) =1100\mathrm{e}^{-\lambda \mathrm{t}} \tag{3}</script><p>利用药物吸收的半衰期为5h的条件可知:</p>
+<script type="math/tex; mode=display">
+\mathrm{x}\left( 5 \right) =1100\mathrm{e}^{-5\lambda}=\frac{\mathrm{x}\left( 0 \right)}{2}=550
+\\
+\Rightarrow \lambda =\frac{\ln 2}{5}=0.138629 \tag{4}</script><p>将方程(3)带入方程(2)得到一阶线性微分方程, 求解得: </p>
+<script type="math/tex; mode=display">
+\mathrm{y}\left( \mathrm{t} \right) =\frac{1100\lambda}{\lambda -\mu}\left( \mathrm{e}^{-\mu \mathrm{t}}-\mathrm{e}^{-\lambda \mathrm{t}} \right) \tag{5}</script><p>表明血液中的药量$\mathrm{y}\left( \mathrm{t} \right) $随着t先增后减并趋于0</p>
+<p>为了根据药物排除的半衰期6h来确定$\mu $, 考虑某时刻$\tau $有$\mathrm{y}\left( \tau \right) =\mathrm{a}$, 则</p>
+<script type="math/tex; mode=display">
+\mathrm{y}\left( \mathrm{t} \right) =\mathrm{ae}^{-\mu \left( \mathrm{t}-\tau \right)},\mathrm{t}\geqslant \tau</script><p>由$\mathrm{y}\left( \tau +6 \right) =\frac{\mathrm{a}}{2}$得$\mu =\frac{\ln 2}{6}=0.115525$</p>
+<p>将$\lambda $和$\mu $的值带入(3) (5)得</p>
+<script type="math/tex; mode=display">
+\mathrm{x}\left( \mathrm{t} \right) =1100\mathrm{e}^{-0.1386\mathrm{t}} \tag{6}</script><script type="math/tex; mode=display">
+\mathrm{y}\left( \mathrm{t} \right) =6600\left( \mathrm{e}^{-0.1155\mathrm{t}}-\mathrm{e}^{-0.1386\mathrm{t}} \right) \tag{7}</script><h2 id="4-作图与分析"><a href="#4-作图与分析" class="headerlink" title="4 | 作图与分析"></a>4 | 作图与分析</h2><p>这里使用python作图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>plt.rcParams[<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>]=[<span class="hljs-string">&#x27;SimHei&#x27;</span>] <br>plt.rcParams[<span class="hljs-string">&#x27;axes.unicode_minus&#x27;</span>]=<span class="hljs-literal">False</span> <br><br>x = np.arange(<span class="hljs-number">0</span>, <span class="hljs-number">20</span>, <span class="hljs-number">0.1</span>)<br>y1 = <span class="hljs-number">1100</span> * np.exp(-<span class="hljs-number">0.1386</span> * x)<br>y2 = <span class="hljs-number">6600</span> * (np.exp(-<span class="hljs-number">0.1155</span> * x) - np.exp(-<span class="hljs-number">0.1386</span> * x))<br><br>%matplotlib inline<br>plt.plot(x, y1, linestyle=<span class="hljs-string">&quot;-&quot;</span>, label=<span class="hljs-string">&#x27;x(t)&#x27;</span>)<br>plt.plot(x, y2, linestyle=<span class="hljs-string">&quot;-&quot;</span>, label=<span class="hljs-string">&#x27;y(t)&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&quot;t/h&quot;</span>)<br>plt.ylabel(<span class="hljs-string">&quot;x, y/mg&quot;</span>)<br>plt.legend(loc=<span class="hljs-string">&#x27;upper right&#x27;</span>)<br>plt.title(<span class="hljs-string">&quot;胃肠道中药量x(t)和血液系统中药量y(t)&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210114125435.png" srcset="/img/loading.gif" alt=""></p>
+<p>由图可以看出若不及时抢救, 在5h后血液中药物浓度将达到400mg</p>
+<p>由公式(6)易得y(2)=236.5mg, 计算药量达到400mg的时间: </p>
+<p>通过解非线性方程: </p>
+<script type="math/tex; mode=display">
+6600\left( \mathrm{e}^{-0.1155\mathrm{t}}-\mathrm{e}^{-0.1386\mathrm{t}} \right)=400 \tag{7}</script><p><img src="https://youpai.roccoshi.top/img/20210114130624.png" srcset="/img/loading.gif" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> scipy.optimize <span class="hljs-keyword">import</span> fsolve<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f1</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-keyword">return</span> [<span class="hljs-number">6600</span> * (np.exp(-<span class="hljs-number">0.1155</span> * x[<span class="hljs-number">0</span>]) - np.exp(-<span class="hljs-number">0.1386</span> * x[<span class="hljs-number">0</span>])) - <span class="hljs-number">400</span>]<br>print(fsolve(f1, [<span class="hljs-number">0</span>]))<br></code></pre></td></tr></table></figure>
+<p>解得t = 4.87h</p>
+<p>同时可以求出当t = 7.89h时血液中药量达到最大, 为442.1mg</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f2</span>(<span class="hljs-params">x</span>):</span><br>    a = <span class="hljs-number">0.1386</span><br>    b = <span class="hljs-number">0.1155</span><br>    <span class="hljs-keyword">return</span> [<span class="hljs-number">1100</span> * a * np.exp(-<span class="hljs-number">1</span> * a * x[<span class="hljs-number">0</span>]) - <span class="hljs-number">1100</span> * a * b * (np.exp(-<span class="hljs-number">1</span> * b * x[<span class="hljs-number">0</span>]) - np.exp(-<span class="hljs-number">1</span> * a * x[<span class="hljs-number">0</span>])) / (a - b)]<br>print(fsolve(f2, [<span class="hljs-number">0</span>]))<br>print()<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f3</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">6600</span> * (np.exp(-<span class="hljs-number">0.1155</span> * x) - np.exp(-<span class="hljs-number">0.1386</span> * x))<br>print(f3(<span class="hljs-number">7.89</span>))<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/img/20210114131930.png" srcset="/img/loading.gif" alt=""></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E6%A8%A1%E5%9E%8B/">微分方程模型</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%BA%8C)%20Numpy(%E4%B8%80)%E6%95%B0%E7%BB%84/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">python数据科学(二) Numpy(一) 数组</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%80)%20JupyterNotebook/">
+                        <span class="hidden-mobile">python数据科学(一) Jupyter NoteBook</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '334a894b9dc165e734f9',
+          clientSecret: '2682f62ff5c94d84323e7fbab37d41fad18f70a1',
+          repo: 'Lincest.github.io',
+          owner: 'Lincest',
+          admin: ["Lincest"],
+          id: '9df5a4d25fd79ab1ff635ba4fd209b92',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://home.roccoshi.top" target="_blank" rel="nofollow noopener"><span>roccoshi</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f31390029ab05a47052152645c759b9c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21044765.js"></script>
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

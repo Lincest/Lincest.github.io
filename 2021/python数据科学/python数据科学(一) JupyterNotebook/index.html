@@ -1,0 +1,819 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;light&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
+  <meta name="author" content="RoccoShi">
+  <meta name="keywords" content="roccoshi,shootzone">
+  <title>python数据科学(一) Jupyter NoteBook - ShootZone</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="ShootZone" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>ShootZone</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://youpai.roccoshi.top/img/wallhaven1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="python数据科学(一) Jupyter NoteBook">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-13 13:42" pubdate>
+        2021年1月13日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">python数据科学(一) Jupyter NoteBook</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Python数据科学-一-Jupyter-NoteBook初见"><a href="#Python数据科学-一-Jupyter-NoteBook初见" class="headerlink" title="Python数据科学(一) Jupyter NoteBook初见"></a>Python数据科学(一) Jupyter NoteBook初见</h1><p>JupyterNoteBook是Ipython shell基于浏览器的图形界面</p>
+<blockquote>
+<p><code>ipython</code>是一个<code>python</code>的交互式<code>shell</code>，比默认的<code>python shell</code>好用得多，支持变量自动补全，自动缩进，支持<code>bash shell</code>命令，内置了许多很有用的功能和函数。学习<code>ipython</code>将会让我们以一种更高的效率来使用<code>python</code>。同时它也是利用Python进行科学计算和交互可视化的一个最佳的平台。</p>
+</blockquote>
+<h2 id="一-启动Jupyter-Notebook"><a href="#一-启动Jupyter-Notebook" class="headerlink" title="一. 启动Jupyter Notebook"></a>一. 启动Jupyter Notebook</h2><p>在命令行中输入<code>jupyter notebook</code>, 启动一个本地的web服务器, 可以在浏览器中看到页面内容</p>
+<p><img src="https://youpai.roccoshi.top/img/20210113134632.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="修改工作目录"><a href="#修改工作目录" class="headerlink" title="修改工作目录"></a>修改工作目录</h3><p>可以看到目前jupyter的默认主目录为C盘, 我希望能放在E盘里的<code>&quot;E:\projects\Jupyter&quot;</code>目录下</p>
+<p>修改流程如下: </p>
+<ul>
+<li>启动anaconda prompt, 输入<code>jupyter notebook --generate-config</code></li>
+</ul>
+<p><img src="https://youpai.roccoshi.top/img/20210113135148.png" srcset="/img/loading.gif" alt=""></p>
+<ul>
+<li>打开该目录, 查找<code>notebook_dir</code>关键字, 修改为自己的工作目录</li>
+</ul>
+<p><img src="https://youpai.roccoshi.top/img/20210113135446.png" srcset="/img/loading.gif" alt=""></p>
+<ul>
+<li>重新启动jupyter notebook即可</li>
+</ul>
+<h2 id="二-Jupyter的常用快捷键以及工作方式"><a href="#二-Jupyter的常用快捷键以及工作方式" class="headerlink" title="二. Jupyter的常用快捷键以及工作方式"></a>二. Jupyter的常用快捷键以及工作方式</h2><p>jupyter分为两种模式, 一种是命令模式, 一种是编辑模式<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://blog.csdn.net/eswai/article/details/53642802
+">[1]</span></a></sup></p>
+<h3 id="编辑模式-绿色-和命令模式-蓝色-的切换"><a href="#编辑模式-绿色-和命令模式-蓝色-的切换" class="headerlink" title="编辑模式 (绿色)和命令模式 (蓝色)的切换"></a>编辑模式 (绿色)和命令模式 (蓝色)的切换</h3><p>编辑模式 -&gt; 命令模式: Esc</p>
+<p>命令模式 -&gt; 编辑模式: Enter</p>
+<h3 id="命令模式下"><a href="#命令模式下" class="headerlink" title="命令模式下"></a>命令模式下</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Enter</code></td>
+<td>进入当前块的<strong>编辑</strong>模式</td>
+<td><code>X</code></td>
+<td><strong>剪切</strong>选中的代码块</td>
+</tr>
+<tr>
+<td><code>Shift</code>+<code>Enter</code></td>
+<td><strong>运行</strong>当前块并选中下一块</td>
+<td><code>C</code></td>
+<td><strong>复制</strong>选中的代码块</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>Enter</code></td>
+<td><strong>运行</strong>当前块</td>
+<td><code>Shift</code>+<code>V</code></td>
+<td>在当前块上方<strong>粘贴</strong></td>
+</tr>
+<tr>
+<td><code>Alt</code>+<code>Enter</code></td>
+<td><strong>运行</strong>当前块并在下方插入新块</td>
+<td><code>V</code></td>
+<td>在当前块下方<strong>粘贴</strong></td>
+</tr>
+<tr>
+<td><code>Y</code></td>
+<td>切换到<strong>代码</strong>状态</td>
+<td><code>Z</code></td>
+<td><strong>撤销删除</strong>操作</td>
+</tr>
+<tr>
+<td><code>M</code></td>
+<td>切换到<strong>MarkDown</strong>状态</td>
+<td><code>D</code>,<code>D</code></td>
+<td><strong>删除</strong>选中的代码块</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>切换到<strong>Raw NBConvert</strong></td>
+<td><code>Shift</code>+<code>M</code></td>
+<td>将当前块与下一块<strong>合并</strong></td>
+</tr>
+<tr>
+<td>数字键<code>1</code>到<code>6</code></td>
+<td>将当前块第一行变为MarkDown的<strong>n级标题</strong></td>
+<td><code>S</code> / <code>Ctrl</code>+<code>S</code></td>
+<td><strong>保存</strong>并设置检查点</td>
+</tr>
+<tr>
+<td><code>↑</code> / <code>K</code></td>
+<td><strong>选择</strong>上一个代码块</td>
+<td><code>L</code></td>
+<td>显示/隐藏当前块的代码<strong>行号</strong></td>
+</tr>
+<tr>
+<td><code>↓</code> / <code>J</code></td>
+<td><strong>选择</strong>下一个代码块</td>
+<td><code>O</code></td>
+<td>显示/隐藏当前块的<strong>输出内容</strong></td>
+</tr>
+<tr>
+<td><code>A</code></td>
+<td>在当前块上方<strong>插入</strong>新代码块</td>
+<td><code>Shift</code>+<code>O</code></td>
+<td>显示/隐藏当前块的<strong>输出内容</strong>的滚动条</td>
+</tr>
+<tr>
+<td><code>B</code></td>
+<td>在当前块下方<strong>插入</strong>新代码块</td>
+<td><code>Esc</code> / <code>Q</code></td>
+<td>关闭弹窗</td>
+</tr>
+<tr>
+<td><code>H</code></td>
+<td>展示<strong>快捷键</strong>帮助</td>
+<td><code>I</code>,<code>I</code></td>
+<td><strong>打断</strong>kernal运行</td>
+</tr>
+<tr>
+<td><code>Space</code></td>
+<td><strong>滚动</strong>向下</td>
+<td><code>O</code>,<code>O</code></td>
+<td><strong>重启</strong>kernal</td>
+</tr>
+<tr>
+<td><code>Shift</code>+<code>Space</code></td>
+<td><strong>滚动</strong>向上</td>
+<td><code>Shift</code>+(<code>↑</code>/<code>↓</code>)</td>
+<td>选中多个代码块</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="编辑模式下"><a href="#编辑模式下" class="headerlink" title="编辑模式下"></a>编辑模式下</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Tab</code></td>
+<td>代码<strong>补全</strong>/<strong>缩进</strong></td>
+<td><code>Ctrl</code>+<code>→</code></td>
+<td><strong>光标</strong>右移一个词</td>
+</tr>
+<tr>
+<td><code>Shift</code>+<code>Tab</code></td>
+<td>工具<strong>提示</strong>/<strong>反缩进</strong></td>
+<td><code>Ctrl</code>+<code>Backspace</code></td>
+<td><strong>删除</strong>前一个词</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>[</code></td>
+<td><strong>缩进</strong></td>
+<td><code>Ctrl</code>+<code>Delete</code></td>
+<td><strong>删除</strong>后一个词</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>]</code></td>
+<td><strong>反缩进</strong></td>
+<td><code>Ctrl</code>+<code>M</code> / <code>Esc</code></td>
+<td>进入<strong>命令</strong>模式</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>A</code></td>
+<td><strong>全选</strong></td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>P</code></td>
+<td>打开<strong>命令</strong>选择板</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>Z</code></td>
+<td><strong>撤销</strong></td>
+<td><code>Shift</code>+<code>Enter</code></td>
+<td><strong>运行</strong>当前块并选中下一块</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>Y</code> / <code>Ctrl</code>+<code>Shift</code>+<code>Z</code></td>
+<td><strong>重复</strong></td>
+<td><code>Ctrl</code>+<code>Enter</code></td>
+<td><strong>运行</strong>当前块</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>Home</code></td>
+<td><strong>移动</strong>光标到块首</td>
+<td><code>Alt</code>+<code>Enter</code></td>
+<td><strong>运行</strong>当前块并在下方插入新块</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>End</code></td>
+<td><strong>移动</strong>光标到块尾</td>
+<td><code>Ctrl</code>+<code>Shift</code>+<code>-</code></td>
+<td>按光标位置分割当前块</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>←</code></td>
+<td><strong>光标</strong>左移一个词</td>
+<td><code>Ctrl</code>+<code>S</code></td>
+<td><strong>保存</strong>并设置检查点</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="三-Ipython的帮助和文档"><a href="#三-Ipython的帮助和文档" class="headerlink" title="三. Ipython的帮助和文档"></a>三. Ipython的帮助和文档</h2><h3 id="通过-查看帮助文档-自定义帮助文档"><a href="#通过-查看帮助文档-自定义帮助文档" class="headerlink" title="通过?查看帮助文档, 自定义帮助文档"></a>通过<code>?</code>查看帮助文档, 自定义帮助文档</h3><p>每一个Python对象都要有一个字符串的引用(docstring), 这个字符串包含对象的简要介绍和使用方法, python内置的<code>help()</code>函数可以获取这些信息并且能打印输出结果, 比如查看内置的print文档: </p>
+<p><img src="https://youpai.roccoshi.top/img/20210113140833.png" srcset="/img/loading.gif" alt=""></p>
+<p>也可以对自己定义的函数添加<code>docstring</code>, 即在函数定义的下方加入<code>“&quot;&quot; &quot;&quot;”</code>, 里面填入docstring</p>
+<p><img src="https://youpai.roccoshi.top/img/20210113141032.png" srcset="/img/loading.gif" alt="对自己定义的函数添加`docstring`"></p>
+<h3 id="通过-获取源代码"><a href="#通过-获取源代码" class="headerlink" title="通过??获取源代码"></a>通过<code>??</code>获取源代码</h3><p><img src="https://youpai.roccoshi.top/img/20210113141330.png" srcset="/img/loading.gif" alt="通过`??`获取源代码"></p>
+<h3 id="通过TAB键自动补全-通配符匹配"><a href="#通过TAB键自动补全-通配符匹配" class="headerlink" title="通过TAB键自动补全, 通配符匹配"></a>通过<code>TAB</code>键自动补全, 通配符匹配</h3><h4 id="1-对象内容的自动补全"><a href="#1-对象内容的自动补全" class="headerlink" title="1 | 对象内容的自动补全"></a>1 | 对象内容的自动补全</h4><p>如果有多个属性/方法, 则下面出现提示, 如果只有一个属性/方法, 则tab键将自动补全</p>
+<h4 id="2-导入时的TAB自动补全"><a href="#2-导入时的TAB自动补全" class="headerlink" title="2 | 导入时的TAB自动补全"></a>2 | 导入时的TAB自动补全</h4><p><code>import &lt;TAB&gt;</code></p>
+<h4 id="3-通配符-匹配"><a href="#3-通配符-匹配" class="headerlink" title="3 | 通配符*匹配"></a>3 | 通配符<code>*</code>匹配</h4><p>比如查找以Warning结尾的所有对象: </p>
+<p>语法: <code>*Warning?</code></p>
+<p><img src="https://youpai.roccoshi.top/img/20210113141845.png" srcset="/img/loading.gif" alt=""></p>
+<p>查找字符串包含find的方法: </p>
+<p>语法:<code>str.*find*?</code>: </p>
+<p><img src="https://youpai.roccoshi.top/img/20210113141954.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="四-魔法函数"><a href="#四-魔法函数" class="headerlink" title="四. 魔法函数"></a>四. 魔法函数</h2><p>利用<code>%lsmagic</code>可以列出所有魔法函数, 魔法函数设计用于简洁解决标准数据分析中的各种常见问题</p>
+<p>其中双百分号<code>%%</code>为多行魔法函数</p>
+<p>单百分号<code>%</code>为行内魔法函数</p>
+<p><img src="https://youpai.roccoshi.top/img/20210113142458.png" srcset="/img/loading.gif" alt=""></p>
+<p>例如: <code>%%timeit</code>计算代码的执行时间</p>
+<p><img src="https://youpai.roccoshi.top/img/20210113142714.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="用于内存分析和时间分析的魔法函数"><a href="#用于内存分析和时间分析的魔法函数" class="headerlink" title="用于内存分析和时间分析的魔法函数"></a>用于内存分析和时间分析的魔法函数</h3><p>用于时间分析: <code>%%timeit</code>(根据长度不同执行次数不同求平均)和<code>%time</code>(执行一次, end-start)</p>
+<p>用于内存分析: <code>%memit</code>和<code>%mprun</code>(需要安装<code>memory_profiler</code>并导入<code>%load_ext memory_profiler</code>)</p>
+<h2 id="五-输入输出历史"><a href="#五-输入输出历史" class="headerlink" title="五. 输入输出历史"></a>五. 输入输出历史</h2><p>输入和输出分别保存在<code>In</code>和<code>Out</code>两个对象中,In对象是一个列表, Out对象是一个字典</p>
+<h4 id="下划线和以前的输出"><a href="#下划线和以前的输出" class="headerlink" title="下划线和以前的输出"></a>下划线和以前的输出</h4><ul>
+<li><p>单下划线<code>_</code>, 双下划线<code>__</code>, 三下划线<code>___</code>分别表示倒数第一, 第二, 第三个历史输出</p>
+</li>
+<li><p>Out[x]的下划线简写形式是<code>_x</code></p>
+</li>
+</ul>
+<h2 id="六-python和shell的相互传值"><a href="#六-python和shell的相互传值" class="headerlink" title="六. python和shell的相互传值"></a>六. python和shell的相互传值</h2><ul>
+<li>将<code>!</code>作为符号前缀可以在Ipython中执行任何命令行命令</li>
+</ul>
+<p>例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ipthon">!pwd<br></code></pre></td></tr></table></figure>
+<ul>
+<li>利用<code>&#123;&#125;</code>可以将python中的变量传至shell中</li>
+</ul>
+<p>例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">In [<span class="hljs-number">1</span>]: message = <span class="hljs-string">&quot;123&quot;</span><br>    <br>In [<span class="hljs-number">2</span>]: !echo &#123;message&#125;<br><span class="hljs-number">123</span><br></code></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/eswai/article/details/53642802">https://blog.csdn.net/eswai/article/details/53642802</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/python/">python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/">数据科学</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B(%E4%B8%80)%E5%A6%82%E4%BD%95%E6%96%BD%E6%95%91%E8%8D%AF%E7%89%A9%E4%B8%AD%E6%AF%92/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">数学模型(一) 如何施救药物中毒</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E5%A4%8D%E4%B9%A0/">
+                        <span class="hidden-mobile">基于「数据库系统概论」的数据库期末复习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '334a894b9dc165e734f9',
+          clientSecret: '2682f62ff5c94d84323e7fbab37d41fad18f70a1',
+          repo: 'Lincest.github.io',
+          owner: 'Lincest',
+          admin: ["Lincest"],
+          id: 'c514f162d5425edc08351fb411b778d3',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://home.roccoshi.top" target="_blank" rel="nofollow noopener"><span>roccoshi</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f31390029ab05a47052152645c759b9c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21044765.js"></script>
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
