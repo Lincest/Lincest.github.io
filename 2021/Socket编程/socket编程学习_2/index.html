@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;light&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
+  <meta name="author" content="RoccoShi">
+  <meta name="keywords" content="roccoshi,shootzone">
+  <title>「socket编程学习笔记 | 2 封装与多进程」 - ShootZone</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="ShootZone" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>ShootZone</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://youpai.roccoshi.top/img/wallhaven1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="「socket编程学习笔记 | 2 封装与多进程」">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-03-28 10:20" pubdate>
+        2021年3月28日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">「socket编程学习笔记 | 2 封装与多进程」</h1>
+            
+            <div class="markdown-body">
+              <h1 id="socket编程学习笔记-2-封装与多进程"><a href="#socket编程学习笔记-2-封装与多进程" class="headerlink" title="socket编程学习笔记 | 2 封装与多进程"></a>socket编程学习笔记 | 2 封装与多进程</h1><h2 id="1-对socket进行封装"><a href="#1-对socket进行封装" class="headerlink" title="1 | 对socket进行封装"></a>1 | 对socket进行封装</h2><p>在头文件中包含如下类和方法声明: </p>
+<p>定义<code>TcpServer</code>类:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TcpServer</span> &#123;</span><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">int</span> m_socklen;  <span class="hljs-comment">// 结构体struct sockaddr_in的大小。</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span> <span class="hljs-title">m_clientaddr</span>&#123;</span>&#125;;  <span class="hljs-comment">// address of client</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span> <span class="hljs-title">m_serveraddr</span>&#123;</span>&#125;;  <span class="hljs-comment">// address of server</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> m_listenfd;  <span class="hljs-comment">// 监听socket</span><br>    <span class="hljs-keyword">int</span> m_connfd;  <span class="hljs-comment">// 客户端连接socket</span><br>    <span class="hljs-keyword">bool</span> m_btimeout;  <span class="hljs-comment">// 是否超时, true: timeout  false: not time out</span><br>    <span class="hljs-keyword">int</span> m_buflen&#123;&#125;; <span class="hljs-comment">// 调用Read方法后，接收到的报文的大小，单位：字节。</span><br><br>    TcpServer();<br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">InitServer</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> port)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">Accept</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// </span><br>    <span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">GetIP</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;  <span class="hljs-comment">// 获取客户端ip地址</span><br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">Read</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *buffer,<span class="hljs-keyword">int</span> itimeout)</span></span>; <span class="hljs-comment">// 读取数据, itimeout为超时时间, 设置为0为无限等待</span><br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">Write</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *buffer,<span class="hljs-keyword">int</span> ibuflen=<span class="hljs-number">0</span>)</span></span>; <span class="hljs-comment">// 发送数据, 发送ascii字符串时ibuflen取0, 发送二进制流时取二进制数据块大小(单位: byte)</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CloseListen</span><span class="hljs-params">()</span></span>;  <span class="hljs-comment">// 关闭监听socket即m_listenfd</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CloseClient</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// 关闭客户端socket即m_connfd</span><br>    ~TcpServer();<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>定义<code>TcpClient</code>类</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TcpClient</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> m_sockfd;  <span class="hljs-comment">// 客户端socket</span><br>    <span class="hljs-keyword">char</span> m_ip[<span class="hljs-number">21</span>]&#123;&#125;;  <span class="hljs-comment">// 服务器ip地址</span><br>    <span class="hljs-keyword">int</span> m_port;  <span class="hljs-comment">// 通信的端口 </span><br>    <span class="hljs-keyword">bool</span> m_btimeout;  <span class="hljs-comment">// true-超时，false-未超时</span><br>    <span class="hljs-keyword">int</span> m_buflen&#123;&#125;;<br>    TcpClient();<br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">ConnectToServer</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* ip, <span class="hljs-keyword">int</span> port)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">Read</span><span class="hljs-params">(<span class="hljs-keyword">char</span>* buffer, <span class="hljs-keyword">int</span> itimeout = <span class="hljs-number">0</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">Write</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* buffer, <span class="hljs-keyword">int</span> ibuflen = <span class="hljs-number">0</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Close</span><span class="hljs-params">()</span></span>;<br>    ~TcpClient();<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>定义读写实用方法:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// communication utils</span><br><span class="hljs-comment">// Readn: 从sockfd中读取n字节数据到buffer</span><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">Readn</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">char</span>* buffer, <span class="hljs-keyword">size_t</span> n)</span></span>;<br><span class="hljs-comment">// Writen: 向sockfd发送buffer中n字节数据</span><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">Writen</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* buffer, <span class="hljs-keyword">size_t</span> n)</span></span>;<br><span class="hljs-comment">// TcpRead: Tcp接受数据, itimeout为超时时间, 0为无限等待</span><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">TcpRead</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">char</span>* buffer, <span class="hljs-keyword">int</span>* ibuflen, <span class="hljs-keyword">bool</span>&amp; btimeout, <span class="hljs-keyword">int</span> itimeout = <span class="hljs-number">0</span>)</span></span>;<br><span class="hljs-comment">// TcpWrite: 发送数据, 发送ascii字符串时ibuflen取0, 发送二进制流时取二进制数据块大小(单位: byte)</span><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">TcpWrite</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* buffer, <span class="hljs-keyword">int</span> ibuflen = <span class="hljs-number">0</span>)</span></span>;<br></code></pre></td></tr></table></figure>
+<h2 id="2-对粘包和拆包的处理"><a href="#2-对粘包和拆包的处理" class="headerlink" title="2 | 对粘包和拆包的处理"></a>2 | 对粘包和拆包的处理</h2><p>什么是粘包:</p>
+<ol>
+<li><p>发送端需要等缓冲区满才发送出去，造成粘包 (发送端出现粘包)</p>
+</li>
+<li><p>接收端没有及时接收缓冲区包数据，造成一次性接收多个包，出现粘包 (接收端出现粘包)</p>
+</li>
+</ol>
+<p>如何处理粘包:</p>
+<blockquote>
+<p> 发送消息的时候在消息首部四个字节表示消息的长度, 接受方每次读取消息的时候先读取首部, 然后按长度读取消息</p>
+</blockquote>
+<p>实现:</p>
+<p><code>TcpRead</code>中「拆包」:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">(*ibuflen) = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">if</span> (!Readn(sockfd, (<span class="hljs-keyword">char</span> *) ibuflen, <span class="hljs-number">4</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;  <span class="hljs-comment">// 读取首部四个字节, 知道该段数据长度</span><br>(*ibuflen) = ntohl(*ibuflen);	<span class="hljs-comment">// net to host long, 网络字节序-&gt;主机字节序</span><br><span class="hljs-keyword">if</span> (!Readn(sockfd, buffer, (*ibuflen))) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br></code></pre></td></tr></table></figure>
+<p><code>TcpWrite</code>中「封包」:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> ilen = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">if</span> (ibuflen == <span class="hljs-number">0</span>) ilen = <span class="hljs-built_in">strlen</span>(buffer);  <span class="hljs-comment">// 消息的长度</span><br><span class="hljs-keyword">else</span> ilen = ibuflen;<br><span class="hljs-keyword">int</span> ilenn = htonl(ilen);  <span class="hljs-comment">// host to net long, 主机字节序-&gt;网络字节序</span><br><span class="hljs-keyword">char</span> str2buffer[ilen + <span class="hljs-number">4</span>]; <br><span class="hljs-built_in">memset</span>(str2buffer, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(str2buffer));<br><span class="hljs-built_in">memcpy</span>(str2buffer, &amp;ilenn, <span class="hljs-number">4</span>);  <span class="hljs-comment">// 把消息长度写入str2buffer的前四个字节</span><br><span class="hljs-built_in">memcpy</span>(str2buffer + <span class="hljs-number">4</span>, buffer, ilen); <span class="hljs-comment">// 消息写入str2buffer</span><br><span class="hljs-keyword">if</span> (!Writen(sockfd, str2buffer, ilen + <span class="hljs-number">4</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br></code></pre></td></tr></table></figure>
+<h2 id="3-多进程socket"><a href="#3-多进程socket" class="headerlink" title="3 | 多进程socket"></a>3 | 多进程socket</h2><p>服务端多进程, 每来一个客户端为该客户端创建一个进程: </p>
+<p>linux下使用<code>fork()</code>创建子进程, 当返回值<code>&gt;0</code>表示父进程, 返回值<code>=0</code>表示子进程</p>
+<p>这里的逻辑是先<code>while (!server.Accept());</code>监听到一个客户端的连接后, 创建一个子进程, 由于子进程拷贝了父进程的资源故父子进程都存在<code>ListenSocket</code>和<code>ClientSocket</code>, 为了节约资源, 父进程可以<code>CloseClient()</code>而子进程可以<code>CloseListen()</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//</span><br><span class="hljs-comment">// Created by roccoshi on 3/24/21.</span><br><span class="hljs-comment">//</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;TcpUtil.h&quot;</span></span><br><br><span class="hljs-comment">// 输入端口argv[1]</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (argc != <span class="hljs-number">2</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;please input the ip and port, usage: ./server [port]&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">int</span> port = atoi(argv[<span class="hljs-number">1</span>]);<br>    TcpServer server;<br>    <span class="hljs-comment">// 忽略子进程的信号, 避免产生僵尸进程</span><br>    signal(SIGCHLD,SIG_IGN);  <span class="hljs-comment">// &lt;wait/sys.h&gt;</span><br>    <span class="hljs-keyword">if</span> (!server.InitServer(port)) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;server.InitServer failed.\n&quot;</span>); <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;The server port %d is listening...\n&quot;</span>, port);<br>    &#125;<br><br>    <span class="hljs-comment">// 多进程</span><br>    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>        <span class="hljs-comment">// waiting for client to connect</span><br>        <span class="hljs-keyword">while</span> (!server.Accept());<br>        <span class="hljs-keyword">int</span> ipid = fork();<br>        <span class="hljs-comment">// 父进程只需要保留监听socket</span><br>        <span class="hljs-keyword">if</span> (ipid &gt; <span class="hljs-number">0</span>) &#123;<br>            server.CloseClient(); <span class="hljs-keyword">continue</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">// 子进程</span><br>            <span class="hljs-comment">// 子进程不需要监听socket</span><br>            server.CloseListen();<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;client(%s) connected. The pid is: %d\n&quot;</span>,server.GetIP(), getpid());<br>            <span class="hljs-keyword">char</span> str_buffer[<span class="hljs-number">1024</span>];<br>            <span class="hljs-comment">// 接受客户端申请的超时时间</span><br>            <span class="hljs-keyword">if</span> (!server.Read(str_buffer, <span class="hljs-number">0</span>)) <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>            <span class="hljs-keyword">int</span> out_time = atoi(str_buffer);<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;The client asked for %ds of service..\n&quot;</span>,atoi(str_buffer));<br>            <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>                <span class="hljs-built_in">memset</span>(str_buffer,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span>(str_buffer));<br>                <span class="hljs-keyword">if</span> (!server.Read(str_buffer, out_time)) <span class="hljs-keyword">break</span>;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d recv: %s\n&quot;</span>, getpid(), str_buffer);<br>                <span class="hljs-built_in">memset</span>(str_buffer,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span>(str_buffer));<br>                <span class="hljs-built_in">sprintf</span>(str_buffer, <span class="hljs-string">&quot;OK&quot;</span>);<br>                <span class="hljs-keyword">if</span> (!server.Write(str_buffer)) <span class="hljs-keyword">break</span>;<br>            &#125;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;the client %d disconnected.\n&quot;</span>, getpid());<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="3-1-关于僵尸进程"><a href="#3-1-关于僵尸进程" class="headerlink" title="3-1 | 关于僵尸进程"></a>3-1 | 关于僵尸进程</h3><blockquote>
+<p>当子进程退出时，内核都会给父进程发送一个SIGCHLD信号。如果父进程不做任何处理，那么退出的子进程将成为僵尸进程，这会在内核空间留下一些进程结构体的垃圾数据得不到清理，造成内存泄露。</p>
+</blockquote>
+<p>如何避免僵尸进程: </p>
+<p>我采用最简单的方式, 让父进程屏蔽SIGCHLD信号, 即:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 忽略子进程的信号, 避免产生僵尸进程</span><br>signal(SIGCHLD,SIG_IGN);  <span class="hljs-comment">// &lt;wait/sys.h&gt;</span><br></code></pre></td></tr></table></figure>
+<p>此时子进程退出后由init进程托管, 清除相关资源</p>
+<h2 id="4-结果展示"><a href="#4-结果展示" class="headerlink" title="4 | 结果展示"></a>4 | 结果展示</h2><p>一个server+一个client:</p>
+<p><img src="https://youpai.roccoshi.top/20210328201950.png" srcset="/img/loading.gif" alt=""></p>
+<p>请求300s的服务时间, 之后交互信息:</p>
+<p><img src="https://youpai.roccoshi.top/20210328202253.png" srcset="/img/loading.gif" alt=""></p>
+<p>加入多个客户端, 多进程:</p>
+<p><img src="C:\Users\47461\AppData\Roaming\Typora\typora-user-images\image-20210328202527131.png" srcset="/img/loading.gif" alt="image-20210328202527131"></p>
+<p><img src="C:\Users\47461\AppData\Roaming\Typora\typora-user-images\image-20210328202624819.png" srcset="/img/loading.gif" alt="image-20210328202624819"></p>
+<p>超时机制演示: </p>
+<p><img src="C:\Users\47461\AppData\Roaming\Typora\typora-user-images\image-20210328213740126.png" srcset="/img/loading.gif" alt="image-20210328213740126"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/socket/">socket</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/socket/">socket</a>
+                    
+                      <a class="hover-with-bg" href="/tags/tcp/">tcp</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_1/">
+                        <span class="hidden-mobile">「socket编程学习笔记 | 1 入门」</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '334a894b9dc165e734f9',
+          clientSecret: '2682f62ff5c94d84323e7fbab37d41fad18f70a1',
+          repo: 'Lincest.github.io',
+          owner: 'Lincest',
+          admin: ["Lincest"],
+          id: '50f28679794c9ab134230dbb808df312',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://home.roccoshi.top" target="_blank" rel="nofollow noopener"><span>roccoshi</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f31390029ab05a47052152645c759b9c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21044765.js"></script>
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
