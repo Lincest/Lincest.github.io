@@ -1,0 +1,641 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;light&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
+  <meta name="author" content="RoccoShi">
+  <meta name="keywords" content="roccoshi,shootzone">
+  <title>「编译原理」flex入门 - ShootZone</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="ShootZone" type="application/atom+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>ShootZone</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://youpai.roccoshi.top/img/wallhaven1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="「编译原理」flex入门">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-03-28 10:20" pubdate>
+        2021年3月28日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      21
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">「编译原理」flex入门</h1>
+            
+            <div class="markdown-body">
+              <h1 id="lex入门章"><a href="#lex入门章" class="headerlink" title="lex入门章"></a>lex入门章</h1><h2 id="1-Win-flex-bison的安装"><a href="#1-Win-flex-bison的安装" class="headerlink" title="1 | Win flex-bison的安装"></a>1 | Win flex-bison的安装</h2><p><code>lex</code> 就是词法分析器生成器, <code>yacc</code> 就是语法分析器</p>
+<p><code>flex</code>和<code>bison</code>分别是<code>lex</code>和<code>yacc</code>在GNU下的实现</p>
+<blockquote>
+<p><code>Win flex-bison</code>提供了 flex bison for Windows 的另外一种移植，将GNU m4宏处理器源代码集成进 win flex-bison ，不依赖Msys，Msys2，Cygwin 提供的模拟类 Unix 运行环境，不依赖GNU m4宏处理器便可生成 C 目标文件。</p>
+</blockquote>
+<p><code>Win flex-bison</code>的安装地址<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/winflexbison/">https://sourceforge.net/projects/winflexbison/</a></p>
+<p>安装好后: </p>
+<ul>
+<li>解压到指定目录</li>
+<li>将该目录添加到环境变量</li>
+</ul>
+<h2 id="2-lex的语法"><a href="#2-lex的语法" class="headerlink" title="2 | lex的语法"></a>2 | lex的语法</h2><blockquote>
+<p>from老师的ppt</p>
+</blockquote>
+<p><img src="https://youpai.roccoshi.top/20210419152053.png" srcset="/img/loading.gif" alt=""></p>
+<p>简而言之: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs flex">&#123;definitions&#125;           &#x2F;&#x2F; 定义部分<br>%%<br>&#123;rules&#125;                 &#x2F;&#x2F; 规则部分<br>%%<br>&#123;user subroutines&#125;      &#x2F;&#x2F; 用户自定义代码部分<br></code></pre></td></tr></table></figure>
+<h3 id="2-1-definitions-辅助定义部分"><a href="#2-1-definitions-辅助定义部分" class="headerlink" title="2.1 | definitions - 辅助定义部分"></a>2.1 | definitions - 辅助定义部分</h3><p>辅助定义部分实际上就是给某些后面可能经常用到的正则表达式取一个别名, 从而简化词法规则的书写</p>
+<p>该部分的格式一般为: </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">name definition<br></code></pre></td></tr></table></figure>
+<p>其中 <code>name</code> 是名字，<code>definition</code> 是任意的正则表达式</p>
+<p><code>e.g.</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs flex">…<br>digit [0-9]<br>letter [_a-zA-Z]<br>%%<br>&#123;rules&#125;<br>%%<br>&#123;user subroutines&#125;<br></code></pre></td></tr></table></figure>
+<p>值得一提的是，如果用户想要对这部分所用到的变量、函数或者头文件进行声明，可以定义部分之前使用<code>%&#123;</code>和<code>%&#125;</code>符号将要声明的内容添加进去。被<code>%&#123;</code>和<code>%&#125;</code>所包围的内容也会一并拷贝到生成的c语言文件的最前面<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="博客「编译原理-构造词法分析器」:  https://www.xerrors.fun/lexical-analysis
+">[4]</span></a></sup>。</p>
+<p>在辅助定义部分同样包含了flex的控制选项<code>%options</code>, 下面是一些常用options的总结: <sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote"><span class="hint--top hint--rounded" aria-label="博客「Flex介绍」: https://zhuanlan.zhihu.com/p/89473441
+">[5]</span></a></sup></p>
+<blockquote>
+<ol>
+<li>%option reentrant: flex能够生成一个可重入的扫描器。通过定义%option reentrant（与-R选项等价）来实现可重入。所生成的扫描器在一个或多个控制线程中不仅可移植，而且安全性好。可重入扫描器通常应用于多线程应用程序。任何一个线程都可以在不考虑与其他线程同步的情况下创建并执行一个可重入的flex扫描器。默认情况下，flex生成一个不可重入的扫描器。本项目为了实现多线程，因而在定义段指定%option reentrant.</li>
+<li>%option bison-bridge: flex和bison联合使用的选项，由于flex和bison部分内容声明不同，使用此选项后可以相互调用。</li>
+<li>%option bison-locations: 此模式同上面参数同时使用，如果做了此声明，yylex 将被声明为int yylex (YYSTYPE<em> lvalp, YYLTYPE</em> llocp, yyscan_t scaninfo);加入了location参数.</li>
+<li>%option 8bit: 识别其输入中8位字符的扫描器。</li>
+<li>%option never-interactive: flex 生成的扫描器从不认为输入是交互的（不会调用isatty()</li>
+<li>%option nodefault: 所有没有被匹配的输入都拷贝到yyoutflex允许在添加%option nodefault，使它不要添加默认的规则这样输入无法被给定的规则完全匹配时，词法分析器可以报告一个错误。</li>
+<li>%option noinput:不使用默认的input函数</li>
+<li>%option nounput: 添加Flex默认的C函数，比如yy_scan_buffer，yy_scan_bytes，yy_scan_string</li>
+<li>%option noyywrap: 不使用yywrap()，当lex读取到文件末尾时，会调用yywrap(), 目的是，当有另外一个输入文件时，yywrap可以调整yyin的值并且返回0来重新开始词法分析。如果是真正的文件末尾，那么就返回1来完成分析。</li>
+<li>%option noyyalloc，%option noyyrealloc，%option noyyfree：不使用flex自带的函数yyalloc，yyrealloc，yyfree（内存的申请，重申请以及释放）</li>
+<li>%option warn: 开启所有警告</li>
+<li>%option prefix=”core_yy”: 可以将原来的yylex等函数 变成core_yylex.这样可以在一个程序中建立多个词法分析器。</li>
+</ol>
+</blockquote>
+<h3 id="2-2-rules-规则部分"><a href="#2-2-rules-规则部分" class="headerlink" title="2.2 | rules - 规则部分"></a>2.2 | rules - 规则部分</h3><p>第二部分为规则部分，它由正则表达式和相应的响应函数组成，其格式为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">pattern &#123;action&#125;<br></code></pre></td></tr></table></figure>
+<p>其中 <code>pattern</code> 为正则表达式，其书写规则与前面的定义部分的正则表达式相同。而 <code>action</code> 则为将要进行的具体操作，这些操作可以用一段C代码表示。Flex 将按照这部分给出的内容依次尝试每一个规则，尽可能匹配最长的输入串。如果有些内容不匹配任何规则，Flex 默认只将其拷贝到标准输出，想要修改这个默认行为的话只需要在所有规则的最后加上一条 <code>&#39;.&#39;</code>（即匹配任何输入）规则，然后在其对应的 <code>action</code> 部分书写你想要的行为即可。</p>
+<p>例如，下面这段Flex代码在遇到输入文件中包含一串数字时，会将该数字串转化为整数值 并打印到屏幕上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs flex">…<br>digit [0-9]<br>%%<br>&#123;digit&#125;+ &#123; printf(&quot;Integer value %d\n&quot;, atoi(yytext)); &#125;<br>…<br>%%<br>&#123;user subroutines&#125;<br></code></pre></td></tr></table></figure>
+<p>其中变量 <code>yytext</code> 的类型为 <code>char*</code> ，它是 Flex 为我们提供的一个变量，里面保存了当前词法单元所对应的词素。函数 <code>atoi()</code> 的作用是把一个字符串表示的整数转化为 <code>int</code> 类型。<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="博客「编译原理-构造词法分析器」:  https://www.xerrors.fun/lexical-analysis
+">[4]</span></a></sup></p>
+<h3 id="2-3-user-subroutines-用户子程序部分"><a href="#2-3-user-subroutines-用户子程序部分" class="headerlink" title="2.3 | user subroutines - 用户子程序部分"></a>2.3 | user subroutines - 用户子程序部分</h3><p>第三部分为用户子程序部分，这部分代码会被原封不动地拷贝到生成的c语言文件中，以方便用户自定义所需要执行的函数，main函数也可以写在这里。</p>
+<h2 id="3-例子"><a href="#3-例子" class="headerlink" title="3 | 例子"></a>3 | 例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs flex">&#x2F;* C声明 *&#x2F;<br>%option noyywrap<br>%&#123;<br>#define ID 0<br>#define NUMBER 1<br>#define CREATE 2<br>#include &lt;bits&#x2F;stdc++.h&gt;<br>using namespace std;<br>%&#125;<br>&#x2F;* 辅助定义正规式 *&#x2F;<br>char	[a-zA-Z]<br>digit	[0-9]<br>digits	&#123;digit&#125;+<br>optional_fraction	(&quot;.&quot;&#123;digits&#125;)?<br>optional_exponent	(E[+-]?&#123;digits&#125;)?<br>create create<br>&#x2F;* 规则部分 *&#x2F;<br>%%<br>&#123;create&#125; &#123; <br>    printf(&quot;识别CREATE&quot;); <br>    return CREATE;<br>&#125;<br>									<br>&#123;char&#125;(&#123;char&#125;|&#123;digit&#125;)*	&#123; <br>    printf(&quot;识别标识符%s：长度为%d\n&quot;, yytext, yyleng);<br>    return ID;<br>&#125;<br><br>&#123;digits&#125;&#123;optional_fraction&#125;&#123;optional_exponent&#125; &#123;<br>    printf(&quot;识别数字%s：长度为%d\n&quot;, yytext, yyleng);<br>    return NUMBER;<br>&#125;<br>%%<br>&#x2F;* 用户自定义代码部分 *&#x2F;<br>int main(void)<br>&#123;<br>	printf(&quot;词法分析成功，返回记号类别为%d\n&quot;, yylex());<br>	return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="vscode运行"><a href="#vscode运行" class="headerlink" title="vscode运行"></a>vscode运行</h3><p>为了简化编译运行过程, 我使用code-runner插件, 将win_flex的输出和g++的编译运行写在一起, <code>settings.json</code>配置如下: </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json">&quot;code-runner.executorMapByGlob&quot;: &#123;<br>       &quot;*.l&quot;: &quot;cd $dir &amp;&amp; win_flex --wincompat -o $fileName.cpp $fileName &amp;&amp; g++ $fileName.cpp -o $fileNameWithoutExt &amp;&amp; $dir$fileNameWithoutExt&quot;,<br>   &#125;,<br></code></pre></td></tr></table></figure>
+<p><img src="https://youpai.roccoshi.top/20210419161901.png" srcset="/img/loading.gif" alt=""></p>
+<p>也可以写一个简单的批处理<code>bat</code>脚本编译运行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json">cd %cd%<br>win_flex --wincompat -o mylexer.cpp mylexer.l &amp;&amp; g++ mylexer.cpp -o mylexer &amp;&amp; mylexer.exe<br>pause<br></code></pre></td></tr></table></figure>
+<h2 id="addtion-附录"><a href="#addtion-附录" class="headerlink" title="addtion | 附录"></a>addtion | 附录</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>南京大学词法分析和语法分析课件: <a target="_blank" rel="noopener" href="https://cs.nju.edu.cn/daixinyu/1006.pdf">https://cs.nju.edu.cn/daixinyu/1006.pdf</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span>tutorial on lex/yacc: <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=54bo1qaHAfk">https://www.youtube.com/watch?v=54bo1qaHAfk</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><code>bilibili</code>- tutorial on lex/yacc: <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1mE411h7oo?from=search&amp;seid=10230721842328773717">https://www.bilibili.com/video/BV1mE411h7oo?from=search&amp;seid=10230721842328773717</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span>博客「编译原理-构造词法分析器」:  <a target="_blank" rel="noopener" href="https://www.xerrors.fun/lexical-analysis">https://www.xerrors.fun/lexical-analysis</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span>博客「Flex介绍」: <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89473441">https://zhuanlan.zhihu.com/p/89473441</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+                    
+                      <a class="hover-with-bg" href="/tags/flex/">flex</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_2/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">「socket编程学习笔记 | 2 封装与多进程」</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_1/">
+                        <span class="hidden-mobile">「socket编程学习笔记 | 1 入门」</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '334a894b9dc165e734f9',
+          clientSecret: '2682f62ff5c94d84323e7fbab37d41fad18f70a1',
+          repo: 'Lincest.github.io',
+          owner: 'Lincest',
+          admin: ["Lincest"],
+          id: 'd9e879f8e381328f8ddf27f4703054b0',
+          language: 'zh-CN',
+          labels: ["Gitalk"],
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        });
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://home.roccoshi.top" target="_blank" rel="nofollow noopener"><span>roccoshi</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f31390029ab05a47052152645c759b9c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21044765.js"></script>
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
