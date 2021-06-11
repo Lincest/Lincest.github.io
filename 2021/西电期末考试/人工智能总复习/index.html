@@ -17,7 +17,7 @@
   <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
   <meta name="author" content="RoccoShi">
   <meta name="keywords" content="roccoshi,shootzone">
-  <title>「编译原理」中期笔记整理 - ShootZone</title>
+  <title>「人工智能导论」期末复习 - ShootZone</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="「编译原理」中期笔记整理">
+            <span class="h2" id="subtitle" title="「人工智能导论」期末复习">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-04-28 16:17" pubdate>
-        2021年4月28日 下午
+      <time datetime="2021-05-31 14:01" pubdate>
+        2021年5月31日 下午
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.8k 字
+      1.7k 字
     </span>
   
 
@@ -233,202 +233,165 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">「编译原理」中期笔记整理</h1>
+            <h1 style="display: none">「人工智能导论」期末复习</h1>
             
             <div class="markdown-body">
-              <blockquote>
-<p>对前半学期的编译原理做小小的整理</p>
+              <h1 id="0-考纲"><a href="#0-考纲" class="headerlink" title="0 | 考纲"></a>0 | 考纲</h1><blockquote>
+<p>没出呢…</p>
 </blockquote>
-<h2 id="1-绪论部分"><a href="#1-绪论部分" class="headerlink" title="1 | 绪论部分"></a>1 | 绪论部分</h2><h3 id="1-1-编译器与解释器"><a href="#1-1-编译器与解释器" class="headerlink" title="1.1 | 编译器与解释器"></a>1.1 | 编译器与解释器</h3><ul>
-<li>语言翻译的两种基本形态</li>
-</ul>
-<p><img src="https://youpai.roccoshi.top/20210428162719.png" srcset="/img/loading.gif" alt=""></p>
-<ul>
-<li>编译器和解释器的区别</li>
-</ul>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>效率</th>
-<th>空间</th>
-<th>可移植性, 交互性</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>编译器</strong></td>
-<td>高</td>
-<td>小</td>
-<td>差</td>
-</tr>
-<tr>
-<td><strong>解释器</strong></td>
-<td>低</td>
-<td>大</td>
-<td>好</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="1-2-编译器的工作过程"><a href="#1-2-编译器的工作过程" class="headerlink" title="1.2 | 编译器的工作过程"></a>1.2 | 编译器的工作过程</h3><p><img src="https://youpai.roccoshi.top/20210428163138.png" srcset="/img/loading.gif" alt=""></p>
-<p>各阶段工作的归纳: </p>
+<h1 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1 | 绪论"></a>1 | 绪论</h1><h2 id="1-0-考题"><a href="#1-0-考题" class="headerlink" title="1.0 | 考题"></a>1.0 | 考题</h2><blockquote>
 <ol>
-<li><p><strong>词法分析</strong>：识别单词，至少分以下几大类：关键字（保留字）、标识符、字面量、特殊符号；</p>
-</li>
-<li><p><strong>语法分析</strong>：得到语言结构并以树的形式表示；</p>
-</li>
-<li><p><strong>语义分析</strong>：考察结构正确的句子是否语义合法，修改树结构；</p>
-</li>
-<li><p><strong>中间代码生成</strong>（可选）：生成一种既接近目标语言，又与具体机器无关的表示，便于优化与代码生成;</p>
-</li>
+<li>人工智能定义</li>
+<li>举出5个人工智能方面的应用并简单介绍</li>
+<li>简述人工智能三大学派及其观点</li>
 </ol>
+</blockquote>
+<h2 id="1-1-人工智能三大学派"><a href="#1-1-人工智能三大学派" class="headerlink" title="1.1 | 人工智能三大学派"></a>1.1 | 人工智能三大学派</h2><p><strong>符号学派, 连接学派, 行为学派</strong></p>
+<p>符号学派认为人工智能源于数理逻辑</p>
+<p>连接学派认为人工智能源于仿生学</p>
+<p>行为学派认为人工智能只是在与环境的交互作用中表现出来</p>
+<h1 id="2-知识表示"><a href="#2-知识表示" class="headerlink" title="2 | 知识表示"></a>2 | 知识表示</h1><h2 id="2-0-考题"><a href="#2-0-考题" class="headerlink" title="2.0 | 考题"></a>2.0 | 考题</h2><blockquote>
+<ol>
+<li>至少简述四种知识表示方法及其特点</li>
+<li>什么是本原问题</li>
+</ol>
+</blockquote>
+<h2 id="2-1-知识表示方法"><a href="#2-1-知识表示方法" class="headerlink" title="2.1 | 知识表示方法"></a>2.1 | 知识表示方法</h2><p>知识表示方法: <strong>状态空间法, 问题归约法, 谓词逻辑法, 语义网络法</strong></p>
+<p><strong>知识:</strong>  把有关信息关联在一起所形成的信息结构</p>
+<p><strong>知识表示:</strong> 计算机可以接受的用于描述知识的数据结构</p>
+<p>状态空间法三要素: <strong>状态, 算符, 状态空间方法</strong></p>
+<p>问题归约法: 从要解决的问题出发, 把问题归成一个个直接可解的本原问题(<strong>本原问题:</strong> 不能再分解或变换且直接可解的子问题)</p>
+<p>语义网络: 是知识的一种图解表示, 它由节点和弧线组成, 节点用于表示实体, 概念和情况等, 弧线用于表示节点间的关系</p>
+<p>框架: 一种结构化的方法, 框架通常由指定事务各个方面的<strong>槽</strong>组成, 每个槽拥有若干个侧面, 每个侧面又有若干个值。大多数实用系统必须同时拥有许多框架，并将之组成一个框架系统。</p>
+<p>剧本：框架的一种特殊表示形式，用一组槽来描述事件的发生序列，剧本表示特别适用于描述顺序性动作或事件，但使用不如框架灵活。</p>
+<p>过程：过程是一种知识的过程式表示，它将某一有关问题领域知识同这些使用方法一起，隐式地表示为一个问题求解过程。</p>
+<h1 id="3-经典逻辑推理"><a href="#3-经典逻辑推理" class="headerlink" title="3 | 经典逻辑推理"></a>3 | 经典逻辑推理</h1><h2 id="3-0-考题"><a href="#3-0-考题" class="headerlink" title="3.0 | 考题"></a>3.0 | 考题</h2><blockquote>
+<p>2道必考题: </p>
+<ul>
+<li><p>归结反演的大题</p>
+</li>
+<li><p>用谓词逻辑表示下列句子</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="3-1-代换-置换"><a href="#3-1-代换-置换" class="headerlink" title="3.1 | 代换(置换)"></a>3.1 | 代换(置换)</h2><p>代换是一个形如</p>
+<script type="math/tex; mode=display">
+{\{t_1/x_1, t_2/x_2, \cdots, t_n/x_n\}}</script><p>的有限集合</p>
+<p>其中$t_i$是项(常量, 变量, 函数)</p>
+<p>$x_i$为某一公式中互不相同的变元</p>
+<h2 id="3-2-合一"><a href="#3-2-合一" class="headerlink" title="3.2 | 合一"></a>3.2 | 合一</h2><p>设有公式集</p>
+<script type="math/tex; mode=display">
+F=\{F_1, F_2, \cdots, F_n\}</script><p>若存在一个代换$\lambda$使$F_1\lambda=F_2\lambda=\cdots=F_n\lambda$</p>
+<p>则称$\lambda$为公式集F的一个合一, 且称$F_1, F_2, \cdots, F_n$是可合一的</p>
+<h2 id="3-3-自然演绎推理"><a href="#3-3-自然演绎推理" class="headerlink" title="3.3 | 自然演绎推理"></a>3.3 | 自然演绎推理</h2><p>自然演绎推理的最基本的推理规则是三段论推理, 包括:</p>
+<ul>
+<li>假言推理</li>
+<li>拒取式</li>
+<li>假言三段论</li>
+</ul>
+<p><strong>假言推理:</strong> $P, P \rightarrow Q \Rightarrow Q$</p>
+<p><strong>拒取式:</strong> $P \rightarrow Q, \lnot Q \Rightarrow \lnot P$</p>
+<p><strong>假言三断论:</strong> $P \rightarrow Q, Q \rightarrow R \Rightarrow P \rightarrow R$</p>
+<h2 id="3-4-归结演绎推理"><a href="#3-4-归结演绎推理" class="headerlink" title="3.4 | 归结演绎推理"></a>3.4 | 归结演绎推理</h2><p>需要证明$P \rightarrow Q$即$\lnot P \lor Q$的永真性, 根据反证法, 只需要证明其否定$P \land \lnot Q$的不满足性即可</p>
+<p><strong>子句</strong>的定义:</p>
 <blockquote>
-<p> （到目前为止，编译器与解释器可以一致） </p>
+<p>任何文字的析取式称为子句($A \lor B$)</p>
 </blockquote>
+<p><strong>子句集</strong>:</p>
+<script type="math/tex; mode=display">
+S = {\{C_1, C_2, C_3, \ldots\}}</script><h3 id="将谓词公式化为子句集的步骤"><a href="#将谓词公式化为子句集的步骤" class="headerlink" title="将谓词公式化为子句集的步骤"></a>将谓词公式化为子句集的步骤</h3><ol>
+<li><p>消去$\rightarrow$</p>
+</li>
+<li><p>将$\lnot$移动到紧靠谓词的位置上</p>
+</li>
+<li>重命名变元使得不同约束变元名字不同</li>
+<li>消去$\exists$<ul>
+<li>若$\exists$不在$\forall$的辖域内, 用常量替换变元即$a/x$</li>
+<li>若$\exists{y}$在$\forall{x}$的辖域内, 用skolem函数$f(x_1, x_2, \dots)$替换变元即$f(x)/y$</li>
+</ul>
+</li>
+<li>消去$\forall$化为合取范式</li>
+<li>消去$\land$得到子句集</li>
+</ol>
+<p><code>e.g.</code></p>
+<p><img src="https://youpai.roccoshi.top/20210603105501.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<p><img src="https://youpai.roccoshi.top/20210603105512.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<p><img src="https://youpai.roccoshi.top/20210603105506.png" srcset="/img/loading.gif" style="zoom: 67%;" /></p>
+<h3 id="利用归结反演的证明步骤"><a href="#利用归结反演的证明步骤" class="headerlink" title="利用归结反演的证明步骤"></a>利用归结反演的证明步骤</h3><p>设F为已知前提的公式集，Q为目标公式(结论)，用归结反演证明Q为真的步骤是：</p>
 <ol>
-<li><p><strong>中间代码优化</strong>（可选）：局部优化、循环优化、全局优化等；优化实际上是一个等价变换，变换前后的指令序列完成同样的功能，但在占用的空间上和程序执行的时间上都更省、更有效。</p>
+<li><p>否定Q，得到¬Q；</p>
 </li>
-<li><p><strong>目标代码生成</strong>：不同形式－汇编、可重定位、内存形式;</p>
+<li><p>把¬Q并入到公式集F中，得到{F, ¬Q};</p>
 </li>
-<li><p><strong>符号表管理</strong>：记录符号信息并合理组织，便于各阶段查找、操作等；</p>
+<li><p>把公式集{F, ¬Q}化为子句集S；</p>
 </li>
-<li><p><strong>出错处理</strong>：错误的种类－词法错、语法错、静态语义错、动态语义错。</p>
+<li><p>应用归结原理对子句集S中的子句进行归结，并把每次归结得到的归结式都并入S中。如此反复进行，若出现了空子句，则停止归结，此时就证明了Q为真。</p>
 </li>
 </ol>
-<h3 id="1-3-部分概念解释"><a href="#1-3-部分概念解释" class="headerlink" title="1.3 | 部分概念解释"></a>1.3 | 部分概念解释</h3><h4 id="1-3-1-前端和后端"><a href="#1-3-1-前端和后端" class="headerlink" title="1.3.1 | 前端和后端"></a>1.3.1 | 前端和后端</h4><ul>
-<li><p><strong>前端</strong>指词法分析, 语法分析和语义分析, 中间代码生成部分</p>
+<h3 id="利用归结原理求取问题的答案"><a href="#利用归结原理求取问题的答案" class="headerlink" title="利用归结原理求取问题的答案"></a>利用归结原理求取问题的答案</h3><ol>
+<li><p>把已知前提用谓词公式表示出来，并且化为相应的子句集。设该子句集的名字为S。</p>
 </li>
-<li><p><strong>后端</strong>指代码优化和目标代码生成部分</p>
+<li><p>把<strong>待求解的问题也用谓词公式表示出来，然后把它否定并与谓词Answer构成析取式</strong>。Answer是一个为了求解问题而专设的谓词。</p>
 </li>
-</ul>
-<h4 id="1-3-2-遍"><a href="#1-3-2-遍" class="headerlink" title="1.3.2 | 遍"></a>1.3.2 | 遍</h4><ul>
-<li><p>对程序<strong>完整分析一遍</strong>的工作模式称为「一遍扫描」</p>
+<li><p>把此析取式化为子句集，并且把该子句集并入到子句集S中，得到子句集S’。</p>
 </li>
-<li><p>一个编译过程可以由一遍、两遍或多遍完成。 所谓「遍」，也称作「趟」，是对源程序或其等价的中间语言程序从头到尾扫描并完成规定任务的过程。</p>
+<li><p>对S’应用归结原理进行归结。</p>
 </li>
-</ul>
-<h2 id="2-词法分析"><a href="#2-词法分析" class="headerlink" title="2 | 词法分析"></a>2 | 词法分析</h2><h3 id="2-1-术语解释"><a href="#2-1-术语解释" class="headerlink" title="2.1 | 术语解释"></a>2.1 | 术语解释</h3><ol>
-<li><strong>模式（patten）</strong>：产生和识别元素的规则 </li>
-<li><strong>记号（token）</strong>：按照某个模式（或规则）识别出的元素（一组） </li>
-<li><strong>单词（lexeme）</strong>：被识别出的元素自身的值（一个），也称为词值</li>
-<li><strong>语言:</strong> 语言L是有限字母表∑上有限长度字符串的集合。   </li>
+<li><p>若得到归结式Answer，则答案就在Answer中。</p>
+</li>
 </ol>
-<blockquote>
-<p>字母表是符号的非空有穷集合。任何语言都有自己的字母表。  </p>
-<p>例如，Pascal语言的字母表为: </p>
-<p>∑={A~Z, a~z, 0~9, +, -, *, /, &lt;, =, &gt;, :, ‘, ”, ;, ., ↑, (, ), {, }, [, ]}   </p>
+<p><code>e.g.</code></p>
+<p>例：设A,B,C三人中有人从不说真话，也有人从不说假话。某人向这三人分别提出同一个问题：谁是说谎者？A答：“B和C都是说谎者”；B答：“A和C都是说谎者”；C答：“A和B中至少有一个是说谎者”。求谁是老实人，谁是说谎者？</p>
+<p><img src="https://youpai.roccoshi.top/20210603111812.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<p><img src="https://youpai.roccoshi.top/20210603111821.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<p><img src="https://youpai.roccoshi.top/20210603111833.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<h1 id="4-不确定推理"><a href="#4-不确定推理" class="headerlink" title="4 | 不确定推理"></a>4 | 不确定推理</h1><h2 id="4-0-考题"><a href="#4-0-考题" class="headerlink" title="4.0 | 考题"></a>4.0 | 考题</h2><blockquote>
+<ol>
+<li>可信度计算</li>
+<li>CF</li>
+</ol>
 </blockquote>
-<h3 id="2-2-词法分析器的工作方式"><a href="#2-2-词法分析器的工作方式" class="headerlink" title="2.2 | 词法分析器的工作方式"></a>2.2 | 词法分析器的工作方式</h3><p>输入: 源程序</p>
-<p>输出: 记号流</p>
-<p><img src="https://youpai.roccoshi.top/20210428164852.png" srcset="/img/loading.gif" alt=""></p>
-<h3 id="2-3-正规式"><a href="#2-3-正规式" class="headerlink" title="2.3 | 正规式"></a>2.3 | 正规式</h3><p><strong>定义:</strong> </p>
-<blockquote>
-<p>定义2.2 令Σ是一个有限字母表，则Σ上的正规式r及其表示的集合L(r)递归定义如下:</p>
-<ol>
-<li><p>ε和Φ都是Σ上的正规式，它表示集合L(ε)={ε}和Φ。</p>
-</li>
-<li><p>若a是Σ上的字符，则a是正规式，它表示集合L(a)={a}。</p>
-</li>
-<li><p>若正规式r和s分别表示集合L(r)和L(s)，则</p>
-</li>
-</ol>
-<p>​    （a） r|s是正规式，表示集合L(r)∪L(s)，</p>
-<p>​    （b） rs是正规式，表示集合L(r)L(s)，</p>
-<p>​    （c） r<em>是正规式，表示集合(L(r))</em>，</p>
-<p>​    （d）(r)是正规式，表示的集合仍然是L(r)。（加括弧改变优先级、结合性）</p>
-<p>  可用正规式描述的语言称为正规语言或正规集。 </p>
-</blockquote>
-<p>正规式可以严格的规定记号的模式, 用正规式说明记号的公式为: <code>记号 = 正规式</code>, e.g. <code>id=a(a|b)*</code></p>
-<p>正规式的简化描述: 正闭包<code>r+</code>, 可缺省<code>r?</code>, 字符组<code>[abc]</code>, 非字符组<code>[^abc]</code></p>
-<p><strong>正规集:</strong> 能用正规式表示的集合</p>
-<h3 id="2-4-有限自动机"><a href="#2-4-有限自动机" class="headerlink" title="2.4 | 有限自动机"></a>2.4 | 有限自动机</h3><h4 id="2-4-1-不确定的有限自动机NFA"><a href="#2-4-1-不确定的有限自动机NFA" class="headerlink" title="2.4.1 | 不确定的有限自动机NFA"></a>2.4.1 | 不确定的有限自动机NFA</h4><p><strong>定义:</strong> </p>
-<p>NFA由五元组<code>(S，∑, move, s0, F)</code>表示</p>
-<p>其中:</p>
-<ol>
-<li><code>S</code>是有限个状态的集合</li>
-<li><code>Σ</code>是有限个输入字符的集合</li>
-<li><code>move</code>是一个状态转移关系</li>
-<li><code>s0</code>是唯一的初态</li>
-<li><code>F</code>是终态集</li>
-</ol>
-<p>NFA的特点: <strong>不确定性</strong>, 即在当前状态下对于同一个字符有不同的状态转移(move是一对多的)</p>
-<h3 id="2-4-2-确定的有限自动机DFA"><a href="#2-4-2-确定的有限自动机DFA" class="headerlink" title="2.4.2 | 确定的有限自动机DFA"></a>2.4.2 | 确定的有限自动机DFA</h3><p>DFA 是 NFA 的一个<strong>特例</strong>，其中：</p>
-<ol>
-<li>没有状态具有 ε 状态转移, 即状态转换图中没有标记 ε 的边</li>
-<li>对每个状态 s 和每个字符 a 最多有一个下一状态 。</li>
-</ol>
-<h3 id="2-5-从正规式构造词法分析器-重点"><a href="#2-5-从正规式构造词法分析器-重点" class="headerlink" title="2.5 | 从正规式构造词法分析器(重点)"></a>2.5 | 从正规式构造词法分析器(重点)</h3><p>步骤如下: </p>
-<p>（1）用正规式对模式进行描述；</p>
-<p>（2）为每一个正规式构造NFA；</p>
-<p>（3）将构造出的NFA转换成等价的DFA，这一过程也被成为确定化；</p>
-<p>（4）把DFA化为最简形式，这一过程也被成为最小化；</p>
-<p>（5）从简化后的DFA构造词法分析器。</p>
-<h4 id="2-5-1-正规式构造NFA-Thompson-算法"><a href="#2-5-1-正规式构造NFA-Thompson-算法" class="headerlink" title="2.5.1 | 正规式构造NFA(Thompson 算法)"></a>2.5.1 | 正规式构造NFA(Thompson 算法)</h4><p>按如下关系将正规式转化为NFA:</p>
-<p>​    <img src="https://youpai.roccoshi.top/20210428171952.png" srcset="/img/loading.gif" alt=""></p>
-<h4 id="2-5-2-将构造出的NFA转换成等价的DFA-确定化"><a href="#2-5-2-将构造出的NFA转换成等价的DFA-确定化" class="headerlink" title="2.5.2 | 将构造出的NFA转换成等价的DFA(确定化)"></a>2.5.2 | 将构造出的NFA转换成等价的DFA(确定化)</h4><p>不断求<code>ε-闭包(smove(T, a));</code></p>
-<p>其中:</p>
-<ul>
-<li><p><code>ε-闭包(I)</code>表示从状态<code>I</code>出发, 不经任何字符到达的状态全体</p>
-</li>
-<li><p><code>smove(T, a)</code>表示从状态<code>S</code>出发, 标记为a的下一状态全体</p>
-</li>
-</ul>
-<h4 id="2-5-3-最小化DFA"><a href="#2-5-3-最小化DFA" class="headerlink" title="2.5.3 | 最小化DFA"></a>2.5.3 | 最小化DFA</h4><ul>
-<li><p>先将状态集划分为终态和非终态</p>
-</li>
-<li><p>利用可区分的概念, 反复划分集合, 直到不能再分裂</p>
-</li>
-</ul>
-<h2 id="3-题目"><a href="#3-题目" class="headerlink" title="3 | 题目"></a>3 | 题目</h2><p><a target="_blank" rel="noopener" href="https://youpai.roccoshi.top/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E5%BC%95%E8%A8%80.mhtml">「编译原理-引言 课后作业」</a></p>
-<p><a target="_blank" rel="noopener" href="https://youpai.roccoshi.top/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90.mhtml">编译原理-词法分析 课后作业</a></p>
-<p>考试真题(填空):</p>
-<ul>
-<li><code>符号表管理</code>和<code>出错处理</code>是编译程序各阶段都涉及到的工作</li>
-<li>在编译器过程中, 实现语言关键字大小写不敏感的阶段是<code>词法分析</code>, 分析语言结构的阶段是<code>语法分析</code></li>
-<li>不确定有限自动机中的有限是指<code>状态</code>的数量是有限的</li>
-<li>Lex和Yacc是用于生成<code>词法分析器</code>和<code>语法分析器</code>的工具</li>
-<li>描述含010的01串的正规式是<code>(0|1)*010(0|1)*</code></li>
-<li>词法分析器的输入是<code>源程序</code>, 输出是<code>识别的记号流</code></li>
-</ul>
-<p>考试真题(简答):</p>
-<ul>
-<li><strong>为什么在一般情况下用正规式而不用CFG来描述语言的词法?</strong></li>
-</ul>
-<p>答: </p>
-<ol>
-<li>词法规则简单, 用正规式描述已足够</li>
-<li>正规式的表示比CFG更直观, 简洁, 易于理解</li>
-<li>有限自动机的构造比下推自动机简单, 且分析效率高</li>
-<li>区分词法和语法, 为编译器的前端模块的划分提供方便</li>
-</ol>
-<ul>
-<li><strong>解释什么是编译器的扫描遍数</strong></li>
-</ul>
-<p>答:</p>
-<p>编译器工作的每个阶段对以某种形式表示的程序进行一遍分析, 每个阶段将程序完整分析一遍的工作模式称为一边扫描</p>
-<ul>
-<li><strong>简述DFA和NFA有何区别</strong></li>
-</ul>
-<p>答:</p>
-<p>DFA与NFA的区别表现为两个方面：一是NFA可以有ε转移，而DFA没有有ε转移。另一方面，DFA的状态转移move是从S×∑到S，而NFA的状态转移是从S×∑到S的幂集，即move将产生一个状态集合（可能为空集），而不是单个状态。</p>
-<p>考试真题(计算):</p>
-<ul>
-<li><strong>已知正规式<code>01(0|1)*10</code>描述的正规集, 试给出: </strong><ul>
-<li><strong>识别该正规集的NFA</strong></li>
-<li><strong>识别该正规集的DFA</strong></li>
-<li><strong>最小化的DFA</strong></li>
-</ul>
-</li>
-</ul>
-<p>答: </p>
-<ul>
-<li><img src="https://youpai.roccoshi.top/20210428185709.png" srcset="/img/loading.gif" alt=""></li>
-<li><img src="https://youpai.roccoshi.top/20210428185723.png" srcset="/img/loading.gif" alt=""></li>
-<li><img src="https://youpai.roccoshi.top/20210428185733.png" srcset="/img/loading.gif" alt=""></li>
-</ul>
-
+<h2 id="4-1-概率论基础公式"><a href="#4-1-概率论基础公式" class="headerlink" title="4.1 | 概率论基础公式"></a>4.1 | 概率论基础公式</h2><p><strong>先验概率和后验概率:</strong></p>
+<p>先验概率: $P(A)$</p>
+<p>后验概率: $P(A|B)$</p>
+<p><strong>条件概率:</strong></p>
+<script type="math/tex; mode=display">
+P\left( A|B \right) =\frac{P\left( AB \right)}{P\left( B \right)}</script><p><strong>全概率公式:</strong></p>
+<p>对任何事件B有下式成立:</p>
+<script type="math/tex; mode=display">
+P\left( B \right)=\sum_{i=1}^n{P\left( A_i \right) \times P\left( B|A_i \right)}</script><p><strong>贝叶斯公式:</strong></p>
+<p>若事件$A_i$满足全概率公式的条件, 则对任何事件B有下式成立</p>
+<script type="math/tex; mode=display">
+P\left( A_i|B \right) =\frac{P\left( B|A_i \right) P\left( A_i \right)}{P\left( B \right)}</script><h2 id="4-2-主观贝叶斯方法"><a href="#4-2-主观贝叶斯方法" class="headerlink" title="4.2 | 主观贝叶斯方法"></a>4.2 | 主观贝叶斯方法</h2><p><strong>形式:</strong></p>
+<script type="math/tex; mode=display">
+IF\,\,E\,\,THEN\,\,\left( LS, LN \right) \,\,H</script><p>其中$E$表示规则前提条件, $H$是结论</p>
+<p>$LS$是规则的<strong>充分性度量</strong>, 定义为:</p>
+<script type="math/tex; mode=display">
+LS=\frac{P\left( E|H \right)}{P\left( E|\lnot H \right)}</script><p>$LS$指出了$E$对$H$的支持程度</p>
+<p>LN是规则的<strong>必要性度量</strong>, 定义为:</p>
+<script type="math/tex; mode=display">
+LN=\frac{P\left( \lnot E|H \right)}{P\left( \lnot E|\lnot H \right)}</script><p>$LN$指出了$\lnot E$对$H$的支持程度</p>
+<p><strong>几率函数:</strong></p>
+<p>几率函数$O(X)$</p>
+<script type="math/tex; mode=display">
+O(X)=\frac{P(X)}{P(\lnot X)}=\frac{P(X)}{1-P(X)}</script><p>引入几率函数后得到:</p>
+<script type="math/tex; mode=display">
+O(H|E)=LS \times O(H)</script><script type="math/tex; mode=display">
+O(H|\lnot E)=LN \times O(H)</script><p><strong>动态强度:</strong></p>
+<p>由于证据E在实际应用中不可直接观测, 故用用户根据<strong>观察S</strong>给出$P(E|S)$, 即动态强度, 用$P(E|S)$描述证据E的不确定性</p>
+<h2 id="4-3-可信度方法"><a href="#4-3-可信度方法" class="headerlink" title="4.3 | 可信度方法"></a>4.3 | 可信度方法</h2><p>形式:</p>
+<script type="math/tex; mode=display">
+IF\,\,E\,\,THEN\,\,H\,\, (CF(H,E))</script><p>$CF(H,E)$指该知识的可信度, 称为可信度因子/静态强度, 范围在<code>-1~1</code></p>
+<script type="math/tex; mode=display">
+CF(H,E)>0 \text{对应于} P(H|E)>P(H) \\
+CF(H,E)<0 \text{对应于} P(H|E)<P(H) \\
+CF(H,E)=0 \text{对应于} P(H|E)=P(H)</script><p>$CF(H,E)$定义为:</p>
+<script type="math/tex; mode=display">
+CF(H,E) = MB(H,E) - MD(H,E)</script><p>其中MB为信任增长度, MD为不信任增长度</p>
+<h3 id="不确定性的传递算法"><a href="#不确定性的传递算法" class="headerlink" title="不确定性的传递算法"></a>不确定性的传递算法</h3><p>在$IF\,\,E\,\,THEN\,\,H\,\, (CF(H,E))$中</p>
+<p>结论$H$的可信度由下式计算</p>
+<script type="math/tex; mode=display">
+CF(H) = CF(H,E) \times max \{ 0, CF(E) \}</script><h2 id="4-4-带阈值和权值的可信度方法"><a href="#4-4-带阈值和权值的可信度方法" class="headerlink" title="4.4 | 带阈值和权值的可信度方法"></a>4.4 | 带阈值和权值的可信度方法</h2><h1 id="5-模糊集"><a href="#5-模糊集" class="headerlink" title="5 | 模糊集"></a>5 | 模糊集</h1>
             </div>
             <hr>
             <div>
@@ -437,7 +400,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+                      <a class="hover-with-bg" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA/">人工智能导论</a>
                     
                   </div>
                 
@@ -445,7 +408,11 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+                      <a class="hover-with-bg" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%A4%A7%E4%B8%89%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/">大三期末复习</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%A5%BF%E7%94%B5/">西电</a>
                     
                   </div>
                 
@@ -458,9 +425,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%80%BB%E5%A4%8D%E4%B9%A0/">
+                      <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%80%BB%E5%A4%8D%E4%B9%A0/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">「人工智能导论」期末复习</span>
+                        <span class="hidden-mobile">「软件工程」期末复习</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -468,8 +435,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8Dflex%E5%85%A5%E9%97%A8/">
-                        <span class="hidden-mobile">「编译原理」flex入门</span>
+                      <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8D%E4%B8%AD%E6%9C%9F%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/">
+                        <span class="hidden-mobile">「编译原理」中期笔记整理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -495,7 +462,7 @@
           repo: 'Lincest.github.io',
           owner: 'Lincest',
           admin: ["Lincest"],
-          id: '1a63de00ed442f55423439e584976b5d',
+          id: '091f7c788624c2584ea95907a442ce26',
           language: 'zh-CN',
           labels: ["Gitalk"],
           perPage: 10,
