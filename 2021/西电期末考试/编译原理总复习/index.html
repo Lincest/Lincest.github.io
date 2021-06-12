@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.8k 字
+      5.3k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      41
+      61
        分钟
     </span>
   
@@ -478,6 +478,13 @@
 </li>
 </ol>
 <h1 id="3-大题总结"><a href="#3-大题总结" class="headerlink" title="3 | 大题总结"></a>3 | 大题总结</h1><p>本部分按章进行总结</p>
+<p>大题共四题, 按照往年经验, 就是</p>
+<ol>
+<li>正规式-&gt;最小化DFA</li>
+<li>LL(1)预测分析表</li>
+<li>SLR(1)分析表</li>
+<li>语法制导翻译</li>
+</ol>
 <h2 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h2><h3 id="题型1-正规式-gt-最小化DFA"><a href="#题型1-正规式-gt-最小化DFA" class="headerlink" title="题型1 | 正规式-&gt;最小化DFA"></a>题型1 | 正规式-&gt;最小化DFA</h3><p>方法步骤: </p>
 <blockquote>
 <ol>
@@ -487,16 +494,16 @@
 </ol>
 </blockquote>
 <ul>
-<li>几条基本的Thompson转换: </li>
+<li><strong>几条基本的Thompson转换:</strong> </li>
 </ul>
 <p><img src="https://youpai.roccoshi.top/20210611112638.png" srcset="/img/loading.gif" alt=""></p>
 <ul>
-<li>子集法确定化的方式: <ul>
+<li><strong>子集法确定化的方式:</strong> <ul>
 <li>首先求出<code>ε-闭包(&#123;0&#125;) = &#123;状态集合&#125;</code>并标上序号<code>A</code>作为<code>A</code>状态</li>
 <li>对于<strong>每一个</strong>状态<code>X</code>和每一个标记<code>a</code>求<code>ε-闭包(smove(X, a)) = &#123;状态集合&#125;</code>并标上序号, 如果状态集合包含终态, 则化俩圈圈, 不包含终态就画一个圈圈</li>
 </ul>
 </li>
-<li>最小化DFA的方式<ul>
+<li><strong>最小化DFA的方式</strong><ul>
 <li>首先将所有状态分为包含终态的G1和不包含终态的G2</li>
 <li>对于G1和G2的每一个转移<code>move(s, a)</code>, 假设s和t都在G1中, 如果出现了move(s, a)在G2中, 而move(t, a)在G1中, 则将s和t分裂到两个集合G11和G12中</li>
 <li>直到不能再分, 最后将每一个集合作为一个状态, 构造最后的DFA就是最小化DFA</li>
@@ -519,6 +526,387 @@
 <p>初始分为G1 = {A, B, C, D} 和 G2 = {E, F, G, H}</p>
 <p>最后分裂为{A}{B}{C}{D}{E}{F}{G}{H}</p>
 <p>故原来的DFA已经为最简形式</p>
+<h2 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h2><h3 id="题型1-LL-1-文法构造预测分析表"><a href="#题型1-LL-1-文法构造预测分析表" class="headerlink" title="题型1 | LL(1)文法构造预测分析表"></a>题型1 | LL(1)文法构造预测分析表</h3><p>方法步骤: </p>
+<blockquote>
+<ol>
+<li>首先消除左递归和左因子, 构造原来文法G的等价的LL(1)文法G’</li>
+<li>求每一个非终结符的FIRST集合和FOLLOW集合</li>
+<li>画出预测分析表M, 第一列是所有非终结符, 第二列是所有终结符 + <code>#</code></li>
+<li>对于每一个产生式<code>A-&gt;α</code>, 对于每一个FIRST(α) = a, 在M[A, a]上填上这个产生式, 如果FIRST(α) = ε, 则找到FOLLOW(A) = b, 在所有M[A, b]上填上产生式<code>A-&gt;ε</code></li>
+</ol>
+</blockquote>
+<ul>
+<li><p><strong>消除左递归和左因子的方式</strong></p>
+<p>消除左递归先消除间接左递归(展开), 再消除直接左递归</p>
+<p>方法见下面例子</p>
+<p>消除左因子就是提出所有的左因子, 再增加一个产生式</p>
+</li>
+<li><p><strong>求FIRST集合的方式</strong></p>
+<ul>
+<li><p>对于产生式<code>A-&gt;a...</code>加入a到FIRST(A)</p>
+</li>
+<li><p>对于产生式<code>A-&gt;BCDE..</code>首先加入FIRST(B)到FIRST(A), 然后若FIRST(B)包含ε, 就加入FIRST(C)….</p>
+</li>
+</ul>
+</li>
+<li><p><strong>求FOLLOW集合的方式</strong></p>
+<ul>
+<li>首先加入<code>#</code>到FOLLOW(S) (S为文法开始符号)</li>
+<li>对于产生式<code>A-&gt;..Ba..</code>将a加入FOLLOW(B)</li>
+<li>对于产生式<code>A-&gt;..BC..</code>将FIRST(C)除了ε外的全体加入FOLLOW(B)</li>
+<li>对于产生式<code>A-&gt;..B</code>将FOLLOW(A)全体加入FOLLOW(B)</li>
+<li>对于产生式<code>A-&gt;..BC 且ε∈FIRST(C)</code>FOLLOW(A)全体加入FOLLOW(B)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>注意FIRST集合中包含ε, FOLLOW集合中不包含ε, FOLLOW集中首先要加上<code>#</code>, 构造M[A, a]时是对于每一个<code>A-&gt;α</code>中的FIRST(α)而不是FIRST(A)</p>
+</blockquote>
+<p><code>e.g.</code></p>
+<p><img src="https://youpai.roccoshi.top/20210612125446.png" srcset="/img/loading.gif" alt=""></p>
+<p>(1) 发现A中有左递归, 消除得LL(1)文法</p>
+<p><img src="https://youpai.roccoshi.top/20210612125900.png" srcset="/img/loading.gif" alt=""></p>
+<p>(2) 先求FIRST集合</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">FIRST(S) = &#123;a&#125;<br>FIRST(A) = &#123;b&#125;<br>FIRST(A&#x27;) = &#123;b, ε&#125;<br>FIRST(B) = &#123;d&#125;<br></code></pre></td></tr></table></figure>
+<p>再求FOLLOW集合</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">FIRST(S) = &#123;#&#125;<br>FIRST(A) = &#123;d&#125;<br>FIRST(A&#x27;) = &#123;d&#125;<br>FIRST(B) = &#123;e&#125;<br></code></pre></td></tr></table></figure>
+<p>(3) 预测分析表构造</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs txt">对于S:<br>FIRST(aABe) = a<br>对于A:<br>FIRST(bA&#x27;) = b<br>对于A&#x27;:<br>FIRST(bcA&#x27;) = b<br>FOLLOW(A&#x27;) = d<br>对于B:<br>FIRST(d) = d<br></code></pre></td></tr></table></figure>
+<p>得到如下预测分析表:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+<th>e</th>
+<th>#</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S</td>
+<td>aABe</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A</td>
+<td></td>
+<td>bA’</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A’</td>
+<td></td>
+<td>bcA’</td>
+<td></td>
+<td>ε</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>B</td>
+<td></td>
+<td></td>
+<td></td>
+<td>d</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="题型2-LR-0-分析表和SLR-1-分析表"><a href="#题型2-LR-0-分析表和SLR-1-分析表" class="headerlink" title="题型2 | LR(0)分析表和SLR(1)分析表"></a>题型2 | LR(0)分析表和SLR(1)分析表</h3><p><img src="https://youpai.roccoshi.top/20210612131706.png" srcset="/img/loading.gif" alt=""></p>
+<p>方法步骤:</p>
+<blockquote>
+<ol>
+<li>写出拓广文法即在原文法中加入<code>S&#39;-&gt;S</code></li>
+<li>写出识别活前缀的DFA(I0开始标号)</li>
+<li>判断DFA中是否有移进-归约冲突/归约-归约冲突<ul>
+<li>如果没有, 文法为LR(0)文法, 直接构造LR(0)分析表</li>
+<li>如果有, 判断移进项{a1, a2…}, 每一个归约项的FOLLOW集是否相交, 如果不相交就是SLR(1)文法, 构造SLR(1)分析表</li>
+</ul>
+</li>
+<li>SLR(1)分析表的样子: 第一列为所有的DFA状态序号0-n, 第一行分为Action和Goto, Action中包括所有终结符和<code>#</code>, Goto包含所有非终结符</li>
+<li>SLR(1)分析表的四种情况:<ol>
+<li><code>A-&gt;α.aβ</code>: 将Action[k, a] = sj (j为下一状态序号)</li>
+<li><code>A-&gt;α.</code>: 将Action[k, a] = rj (a为<strong>属于FOLLOW(A)的终结符</strong>, j为归约的产生式标号) (注意这里是和LR(0)分析表的唯一区别, LR(0)分析表这里是对Action的所有终结符均记Action[k, a] = rj)</li>
+<li><code>S&#39;-&gt;S</code>: 将Action[k, #] = acc</li>
+<li><code>A-&gt;α.Bβ</code>: 将Goto[k, B] = j (j为下一状态序号)</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<p>注意:</p>
+<ul>
+<li>当某个状态的下一状态推出来就是已存在的状态的子集时, 应将边指回到已存在的那个状态</li>
+<li>Z’不出现在GOTO表中</li>
+</ul>
+<p><code>e.g.</code></p>
+<p><img src="https://youpai.roccoshi.top/20210612132234.png" srcset="/img/loading.gif" alt=""></p>
+<p>(1)</p>
+<p>拓广文法并给每一个产生式标号:</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs txt">0) Z&#x27; -&gt; Z<br>1) Z -&gt; C S<br>2) C -&gt; if E then<br>3) S -&gt; A = E<br>4) E -&gt; E V A<br>5) E -&gt; A<br>6) A -&gt; i<br></code></pre></td></tr></table></figure>
+<p>识别活前缀的DFA</p>
+<p><img src="https://youpai.roccoshi.top/20210612133818.png" srcset="/img/loading.gif" alt=""></p>
+<p>注意到I8状态就存在移进-归约冲突, 故需要构造SLR(1)分析表</p>
+<p>(2)构造SLR(1)分析表</p>
+<p>首先需要求所有非终结符的FOLLOW集, 又有求FOLLOW集需要先求FIRST集(Z’不用求, Z’也不出现在SLR(1)分析表中)</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs txt">FIRST(Z) = &#123;if&#125;<br>FIRST(S) = &#123;i&#125;<br>FIRST(C) = &#123;if&#125;<br>FIRST(A) = &#123;i&#125;<br>FIRST(E) = &#123;i&#125;<br>-------------------------------------<br>FOLLOW(Z) = &#123;#&#125;<br>FOLLOW(S) = &#123;#&#125;<br>FOLLOW(C) = &#123;i&#125;<br>FOLLOW(A) = &#123;=, then, V, #&#125;<br>FOLLOW(E) = &#123;then, V, #&#125;<br></code></pre></td></tr></table></figure>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">if</th>
+<th style="text-align:center">then</th>
+<th style="text-align:center">=</th>
+<th style="text-align:center">V</th>
+<th style="text-align:center">i</th>
+<th style="text-align:center">#</th>
+<th></th>
+<th style="text-align:center">Z</th>
+<th style="text-align:center">C</th>
+<th style="text-align:center">S</th>
+<th style="text-align:center">A</th>
+<th style="text-align:center">E</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">s3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td></td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">acc</td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s11</td>
+<td style="text-align:center"></td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s11</td>
+<td style="text-align:center"></td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">12</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r1</td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s7</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r5</td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s11</td>
+<td style="text-align:center"></td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">8</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s9</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r3</td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s11</td>
+<td style="text-align:center"></td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">10</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r4</td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r6</td>
+<td style="text-align:center">r6</td>
+<td style="text-align:center">r6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r6</td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">12</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s13</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">s9</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">13</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">r2</td>
+<td style="text-align:center"></td>
+<td></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="语法制导翻译"><a href="#语法制导翻译" class="headerlink" title="语法制导翻译"></a>语法制导翻译</h2><h3 id="题型1-将语句翻译成三地址码-布尔表达式采用短路计算"><a href="#题型1-将语句翻译成三地址码-布尔表达式采用短路计算" class="headerlink" title="题型1 | 将语句翻译成三地址码, 布尔表达式采用短路计算"></a>题型1 | 将语句翻译成三地址码, 布尔表达式采用短路计算</h3><p>两年都有这道题</p>
+<p>感觉没啥好说的…就注意一个整型和实型的运算, 加入a是整型(int), b是实型(real), a+b流程如下:</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs txt">t1 = itr a <br>t2 = t1 + b<br>a = rti a<br></code></pre></td></tr></table></figure>
+<p>即先把int-&gt;real, 计算后再把结果real-&gt;int</p>
+<p><code>e.g.</code></p>
+<ol>
+<li>将语句<code>if a &lt; b or b &gt; d then while a &gt; 3 and b &lt; 4 do a := a + b;</code>翻译成三地址码, 其中<code>a, c</code>为整型, <code>b, d</code>为实型, 布尔表达式采用短路计算</li>
+</ol>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs txt">1. if a &lt; c goto 5<br>2. goto 3<br>3. if b &gt; d goto 5<br>4. goto -<br>5. if a &gt; 3 goto 7<br>6. goto -<br>7. if b &lt; 4 goto 9<br>8. goto -<br>9. t1 = itr a<br>10. t2 = t1 + b<br>11. a = rti t2<br>12. goto 5<br></code></pre></td></tr></table></figure>
+<ol>
+<li>将语句<code>while a &lt; b or not c &lt; d do if b &lt; a then a := b * d else c := a + b</code>, 其中a, b为整型, c, d为实型, 布尔表达式采用短路计算</li>
+</ol>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs txt">1. if a &lt; b goto 5<br>2. goto 3<br>3. if c &lt; d goto -<br>4. goto 5<br>5. if b &lt; a goto 7<br>6. goto 11<br>7. t1 = itr b<br>8. t2 = t1 * d<br>9. a = rti t2<br>10. goto 1<br>11. t3 = a + b<br>12. c = itr t3<br>13. goto 1<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
