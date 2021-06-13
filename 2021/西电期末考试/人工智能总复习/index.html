@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.8k 字
+      2.1k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      21
+      24
        分钟
     </span>
   
@@ -381,8 +381,49 @@ LN=\frac{P\left( \lnot E|H \right)}{P\left( \lnot E|\lnot H \right)}</script><p>
 O(X)=\frac{P(X)}{P(\lnot X)}=\frac{P(X)}{1-P(X)}</script><p>引入几率函数后得到:</p>
 <script type="math/tex; mode=display">
 O(H|E)=LS \times O(H)</script><script type="math/tex; mode=display">
-O(H|\lnot E)=LN \times O(H)</script><p><strong>动态强度:</strong></p>
-<p>由于证据E在实际应用中不可直接观测, 故用用户根据<strong>观察S</strong>给出$P(E|S)$, 即动态强度, 用$P(E|S)$描述证据E的不确定性</p>
+O(H|\lnot E)=LN \times O(H)</script><p>可以推出如下公式:</p>
+<script type="math/tex; mode=display">
+P(H|E)=\frac{LS \times P(H)}{(LS-1) \times P(H)+1}</script><h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><blockquote>
+<p>这部分公式太多太复杂了, 往年也没见考, 把例题里面的公式背背感觉就差不多了…</p>
+</blockquote>
+<p><img src="https://youpai.roccoshi.top/20210613204058.png" srcset="/img/loading.gif" alt=""></p>
+<p>首先先推出推理网络如下:</p>
+<p><img src="https://youpai.roccoshi.top/20210613204119.png" srcset="/img/loading.gif" alt=""></p>
+<p>可知我们计算最后的P(H2 | S1, S2), 需要提前知道:</p>
+<ol>
+<li>$P(H_1|S_1)$</li>
+<li>$P(H_1|(S_1 \text{AND} S_2))$</li>
+<li>$P(H_1|S_1,S_2)$</li>
+<li>$P(H_2|S_1,S2)$</li>
+</ol>
+<p><strong>计算P(H1|S1)</strong></p>
+<p>依据得公式:</p>
+<ol>
+<li><p>EH公式即 (考试会给)</p>
+<p><img src="https://youpai.roccoshi.top/20210613204336.png" srcset="/img/loading.gif" alt=""></p>
+</li>
+<li><p>$P(H|E)=\frac{LS \times P(H)}{(LS-1) \times P(H)+1}$</p>
+</li>
+</ol>
+<p>故得到答案: </p>
+<p><img src="https://youpai.roccoshi.top/20210613204423.png" srcset="/img/loading.gif" alt=""></p>
+<p><strong>计算P(H1|S1 AND S2)</strong></p>
+<p>这里涉及到合取的证据, 方法是比较P(E1|S1)和P(E2|S2), 取最小的考虑就行, 这里P(E1|S1)  = 0.76&lt; P(E2|S2) = 0.68, 故只考虑E2对H1得影响, 即P(H1|S1 AND S2) = P(H1 | S2)</p>
+<p>接下来算法和第一个相同</p>
+<p><img src="https://youpai.roccoshi.top/20210613204614.png" srcset="/img/loading.gif" alt=""></p>
+<p><strong>计算P(H1 | S1, S2)</strong></p>
+<p>这里涉及到一个新公式…叫「结论不确定性的合成」</p>
+<p><img src="https://youpai.roccoshi.top/20210613204725.png" srcset="/img/loading.gif" alt=""></p>
+<p>故这里计算P(H1 | S1, S2), 首先得计算O(H1 | S1, S2)</p>
+<p><img src="https://youpai.roccoshi.top/20210613204758.png" srcset="/img/loading.gif" alt=""></p>
+<p>然后再根据$P(X) = \frac{O(X)}{1+O(X)}$</p>
+<p>得到<img src="https://youpai.roccoshi.top/20210613204838.png" srcset="/img/loading.gif" alt=""></p>
+<p><strong>计算P(H2|S1,S2)</strong></p>
+<p>知道了H2的前件为H1后, 我们可以直接用EH公式搞定…</p>
+<p><img src="https://youpai.roccoshi.top/20210613205003.png" srcset="/img/loading.gif" alt=""></p>
+<blockquote>
+<p>太复杂了, 计算量也很大, 千万别考啊啊啊</p>
+</blockquote>
 <h2 id="4-3-可信度方法"><a href="#4-3-可信度方法" class="headerlink" title="4.3 | 可信度方法"></a>4.3 | 可信度方法</h2><p>形式:</p>
 <script type="math/tex; mode=display">
 IF\,\,E\,\,THEN\,\,H\,\, (CF(H,E))</script><p>$CF(H,E)$指该知识的可信度, 称为可信度因子/静态强度, 范围在<code>-1~1</code></p>
