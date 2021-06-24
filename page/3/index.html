@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
-  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -17,6 +17,7 @@
   <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
   <meta name="author" content="RoccoShi">
   <meta name="keywords" content="roccoshi,shootzone">
+  
   <title>ShootZone</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
@@ -39,7 +40,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -126,13 +127,13 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
                 class="iconfont icon-search"></i>&nbsp;</a>
           </li>
         
         
           <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" href="javascript:">&nbsp;<i
+            <a class="nav-link" target="_self">&nbsp;<i
                 class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
@@ -181,18 +182,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%BA%8C)%20Numpy(%E4%B8%80)%E6%95%B0%E7%BB%84/" target="_self">
-          <img src="https://youpai.roccoshi.top/img/pythonDataScience.png" srcset="/img/loading.gif" alt="python数据科学(二) Numpy(一) 数组">
+          <img src="https://youpai.roccoshi.top/img/pythonDataScience.png" srcset="/img/loading.gif" lazyload alt="python数据科学(二) Numpy(一) 数组">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%BA%8C)%20Numpy(%E4%B8%80)%E6%95%B0%E7%BB%84/">python数据科学(二) Numpy(一) 数组</a>
+        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%BA%8C)%20Numpy(%E4%B8%80)%E6%95%B0%E7%BB%84/" target="_self">
+          python数据科学(二) Numpy(一) 数组
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%BA%8C)%20Numpy(%E4%B8%80)%E6%95%B0%E7%BB%84/">
+        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%BA%8C)%20Numpy(%E4%B8%80)%E6%95%B0%E7%BB%84/" target="_self">
           
           
           
@@ -235,18 +238,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B(%E4%B8%80)%E5%A6%82%E4%BD%95%E6%96%BD%E6%95%91%E8%8D%AF%E7%89%A9%E4%B8%AD%E6%AF%92/" target="_self">
-          <img src="https://youpai.roccoshi.top/img/20210114110203.png" srcset="/img/loading.gif" alt="数学模型(一) 如何施救药物中毒">
+          <img src="https://youpai.roccoshi.top/img/20210114110203.png" srcset="/img/loading.gif" lazyload alt="数学模型(一) 如何施救药物中毒">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B(%E4%B8%80)%E5%A6%82%E4%BD%95%E6%96%BD%E6%95%91%E8%8D%AF%E7%89%A9%E4%B8%AD%E6%AF%92/">数学模型(一) 如何施救药物中毒</a>
+        <a href="/2021/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B(%E4%B8%80)%E5%A6%82%E4%BD%95%E6%96%BD%E6%95%91%E8%8D%AF%E7%89%A9%E4%B8%AD%E6%AF%92/" target="_self">
+          数学模型(一) 如何施救药物中毒
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B(%E4%B8%80)%E5%A6%82%E4%BD%95%E6%96%BD%E6%95%91%E8%8D%AF%E7%89%A9%E4%B8%AD%E6%AF%92/">
+        <a href="/2021/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B(%E4%B8%80)%E5%A6%82%E4%BD%95%E6%96%BD%E6%95%91%E8%8D%AF%E7%89%A9%E4%B8%AD%E6%AF%92/" target="_self">
           
           
           
@@ -289,18 +294,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%80)%20JupyterNotebook/" target="_self">
-          <img src="https://youpai.roccoshi.top/img/pythonDataScience.png" srcset="/img/loading.gif" alt="python数据科学(一) Jupyter NoteBook">
+          <img src="https://youpai.roccoshi.top/img/pythonDataScience.png" srcset="/img/loading.gif" lazyload alt="python数据科学(一) Jupyter NoteBook">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%80)%20JupyterNotebook/">python数据科学(一) Jupyter NoteBook</a>
+        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%80)%20JupyterNotebook/" target="_self">
+          python数据科学(一) Jupyter NoteBook
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%80)%20JupyterNotebook/">
+        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%80)%20JupyterNotebook/" target="_self">
           
           
           
@@ -343,18 +350,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
-          <img src="https://youpai.roccoshi.top/img/20210107010122.png" srcset="/img/loading.gif" alt="基于「数据库系统概论」的数据库期末复习">
+          <img src="https://youpai.roccoshi.top/img/20210107010122.png" srcset="/img/loading.gif" lazyload alt="基于「数据库系统概论」的数据库期末复习">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E5%A4%8D%E4%B9%A0/">基于「数据库系统概论」的数据库期末复习</a>
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
+          基于「数据库系统概论」的数据库期末复习
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E5%A4%8D%E4%B9%A0/">
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
           
           
           
@@ -399,18 +408,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%AE%97%E6%B3%95%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
-          <img src="https://youpai.roccoshi.top/img/20210107001628.png" srcset="/img/loading.gif" alt="基于「算法第四版」的算法期末复习">
+          <img src="https://youpai.roccoshi.top/img/20210107001628.png" srcset="/img/loading.gif" lazyload alt="基于「算法第四版」的算法期末复习">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%AE%97%E6%B3%95%E6%80%BB%E5%A4%8D%E4%B9%A0/">基于「算法第四版」的算法期末复习</a>
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%AE%97%E6%B3%95%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
+          基于「算法第四版」的算法期末复习
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%AE%97%E6%B3%95%E6%80%BB%E5%A4%8D%E4%B9%A0/">
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%AE%97%E6%B3%95%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
           
           
             
@@ -456,15 +467,9 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span>
     </span>
   </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
-      ele.href += '#board';
-    }
-  </script>
 
 
 
@@ -543,8 +548,9 @@
   
 </footer>
 
-<!-- SCRIPTS -->
 
+  <!-- SCRIPTS -->
+  
   <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
@@ -559,7 +565,6 @@
 
 <script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
 <script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
@@ -567,7 +572,7 @@
 
 
   
-    <script  src="/js/lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -586,6 +591,10 @@
 
 
 
+  <script  src="/js/local-search.js" ></script>
+
+
+
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
@@ -600,20 +609,6 @@
       typing(title)
       
     })(window, document);
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/local-search.xml";
-      var inputArea = document.querySelector("#local-search-input");
-      inputArea.onclick = function () {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-        this.onclick = null
-      }
-    })()
   </script>
 
 
@@ -659,7 +654,6 @@
 
 <!-- 主题的启动项 保持在最底部 -->
 <script  src="/js/boot.js" ></script>
-
 
 
 </body>

@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
-  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -17,6 +17,7 @@
   <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
   <meta name="author" content="RoccoShi">
   <meta name="keywords" content="roccoshi,shootzone">
+  
   <title>ShootZone</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
@@ -39,7 +40,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -126,13 +127,13 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
                 class="iconfont icon-search"></i>&nbsp;</a>
           </li>
         
         
           <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" href="javascript:">&nbsp;<i
+            <a class="nav-link" target="_self">&nbsp;<i
                 class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
@@ -181,18 +182,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%BD%91%E7%BB%9C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
-          <img src="https://youpai.roccoshi.top/20210611142011.png" srcset="/img/loading.gif" alt="「网络程序设计」期末复习">
+          <img src="https://youpai.roccoshi.top/20210611142011.png" srcset="/img/loading.gif" lazyload alt="「网络程序设计」期末复习">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%BD%91%E7%BB%9C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%80%BB%E5%A4%8D%E4%B9%A0/">「网络程序设计」期末复习</a>
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%BD%91%E7%BB%9C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
+          「网络程序设计」期末复习
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%BD%91%E7%BB%9C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%80%BB%E5%A4%8D%E4%B9%A0/">
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%BD%91%E7%BB%9C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
           
           
           
@@ -237,18 +240,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
-          <img src="https://youpai.roccoshi.top/20210609144523.png" srcset="/img/loading.gif" alt="「编译原理」期末复习">
+          <img src="https://youpai.roccoshi.top/20210609144523.png" srcset="/img/loading.gif" lazyload alt="「编译原理」期末复习">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E6%80%BB%E5%A4%8D%E4%B9%A0/">「编译原理」期末复习</a>
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
+          「编译原理」期末复习
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E6%80%BB%E5%A4%8D%E4%B9%A0/">
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
           
           
             
@@ -295,18 +300,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
-          <img src="https://youpai.roccoshi.top/20210611185909.png" srcset="/img/loading.gif" alt="「软件工程」期末复习">
+          <img src="https://youpai.roccoshi.top/20210611185909.png" srcset="/img/loading.gif" lazyload alt="「软件工程」期末复习">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%80%BB%E5%A4%8D%E4%B9%A0/">「软件工程」期末复习</a>
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
+          「软件工程」期末复习
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%80%BB%E5%A4%8D%E4%B9%A0/">
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
           
           
             
@@ -353,18 +360,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
-          <img src="https://youpai.roccoshi.top/20210531140223.png" srcset="/img/loading.gif" alt="「人工智能导论」期末复习">
+          <img src="https://youpai.roccoshi.top/20210531140223.png" srcset="/img/loading.gif" lazyload alt="「人工智能导论」期末复习">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%80%BB%E5%A4%8D%E4%B9%A0/">「人工智能导论」期末复习</a>
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
+          「人工智能导论」期末复习
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%80%BB%E5%A4%8D%E4%B9%A0/">
+        <a href="/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%80%BB%E5%A4%8D%E4%B9%A0/" target="_self">
           
           
             
@@ -411,18 +420,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8D%E4%B8%AD%E6%9C%9F%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" target="_self">
-          <img src="https://youpai.roccoshi.top/20210428185820.png" srcset="/img/loading.gif" alt="「编译原理」中期笔记整理">
+          <img src="https://youpai.roccoshi.top/20210428185820.png" srcset="/img/loading.gif" lazyload alt="「编译原理」中期笔记整理">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8D%E4%B8%AD%E6%9C%9F%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/">「编译原理」中期笔记整理</a>
+        <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8D%E4%B8%AD%E6%9C%9F%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" target="_self">
+          「编译原理」中期笔记整理
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8D%E4%B8%AD%E6%9C%9F%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/">
+        <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8D%E4%B8%AD%E6%9C%9F%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" target="_self">
           
           
             
@@ -465,18 +476,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8Dflex%E5%85%A5%E9%97%A8/" target="_self">
-          <img src="https://youpai.roccoshi.top/20210419202640.png" srcset="/img/loading.gif" alt="「编译原理」flex入门">
+          <img src="https://youpai.roccoshi.top/20210419202640.png" srcset="/img/loading.gif" lazyload alt="「编译原理」flex入门">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8Dflex%E5%85%A5%E9%97%A8/">「编译原理」flex入门</a>
+        <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8Dflex%E5%85%A5%E9%97%A8/" target="_self">
+          「编译原理」flex入门
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8Dflex%E5%85%A5%E9%97%A8/">
+        <a href="/2021/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E3%80%8C%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E3%80%8Dflex%E5%85%A5%E9%97%A8/" target="_self">
           
           
             
@@ -521,18 +534,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_2/" target="_self">
-          <img src="https://youpai.roccoshi.top/20210323211644.png" srcset="/img/loading.gif" alt="「socket编程学习笔记 | 2 封装与多进程」">
+          <img src="https://youpai.roccoshi.top/20210323211644.png" srcset="/img/loading.gif" lazyload alt="「socket编程学习笔记 | 2 封装与多进程」">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_2/">「socket编程学习笔记 | 2 封装与多进程」</a>
+        <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_2/" target="_self">
+          「socket编程学习笔记 | 2 封装与多进程」
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_2/">
+        <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_2/" target="_self">
           
           
             
@@ -577,18 +592,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_1/" target="_self">
-          <img src="https://youpai.roccoshi.top/20210323211644.png" srcset="/img/loading.gif" alt="「socket编程学习笔记 | 1 入门」">
+          <img src="https://youpai.roccoshi.top/20210323211644.png" srcset="/img/loading.gif" lazyload alt="「socket编程学习笔记 | 1 入门」">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_1/">「socket编程学习笔记 | 1 入门」</a>
+        <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_1/" target="_self">
+          「socket编程学习笔记 | 1 入门」
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_1/">
+        <a href="/2021/Socket%E7%BC%96%E7%A8%8B/socket%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0_1/" target="_self">
           
           
             
@@ -633,18 +650,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/leetcode/%E4%BA%8C%E5%8F%89%E6%A0%91/" target="_self">
-          <img src="https://youpai.roccoshi.top/img/20210305101816.png" srcset="/img/loading.gif" alt="「leetcode刷题」二叉树">
+          <img src="https://youpai.roccoshi.top/img/20210305101816.png" srcset="/img/loading.gif" lazyload alt="「leetcode刷题」二叉树">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/leetcode/%E4%BA%8C%E5%8F%89%E6%A0%91/">「leetcode刷题」二叉树</a>
+        <a href="/2021/leetcode/%E4%BA%8C%E5%8F%89%E6%A0%91/" target="_self">
+          「leetcode刷题」二叉树
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/leetcode/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+        <a href="/2021/leetcode/%E4%BA%8C%E5%8F%89%E6%A0%91/" target="_self">
           
           
             
@@ -674,9 +693,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
-            
               <a href="/tags/leetcode/">leetcode</a>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
             
           </div>
         
@@ -689,18 +708,20 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E5%85%AB)%20matplotlib%E5%9B%BE%E4%BE%8B%E9%A3%8E%E6%A0%BC%E4%B8%8E%E9%85%8D%E8%89%B2%E6%96%B9%E6%A1%88/" target="_self">
-          <img src="https://youpai.roccoshi.top/img/pythonDataScience.png" srcset="/img/loading.gif" alt="python数据科学(八) matplotlib图例风格与配色方案">
+          <img src="https://youpai.roccoshi.top/img/pythonDataScience.png" srcset="/img/loading.gif" lazyload alt="python数据科学(八) matplotlib图例风格与配色方案">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E5%85%AB)%20matplotlib%E5%9B%BE%E4%BE%8B%E9%A3%8E%E6%A0%BC%E4%B8%8E%E9%85%8D%E8%89%B2%E6%96%B9%E6%A1%88/">python数据科学(八) matplotlib图例风格与配色方案</a>
+        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E5%85%AB)%20matplotlib%E5%9B%BE%E4%BE%8B%E9%A3%8E%E6%A0%BC%E4%B8%8E%E9%85%8D%E8%89%B2%E6%96%B9%E6%A1%88/" target="_self">
+          python数据科学(八) matplotlib图例风格与配色方案
+        </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E5%85%AB)%20matplotlib%E5%9B%BE%E4%BE%8B%E9%A3%8E%E6%A0%BC%E4%B8%8E%E9%85%8D%E8%89%B2%E6%96%B9%E6%A1%88/">
+        <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E5%85%AB)%20matplotlib%E5%9B%BE%E4%BE%8B%E9%A3%8E%E6%A0%BC%E4%B8%8E%E9%85%8D%E8%89%B2%E6%96%B9%E6%A1%88/" target="_self">
           
           
           
@@ -742,15 +763,9 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
-  
-  <script>
-    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
-      ele.href += '#board';
-    }
-  </script>
 
 
 
@@ -829,8 +844,9 @@
   
 </footer>
 
-<!-- SCRIPTS -->
 
+  <!-- SCRIPTS -->
+  
   <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
@@ -845,7 +861,6 @@
 
 <script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
 <script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
@@ -853,7 +868,7 @@
 
 
   
-    <script  src="/js/lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -872,6 +887,10 @@
 
 
 
+  <script  src="/js/local-search.js" ></script>
+
+
+
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
@@ -886,20 +905,6 @@
       typing(title)
       
     })(window, document);
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/local-search.xml";
-      var inputArea = document.querySelector("#local-search-input");
-      inputArea.onclick = function () {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-        this.onclick = null
-      }
-    })()
   </script>
 
 
@@ -945,7 +950,6 @@
 
 <!-- 主题的启动项 保持在最底部 -->
 <script  src="/js/boot.js" ></script>
-
 
 
 </body>

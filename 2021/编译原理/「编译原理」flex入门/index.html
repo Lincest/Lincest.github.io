@@ -8,15 +8,16 @@
 <head>
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
-  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
+  <meta name="description" content="编译原理一定要好好学">
   <meta name="author" content="RoccoShi">
   <meta name="keywords" content="roccoshi,shootzone">
+  
   <title>「编译原理」flex入门 - ShootZone</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
@@ -55,7 +56,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -142,13 +143,13 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
                 class="iconfont icon-search"></i>&nbsp;</a>
           </li>
         
         
           <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" href="javascript:">&nbsp;<i
+            <a class="nav-link" target="_self">&nbsp;<i
                 class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
@@ -250,7 +251,7 @@
 <h2 id="2-lex的语法"><a href="#2-lex的语法" class="headerlink" title="2 | lex的语法"></a>2 | lex的语法</h2><blockquote>
 <p>from老师的ppt</p>
 </blockquote>
-<p><img src="https://youpai.roccoshi.top/20210419152053.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/20210419152053.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>简而言之: </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs flex">&#123;definitions&#125;           &#x2F;&#x2F; 定义部分<br>%%<br>&#123;rules&#125;                 &#x2F;&#x2F; 规则部分<br>%%<br>&#123;user subroutines&#125;      &#x2F;&#x2F; 用户自定义代码部分<br></code></pre></td></tr></table></figure>
 <h3 id="2-1-definitions-辅助定义部分"><a href="#2-1-definitions-辅助定义部分" class="headerlink" title="2.1 | definitions - 辅助定义部分"></a>2.1 | definitions - 辅助定义部分</h3><p>辅助定义部分实际上就是给某些后面可能经常用到的正则表达式取一个别名, 从而简化词法规则的书写</p>
@@ -290,7 +291,7 @@
 <h2 id="3-例子"><a href="#3-例子" class="headerlink" title="3 | 例子"></a>3 | 例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs flex">&#x2F;* C声明 *&#x2F;<br>%option noyywrap<br>%&#123;<br>#define ID 0<br>#define NUMBER 1<br>#define CREATE 2<br>#include &lt;bits&#x2F;stdc++.h&gt;<br>using namespace std;<br>%&#125;<br>&#x2F;* 辅助定义正规式 *&#x2F;<br>char	[a-zA-Z]<br>digit	[0-9]<br>digits	&#123;digit&#125;+<br>optional_fraction	(&quot;.&quot;&#123;digits&#125;)?<br>optional_exponent	(E[+-]?&#123;digits&#125;)?<br>create create<br>&#x2F;* 规则部分 *&#x2F;<br>%%<br>&#123;create&#125; &#123; <br>    printf(&quot;识别CREATE&quot;); <br>    return CREATE;<br>&#125;<br>									<br>&#123;char&#125;(&#123;char&#125;|&#123;digit&#125;)*	&#123; <br>    printf(&quot;识别标识符%s：长度为%d\n&quot;, yytext, yyleng);<br>    return ID;<br>&#125;<br><br>&#123;digits&#125;&#123;optional_fraction&#125;&#123;optional_exponent&#125; &#123;<br>    printf(&quot;识别数字%s：长度为%d\n&quot;, yytext, yyleng);<br>    return NUMBER;<br>&#125;<br>%%<br>&#x2F;* 用户自定义代码部分 *&#x2F;<br>int main(void)<br>&#123;<br>	printf(&quot;词法分析成功，返回记号类别为%d\n&quot;, yylex());<br>	return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="vscode运行"><a href="#vscode运行" class="headerlink" title="vscode运行"></a>vscode运行</h3><p>为了简化编译运行过程, 我使用code-runner插件, 将win_flex的输出和g++的编译运行写在一起, <code>settings.json</code>配置如下: </p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json">&quot;code-runner.executorMapByGlob&quot;: &#123;<br>       &quot;*.l&quot;: &quot;cd $dir &amp;&amp; win_flex --wincompat -o $fileName.cpp $fileName &amp;&amp; g++ $fileName.cpp -o $fileNameWithoutExt &amp;&amp; $dir$fileNameWithoutExt&quot;,<br>   &#125;,<br></code></pre></td></tr></table></figure>
-<p><img src="https://youpai.roccoshi.top/20210419161901.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/20210419161901.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>也可以写一个简单的批处理<code>bat</code>脚本编译运行</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json">cd %cd%<br>win_flex --wincompat -o mylexer.cpp mylexer.l &amp;&amp; g++ mylexer.cpp -o mylexer &amp;&amp; mylexer.exe<br>pause<br></code></pre></td></tr></table></figure>
 <h2 id="addtion-附录"><a href="#addtion-附录" class="headerlink" title="addtion | 附录"></a>addtion | 附录</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>南京大学词法分析和语法分析课件: <a target="_blank" rel="noopener" href="https://cs.nju.edu.cn/daixinyu/1006.pdf">https://cs.nju.edu.cn/daixinyu/1006.pdf</a>
@@ -323,7 +324,11 @@
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
               
               
                 <div class="post-prevnext">
@@ -353,29 +358,23 @@
 
             
               <!-- Comments -->
-              <article class="comments" id="comments">
+              <article class="comments" id="comments" lazyload>
+                
+                  
                 
                 
   <div id="gitalk-container"></div>
   <script type="text/javascript">
-    Fluid.utils.waitElementVisible('gitalk-container', function() {
+    Fluid.utils.loadComments('#gitalk-container', function() {
       Fluid.utils.createCssLink('/css/gitalk.css')
-      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
-        var gitalk = new Gitalk({
-          clientID: '334a894b9dc165e734f9',
-          clientSecret: '17d676f1f917d8ec89496cb03d4428ac32b54618',
-          repo: 'Lincest.github.io',
-          owner: 'Lincest',
-          admin: ["Lincest"],
-          id: 'd9e879f8e381328f8ddf27f4703054b0',
-          language: 'zh-CN',
-          labels: ["Gitalk"],
-          perPage: 10,
-          pagerDirection: 'last',
-          createIssueManually: false,
-          distractionFreeMode: false,
-          proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
-        });
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"334a894b9dc165e734f9","clientSecret":"17d676f1f917d8ec89496cb03d4428ac32b54618","repo":"Lincest.github.io","owner":"Lincest","admin":["Lincest"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":false,"proxy":"https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token"},
+          {
+            id: 'd9e879f8e381328f8ddf27f4703054b0'
+          }
+        )
+        var gitalk = new Gitalk(options);
         gitalk.render('gitalk-container');
       });
     });
@@ -474,8 +473,9 @@
   
 </footer>
 
-<!-- SCRIPTS -->
 
+  <!-- SCRIPTS -->
+  
   <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
@@ -490,7 +490,6 @@
 
 <script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
 <script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
@@ -498,7 +497,7 @@
 
 
   
-    <script  src="/js/lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -523,6 +522,10 @@
 
 
 
+  <script  src="/js/local-search.js" ></script>
+
+
+
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
@@ -537,20 +540,6 @@
       typing(title)
       
     })(window, document);
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/local-search.xml";
-      var inputArea = document.querySelector("#local-search-input");
-      inputArea.onclick = function () {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-        this.onclick = null
-      }
-    })()
   </script>
 
 
@@ -635,7 +624,6 @@
 
 <!-- 主题的启动项 保持在最底部 -->
 <script  src="/js/boot.js" ></script>
-
 
 
 </body>

@@ -8,15 +8,16 @@
 <head>
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
-  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
+  <meta name="description" content="Pandas的三个基本数据结构--Series, DataFrame和Index">
   <meta name="author" content="RoccoShi">
   <meta name="keywords" content="roccoshi,shootzone">
+  
   <title>python数据科学(六) Pandas(一) Pandas基本数据结构 - ShootZone</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
@@ -55,7 +56,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -142,13 +143,13 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
                 class="iconfont icon-search"></i>&nbsp;</a>
           </li>
         
         
           <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" href="javascript:">&nbsp;<i
+            <a class="nav-link" target="_self">&nbsp;<i
                 class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
@@ -240,9 +241,9 @@
 <p>Pandas是在NumPy的基础上建立的新程序库, 提供了一种高效的DataFrame数据结构, DataFrame本质上是一种带行标签和列标签, 支持相同类型数据和缺失值的多维数组</p>
 </blockquote>
 <h2 id="1-Pandas的Series对象"><a href="#1-Pandas的Series对象" class="headerlink" title="1 | Pandas的Series对象"></a>1 | Pandas的Series对象</h2><p>Pandas的Series对象是一个带索引数据构成的一维数组, 可以一个数组创建Series对象</p>
-<p><img src="https://youpai.roccoshi.top/img/20210119160720.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210119160720.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>values和index:</p>
-<p><img src="https://youpai.roccoshi.top/img/20210119160853.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210119160853.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>和NumPy数组一样, 数据可以通过Python的中括号索引标签获取</p>
 <p>Series和NumPy数组的本质差异其实是<strong>索引</strong></p>
 <p>NumPy数组通过<strong>隐式定义</strong>的整数索引获取数值, 而Pandas的Series对象用一种<strong>显式定义</strong>的索引与数值关联</p>
@@ -262,7 +263,7 @@
 <p>可以将DataFrame看作有序排列的若干Series对象</p>
 </blockquote>
 <p>Series中一个键映射一个值, DataFrame中一个键映射一个Series</p>
-<p><img src="https://youpai.roccoshi.top/img/20210119164122.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210119164122.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h3 id="创建DataFrame对象"><a href="#创建DataFrame对象" class="headerlink" title="创建DataFrame对象"></a>创建DataFrame对象</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 通过单个Series对象创建</span><br>population = pd.Series(dict_population)<br>pd.DataFrame(population, columns = [<span class="hljs-string">&#x27;population&#x27;</span>])<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">	population</span><br><span class="hljs-string">湖南	1000</span><br><span class="hljs-string">广东	2000</span><br><span class="hljs-string">上海	10000</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 2. 通过字典列表创建, 如果有些键不存在, Pandas也会用NaN代替(not a number)</span><br>pd.DataFrame([&#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-number">2</span>&#125;, &#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;c&#x27;</span>: <span class="hljs-number">3</span>&#125;])<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">	a	b	c</span><br><span class="hljs-string">0	1	2.0	NaN</span><br><span class="hljs-string">1	2	NaN	3.0</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 3. 通过Series对象字典创建</span><br>dict_population = &#123;<span class="hljs-string">&quot;湖南&quot;</span>: <span class="hljs-number">1000</span>, <span class="hljs-string">&quot;广东&quot;</span>: <span class="hljs-number">2000</span>, <span class="hljs-string">&quot;上海&quot;</span>: <span class="hljs-number">10000</span>&#125;<br>dict_area = &#123;<span class="hljs-string">&quot;湖南&quot;</span>: <span class="hljs-string">&quot;1A&quot;</span>, <span class="hljs-string">&quot;广东&quot;</span>: <span class="hljs-string">&quot;2B&quot;</span>, <span class="hljs-string">&quot;上海&quot;</span>: <span class="hljs-string">&quot;3C&quot;</span>&#125;<br>population = pd.Series(dict_population)<br>area = pd.Series(dict_area)<br>state = pd.DataFrame(&#123;<span class="hljs-string">&#x27;population&#x27;</span>: population, <span class="hljs-string">&#x27;area&#x27;</span>: area&#125;)<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">population	area</span><br><span class="hljs-string">湖南	1000	1A</span><br><span class="hljs-string">广东	2000	2B</span><br><span class="hljs-string">上海	10000	3C</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 4. 通过NumPy二维数组创建, 如果行列不指定索引值, 那么都是整数索引</span><br>pd.DataFrame(np.random.rand(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>))<br><span class="hljs-string">&quot;&quot;&quot;	</span><br><span class="hljs-string">		0			1</span><br><span class="hljs-string">0	0.931631	0.727243</span><br><span class="hljs-string">1	0.796623	0.715634</span><br><span class="hljs-string">2	0.730584	0.020360</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>pd.DataFrame(np.random.rand(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>), columns = [<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>], index = [<span class="hljs-string">&#x27;aaa&#x27;</span>, <span class="hljs-string">&#x27;bbb&#x27;</span>])<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">		A			B			C</span><br><span class="hljs-string">aaa	0.608391	0.362048	0.865072</span><br><span class="hljs-string">bbb	0.768997	0.457158	0.885170</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 5. 通过NumPy结构化数组创建</span><br>a = np.zeros(<span class="hljs-number">3</span>, dtype=[(<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;i8&#x27;</span>), (<span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;f8&#x27;</span>)])<br>a <span class="hljs-comment"># array([(0, 0.), (0, 0.), (0, 0.)], dtype=[(&#x27;a&#x27;, &#x27;&lt;i8&#x27;), (&#x27;b&#x27;, &#x27;&lt;f8&#x27;)])</span><br>pd.DataFrame(a)<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">	a	b</span><br><span class="hljs-string">0	0	0.0</span><br><span class="hljs-string">1	0	0.0</span><br><span class="hljs-string">2	0	0.0</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
 <h2 id="3-Pandas的Index对象"><a href="#3-Pandas的Index对象" class="headerlink" title="3 | Pandas的Index对象"></a>3 | Pandas的Index对象</h2><blockquote>
 <p>可以将Pandas的Index对象看作是一个不可变数组或有序集合(实际上是一个多集, 因为index对象可能会包含重复值)</p>
@@ -270,7 +271,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">ind = pd.Index(np.arange(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>))<br>ind<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">Int64Index([1, 2, 3], dtype=&#x27;int64&#x27;)</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
 <p>Index对象和numpy数组之间的差别是: Index对象的索引是不可变的, 也就是说不能通过通常的方式进行调整</p>
 <h3 id="将Index对象看成有序集合"><a href="#将Index对象看成有序集合" class="headerlink" title="将Index对象看成有序集合"></a>将Index对象看成有序集合</h3><p>Pandas对象涉及很多集合操作, Index对象遵循python标准库的集合数据结构的很多种习惯用法, 包括并, 交, 差等</p>
-<p><img src="https://youpai.roccoshi.top/img/20210119165607.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210119165607.png" srcset="/img/loading.gif" lazyload alt=""></p>
 
             </div>
             <hr>
@@ -296,7 +297,11 @@
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
               
               
                 <div class="post-prevnext">
@@ -326,29 +331,23 @@
 
             
               <!-- Comments -->
-              <article class="comments" id="comments">
+              <article class="comments" id="comments" lazyload>
+                
+                  
                 
                 
   <div id="gitalk-container"></div>
   <script type="text/javascript">
-    Fluid.utils.waitElementVisible('gitalk-container', function() {
+    Fluid.utils.loadComments('#gitalk-container', function() {
       Fluid.utils.createCssLink('/css/gitalk.css')
-      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
-        var gitalk = new Gitalk({
-          clientID: '334a894b9dc165e734f9',
-          clientSecret: '17d676f1f917d8ec89496cb03d4428ac32b54618',
-          repo: 'Lincest.github.io',
-          owner: 'Lincest',
-          admin: ["Lincest"],
-          id: '00a42b10c4b8df434bc41e777c2b2f74',
-          language: 'zh-CN',
-          labels: ["Gitalk"],
-          perPage: 10,
-          pagerDirection: 'last',
-          createIssueManually: false,
-          distractionFreeMode: false,
-          proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
-        });
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"334a894b9dc165e734f9","clientSecret":"17d676f1f917d8ec89496cb03d4428ac32b54618","repo":"Lincest.github.io","owner":"Lincest","admin":["Lincest"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":false,"proxy":"https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token"},
+          {
+            id: '00a42b10c4b8df434bc41e777c2b2f74'
+          }
+        )
+        var gitalk = new Gitalk(options);
         gitalk.render('gitalk-container');
       });
     });
@@ -447,8 +446,9 @@
   
 </footer>
 
-<!-- SCRIPTS -->
 
+  <!-- SCRIPTS -->
+  
   <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
@@ -463,7 +463,6 @@
 
 <script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
 <script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
@@ -471,7 +470,7 @@
 
 
   
-    <script  src="/js/lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -496,6 +495,10 @@
 
 
 
+  <script  src="/js/local-search.js" ></script>
+
+
+
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
@@ -510,20 +513,6 @@
       typing(title)
       
     })(window, document);
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/local-search.xml";
-      var inputArea = document.querySelector("#local-search-input");
-      inputArea.onclick = function () {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-        this.onclick = null
-      }
-    })()
   </script>
 
 
@@ -608,7 +597,6 @@
 
 <!-- 主题的启动项 保持在最底部 -->
 <script  src="/js/boot.js" ></script>
-
 
 
 </body>

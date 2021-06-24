@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
-  <link rel="icon" type="image/png" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -17,6 +17,7 @@
   <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
   <meta name="author" content="RoccoShi">
   <meta name="keywords" content="roccoshi,shootzone">
+  
   <title>基于「数据库系统概论」的数据库期末复习 - ShootZone</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
@@ -55,7 +56,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    var CONFIG = {"hostname":"blog.roccoshi.top","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"f31390029ab05a47052152645c759b9c","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21044765,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -142,13 +143,13 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
                 class="iconfont icon-search"></i>&nbsp;</a>
           </li>
         
         
           <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" href="javascript:">&nbsp;<i
+            <a class="nav-link" target="_self">&nbsp;<i
                 class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
@@ -245,29 +246,29 @@
 ">[3]</span></a></sup></p>
 </li>
 </ul>
-<h1 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1. 绪论"></a>1. 绪论</h1><p><img src="https://youpai.roccoshi.top/img/20210107010414.png" srcset="/img/loading.gif" alt=""></p>
+<h1 id="1-绪论"><a href="#1-绪论" class="headerlink" title="1. 绪论"></a>1. 绪论</h1><p><img src="https://youpai.roccoshi.top/img/20210107010414.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h1 id="2-关系代数和元组关系演算"><a href="#2-关系代数和元组关系演算" class="headerlink" title="2. 关系代数和元组关系演算"></a>2. 关系代数和元组关系演算</h1><p>关系代数的五个基本操作: </p>
-<p><img src="https://youpai.roccoshi.top/img/20210107010534.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210107010534.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>关系代数中可能会用到的各个符号:</p>
-<p><img src="https://youpai.roccoshi.top/img/20210107010616.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210107010616.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h1 id="3-SQL"><a href="#3-SQL" class="headerlink" title="3. SQL"></a>3. SQL</h1><p>SQL与<strong>三级模式</strong>体系结构图:</p>
-<p><img src="https://youpai.roccoshi.top/img/20210106174625.png" srcset="/img/loading.gif" alt="image-20201226123540167"></p>
+<p><img src="https://youpai.roccoshi.top/img/20210106174625.png" srcset="/img/loading.gif" lazyload alt="image-20201226123540167"></p>
 <h2 id="1-数据定义"><a href="#1-数据定义" class="headerlink" title="1 | 数据定义"></a>1 | 数据定义</h2><p>SQL提供了专门的语言定义数据库对象, 称为<strong>DDL</strong>(数据定义语言, Data Definition Language)</p>
-<p><img src="https://youpai.roccoshi.top/img/20210106174626.png" srcset="/img/loading.gif" alt="image-20201226123755751"></p>
+<p><img src="https://youpai.roccoshi.top/img/20210106174626.png" srcset="/img/loading.gif" lazyload alt="image-20201226123755751"></p>
 <h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><p><code>CREATE DATABASE &lt;name&gt;</code></p>
 <h3 id="创建基本表"><a href="#创建基本表" class="headerlink" title="创建基本表"></a>创建基本表</h3><p>格式</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span><br>(<br>    <span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>数据类型<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>列级完整性约束条件<span class="hljs-operator">&gt;</span>,<br>    <span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>数据类型<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>列级完整性约束条件<span class="hljs-operator">&gt;</span>,<br>   	...<br>    <span class="hljs-operator">&lt;</span>表级完整性约束条件<span class="hljs-operator">&gt;</span><br>);<br></code></pre></td></tr></table></figure>
 <p>实例</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> S<br>    (<br>    SNO <span class="hljs-type">int</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">primary</span> <span class="hljs-keyword">key</span>, <span class="hljs-comment">-- 列级完整性约束</span><br>    SNAME <span class="hljs-type">char</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>,<br>    SA <span class="hljs-type">int</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>,<br>    FNAME <span class="hljs-type">char</span>(<span class="hljs-number">15</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>,<br>    CNO <span class="hljs-type">int</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>,	<br>    SD <span class="hljs-type">char</span>(<span class="hljs-number">10</span>),<br>    <span class="hljs-keyword">constraint</span> fk_fname1 <span class="hljs-keyword">foreign</span> <span class="hljs-keyword">key</span>(FNAME) <span class="hljs-keyword">references</span> F(FNAME), <span class="hljs-comment">-- 表级完整性约束, 命名约束</span><br>    <span class="hljs-keyword">foreign</span> <span class="hljs-keyword">key</span>(CNO) <span class="hljs-keyword">references</span> C(CNO) <span class="hljs-comment">-- 直接指定约束 (少了constraint xxx)</span><br>    );<br></code></pre></td></tr></table></figure>
 <p>常用的完整性约束:</p>
-<p><img src="https://youpai.roccoshi.top/img/20210106174627.png" srcset="/img/loading.gif" alt="image-20201226125004438"></p>
+<p><img src="https://youpai.roccoshi.top/img/20210106174627.png" srcset="/img/loading.gif" lazyload alt="image-20201226125004438"></p>
 <h3 id="修改基本表"><a href="#修改基本表" class="headerlink" title="修改基本表"></a>修改基本表</h3><p>格式</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span><br>(<br>    <span class="hljs-keyword">ADD</span> <span class="hljs-operator">&lt;</span>新列名<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>数据类型<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>完整性约束<span class="hljs-operator">&gt;</span><br>    <span class="hljs-keyword">DROP</span> <span class="hljs-operator">&lt;</span>完整性约束名<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span><br>    <span class="hljs-keyword">ALTER</span> <span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>数据类型<span class="hljs-operator">&gt;</span><br>);<br></code></pre></td></tr></table></figure>
 <p>实例:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 增加属性</span><br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> student <span class="hljs-keyword">add</span> senroll <span class="hljs-type">date</span>;<br><span class="hljs-comment">-- 修改属性数据类型</span><br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> student <span class="hljs-keyword">alter</span> sage <span class="hljs-type">smallint</span>;<br><span class="hljs-comment">-- 删除约束</span><br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> student <span class="hljs-keyword">drop</span> <span class="hljs-keyword">unique</span>(name);<br></code></pre></td></tr></table></figure>
 <h2 id="2-查询"><a href="#2-查询" class="headerlink" title="2 | 查询"></a>2 | 查询</h2><p>语法:</p>
-<p><img src="https://youpai.roccoshi.top/img/20210106174628.png" srcset="/img/loading.gif" alt="image-20201226130756283"></p>
-<h3 id="where子句"><a href="#where子句" class="headerlink" title="where子句"></a>where子句</h3><p><img src="https://youpai.roccoshi.top/img/20210106174629.png" srcset="/img/loading.gif" alt="image-20201226130825216"></p>
+<p><img src="https://youpai.roccoshi.top/img/20210106174628.png" srcset="/img/loading.gif" lazyload alt="image-20201226130756283"></p>
+<h3 id="where子句"><a href="#where子句" class="headerlink" title="where子句"></a>where子句</h3><p><img src="https://youpai.roccoshi.top/img/20210106174629.png" srcset="/img/loading.gif" lazyload alt="image-20201226130825216"></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 例子</span><br><span class="hljs-keyword">where</span> age <span class="hljs-keyword">between</span> <span class="hljs-number">20</span> <span class="hljs-keyword">and</span> <span class="hljs-number">23</span>;  <span class="hljs-comment">-- 找年龄20-23岁的</span><br><br><span class="hljs-keyword">where</span> dept <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> (<span class="hljs-string">&#x27;is&#x27;</span>, <span class="hljs-string">&#x27;ma&#x27;</span>, <span class="hljs-string">&#x27;cs&#x27;</span>); <span class="hljs-comment">--查询不是is, ma, cs系得</span><br><br><span class="hljs-keyword">where</span> name <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;刘%&#x27;</span>; <span class="hljs-comment">-- 找姓刘的</span><br><br><span class="hljs-keyword">where</span> name <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;__阳&#x27;</span>; <span class="hljs-comment">-- 找名字叫xx阳的</span><br><br><span class="hljs-keyword">where</span> cname <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;DB\_Design&#x27;</span> <span class="hljs-keyword">ESCAPE</span> <span class="hljs-string">&#x27;\&#x27;</span>; <span class="hljs-comment">-- escape定义转义字符, 出现在其后的第一个字符不是通配符而是字符本身</span><br></code></pre></td></tr></table></figure>
 <p>注意点:</p>
 <ul>
@@ -309,13 +310,13 @@
 </ul>
 <p>例子:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span>  Sname		    <span class="hljs-comment">-- 外层查询/父查询</span><br>  <span class="hljs-keyword">FROM</span>  Student<br>  <span class="hljs-keyword">WHERE</span>  Sno  <span class="hljs-keyword">IN</span><br>    	  ( <span class="hljs-keyword">SELECT</span>  Sno <span class="hljs-comment">-- 内层查询/子查询</span><br>                <span class="hljs-keyword">FROM</span>  SC<br>                <span class="hljs-keyword">WHERE</span>  Cno <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;c2&#x27;</span> ) ;<br></code></pre></td></tr></table></figure>
-<h4 id="带有any或者all谓词的子查询"><a href="#带有any或者all谓词的子查询" class="headerlink" title="带有any或者all谓词的子查询"></a>带有any或者all谓词的子查询</h4><p><img src="https://youpai.roccoshi.top/img/20210106174630.png" srcset="/img/loading.gif" alt=""></p>
+<h4 id="带有any或者all谓词的子查询"><a href="#带有any或者all谓词的子查询" class="headerlink" title="带有any或者all谓词的子查询"></a>带有any或者all谓词的子查询</h4><p><img src="https://youpai.roccoshi.top/img/20210106174630.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>例子: (为不相关子查询)</p>
-<p><img src="https://youpai.roccoshi.top/img/20210106174631.png" srcset="/img/loading.gif" alt="image-20201226133604299"></p>
+<p><img src="https://youpai.roccoshi.top/img/20210106174631.png" srcset="/img/loading.gif" lazyload alt="image-20201226133604299"></p>
 <p>使用any/all谓词与集函数具有等价关系, 而用<strong>集函数查询通常比any/all查询效率高</strong>因为前者可以减少比较次数</p>
-<p><img src="https://youpai.roccoshi.top/img/20210106174632.png" srcset="/img/loading.gif" alt="image-20201226133751280"></p>
+<p><img src="https://youpai.roccoshi.top/img/20210106174632.png" srcset="/img/loading.gif" lazyload alt="image-20201226133751280"></p>
 <h4 id="带有EXISTS谓词的子查询"><a href="#带有EXISTS谓词的子查询" class="headerlink" title="带有EXISTS谓词的子查询"></a>带有EXISTS谓词的子查询</h4><p>exists仅返回true/false, 故子查询通常只用<code>select *</code></p>
-<p><img src="https://youpai.roccoshi.top/img/20210106174633.png" srcset="/img/loading.gif" alt="image-20201226133932439"></p>
+<p><img src="https://youpai.roccoshi.top/img/20210106174633.png" srcset="/img/loading.gif" lazyload alt="image-20201226133932439"></p>
 <p>使用<strong>EXISTS子查询的效率要优于使用连接查询和IN查询</strong></p>
 <p>EXISTS通常引入的是相关子查询, 而IN更多的是不相关子查询</p>
 <h3 id="集合查询"><a href="#集合查询" class="headerlink" title="集合查询"></a>集合查询</h3><p>集合操作命令</p>
@@ -343,7 +344,7 @@
 </tbody>
 </table>
 </div>
-<p><img src="https://youpai.roccoshi.top/img/20210106174634.png" srcset="/img/loading.gif" alt="image-20201226140459748"></p>
+<p><img src="https://youpai.roccoshi.top/img/20210106174634.png" srcset="/img/loading.gif" lazyload alt="image-20201226140459748"></p>
 <h2 id="3-数据更新"><a href="#3-数据更新" class="headerlink" title="3 | 数据更新"></a>3 | 数据更新</h2><h3 id="3-1-插入数据"><a href="#3-1-插入数据" class="headerlink" title="3-1 | 插入数据"></a>3-1 | 插入数据</h3><h4 id="插入单个结果"><a href="#插入单个结果" class="headerlink" title="插入单个结果"></a>插入单个结果</h4><p>格式:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span><br><span class="hljs-keyword">INTO</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>属性列s<span class="hljs-operator">&gt;</span><br><span class="hljs-keyword">VALUES</span> <span class="hljs-operator">&lt;</span>常量s<span class="hljs-operator">&gt;</span>;<br></code></pre></td></tr></table></figure>
 <p>如果不指定属性列, 则values必须以完整的元组插入, 且属性与表中属性顺序一致</p>
@@ -352,7 +353,7 @@
 <h4 id="插入子查询结果"><a href="#插入子查询结果" class="headerlink" title="插入子查询结果"></a>插入子查询结果</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span><br><span class="hljs-keyword">INTO</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>属性列s<span class="hljs-operator">&gt;</span><br>子查询;<br></code></pre></td></tr></table></figure>
 <p>举例:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">INSERT</span><br><span class="hljs-keyword">INTO</span>  Deptage ( Sdept, Avgage )<br>		<span class="hljs-keyword">SELECT</span>  Sdept, <span class="hljs-built_in">AVG</span>(Sage)  <span class="hljs-comment">-- 属性个数要匹配</span><br>		<span class="hljs-keyword">FROM</span>  Student<br>		<span class="hljs-keyword">GROUP</span>  <span class="hljs-keyword">BY</span>  Sdept ;<br></code></pre></td></tr></table></figure>
-<h4 id="注意完整性约束"><a href="#注意完整性约束" class="headerlink" title="注意完整性约束"></a>注意完整性约束</h4><p><img src="https://youpai.roccoshi.top/img/20210106174635.png" srcset="/img/loading.gif" alt="image-20201226143151436"></p>
+<h4 id="注意完整性约束"><a href="#注意完整性约束" class="headerlink" title="注意完整性约束"></a>注意完整性约束</h4><p><img src="https://youpai.roccoshi.top/img/20210106174635.png" srcset="/img/loading.gif" lazyload alt="image-20201226143151436"></p>
 <h3 id="3-2-修改数据"><a href="#3-2-修改数据" class="headerlink" title="3-2 | 修改数据"></a>3-2 | 修改数据</h3><p>格式:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">UPDATE</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span><br><span class="hljs-keyword">SET</span> <span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span> <span class="hljs-operator">=</span> <span class="hljs-operator">&lt;</span>表达式<span class="hljs-operator">&gt;</span><br><span class="hljs-keyword">WHERE</span> <span class="hljs-operator">&lt;</span>条件<span class="hljs-operator">&gt;</span><br></code></pre></td></tr></table></figure>
 <p>举例:</p>
@@ -381,7 +382,7 @@
 <p>视图对应的就是三级模式/两级映像体系结构中的外模式和外模式/模式映像</p>
 <h3 id="4-1-建立视图"><a href="#4-1-建立视图" class="headerlink" title="4-1 | 建立视图"></a>4-1 | 建立视图</h3><p>格式:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> <span class="hljs-operator">&lt;</span>视图名<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span><br><span class="hljs-keyword">AS</span> <span class="hljs-operator">&lt;</span>子查询<span class="hljs-operator">&gt;</span><br>[<span class="hljs-keyword">WITH</span> <span class="hljs-keyword">CHECK</span> OPTION];<br></code></pre></td></tr></table></figure>
-<p><img src="https://youpai.roccoshi.top/img/20210106174636.png" srcset="/img/loading.gif" alt="image-20210102151117045"></p>
+<p><img src="https://youpai.roccoshi.top/img/20210106174636.png" srcset="/img/loading.gif" lazyload alt="image-20210102151117045"></p>
 <p>DBMS执行create view语句时只是把视图的定义存入数据字典, 并不执行其中的select语句, 在对视图查询时, 按视图的定义从基本表中将</p>
 <p>数据查出</p>
 <p>例子:</p>
@@ -405,7 +406,7 @@
 <li>接收权限的用户可以是一个或者多个具体用户, 也可以是全体用户PUBLIC</li>
 <li><code>WITH GRANT OPTION</code>子句: 获得某种权限的用户还可以把这种权限再授予别的用户, 没有指定with grant option时, 获得某种权限的用户只能使用该权限, 不能传播该权限</li>
 </ul>
-<h3 id="所有权限一览表"><a href="#所有权限一览表" class="headerlink" title="所有权限一览表"></a>所有权限一览表</h3><p><img src="https://youpai.roccoshi.top/img/20201227101704.png" srcset="/img/loading.gif" alt="image-20201227101703896"></p>
+<h3 id="所有权限一览表"><a href="#所有权限一览表" class="headerlink" title="所有权限一览表"></a>所有权限一览表</h3><p><img src="https://youpai.roccoshi.top/img/20201227101704.png" srcset="/img/loading.gif" lazyload alt="image-20201227101703896"></p>
 <h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">grant</span> <span class="hljs-keyword">select</span><br><span class="hljs-keyword">on</span> <span class="hljs-keyword">table</span> student<br><span class="hljs-keyword">to</span> user1;<br></code></pre></td></tr></table></figure>
 <p>把对sc表的全部权限授予全部用户</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> priviliges<br><span class="hljs-keyword">on</span> <span class="hljs-keyword">table</span> sc<br><span class="hljs-keyword">to</span> public;<br></code></pre></td></tr></table></figure>
@@ -424,7 +425,7 @@
 <li><p>如果存在多重授予, (从不同用户处得到的相同权限, 则仍然具有该权限), 只收回自己级联授予的权限</p>
 </li>
 </ul>
-<h2 id="3-视图机制"><a href="#3-视图机制" class="headerlink" title="3 | 视图机制"></a>3 | 视图机制</h2><p><img src="https://youpai.roccoshi.top/img/20201227102725.png" srcset="/img/loading.gif" alt="image-20201227102725294"></p>
+<h2 id="3-视图机制"><a href="#3-视图机制" class="headerlink" title="3 | 视图机制"></a>3 | 视图机制</h2><p><img src="https://youpai.roccoshi.top/img/20201227102725.png" srcset="/img/loading.gif" lazyload alt="image-20201227102725294"></p>
 <h1 id="5-存储过程和触发器"><a href="#5-存储过程和触发器" class="headerlink" title="5. 存储过程和触发器"></a>5. 存储过程和触发器</h1><h2 id="1-存储过程"><a href="#1-存储过程" class="headerlink" title="1 | 存储过程"></a>1 | 存储过程</h2><p>创建存储过程:</p>
 <p><code>CREATE PROCEDURE</code></p>
 <p>执行存储过程:</p>
@@ -550,21 +551,21 @@
 <li>分解规则</li>
 <li>伪传递规则</li>
 </ul>
-<p><img src="https://youpai.roccoshi.top/img/20210102192831.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210102192831.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h3 id="函数依赖集的闭包"><a href="#函数依赖集的闭包" class="headerlink" title="函数依赖集的闭包"></a>函数依赖集的闭包</h3><p>在关系模式R<U, F>中为F所逻辑蕴含的函数依赖的全体叫做F的闭包, 记为$\text{F}^+$</p>
 <p>注: $\text{F}^+$一般超级多, 求$\text{F}^+$属于NP完全问题</p>
 <h3 id="属性集的闭包"><a href="#属性集的闭包" class="headerlink" title="属性集的闭包"></a>属性集的闭包</h3><p>设F为属性集U上的一组函数依赖, $\mathrm{X}\subseteq \mathrm{U}$, X关于函数依赖集F的闭包为$\mathrm{X}_{\mathrm{F}^+}$</p>
 <script type="math/tex; mode=display">
 \mathrm{X}_{\mathrm{F}^+}=\left\{ \left. \mathrm{A} \right|\mathrm{X}\rightarrow \text{A能由F根据Armstrong公理导出} \right\}</script><p>注: 即求X可以导出的所有属性集合</p>
-<p><img src="https://youpai.roccoshi.top/img/20210102192832.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210102192832.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h3 id="最小函数依赖集"><a href="#最小函数依赖集" class="headerlink" title="最小函数依赖集"></a>最小函数依赖集</h3><p>即用最少的函数依赖表示全部属性之间的依赖关系, 记为$\mathrm{F}_{\min}$</p>
 <p>最小函数依赖集的定义:</p>
-<p><img src="https://youpai.roccoshi.top/img/20210102192833.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210102192833.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h3 id="考点-最小函数依赖集的求解算法"><a href="#考点-最小函数依赖集的求解算法" class="headerlink" title="考点: 最小函数依赖集的求解算法"></a>考点: 最小函数依赖集的求解算法</h3><p>第一步: <strong>对每个函数依赖作右部属性分离</strong></p>
 <p>第二步: <strong>去掉左部的冗余属性</strong></p>
 <p>第三步: <strong>去除多余的函数依赖</strong></p>
 <p>注意: 最小函数依赖集不是唯一的</p>
-<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p><img src="https://youpai.roccoshi.top/img/20210102192834.png" srcset="/img/loading.gif" alt=""></p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p><img src="https://youpai.roccoshi.top/img/20210102192834.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>在第三步的时候可以采用「除本求包」的方法, 即除去正在考察的这个函数依赖, 看左部属性的闭包是否包含正在考察的函数依赖的右部属性, 如果包含则正在考察的这个函数依赖为多余的函数依赖, 例如上面的A-&gt;D, 除去A-&gt;D的这个函数依赖求A的闭包为{A, B, C, D, E}包含D, 则A-&gt;D为多余, 应该去除。</p>
 <p><strong>正则覆盖</strong>: 将求出的最小函数依赖集左部属性相同的函数依赖合并(例如A-&gt;B A-&gt;C合并为A-&gt;BC)</p>
 <h3 id="考点-候选码求解算法"><a href="#考点-候选码求解算法" class="headerlink" title="考点: 候选码求解算法"></a>考点: 候选码求解算法</h3><p>第一步: <strong>根据函数依赖集F将R的所有属性分为L类, R类, LR类和N类属性<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="
@@ -573,8 +574,8 @@
 <p>第三步: <strong>逐一取Y中的单一属性A, 若$\left( \mathrm{XA} \right) _{\mathrm{F}^+}$=U, 则XA为候选码, 令Y = Y - {A}, 到第四步</strong></p>
 <p>第四步: <strong>依次取Y中的两个, 三个…属性与X组成属性组XZ, 若XZ不包含已求得的候选码, 则求其关于F的闭包$\left( \mathrm{XZ} \right) _{\mathrm{F}^+}$</strong></p>
 <p><strong>若$\left( \mathrm{XZ} \right) _{\mathrm{F}^+}$=U, 则XZ为候选码, 重复第四步直到所有Y中的属性取完为止, 算法结束</strong></p>
-<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><p><img src="https://youpai.roccoshi.top/img/20210102192835.png" srcset="/img/loading.gif" alt=""></p>
-<h2 id="5-模式分解"><a href="#5-模式分解" class="headerlink" title="5 | 模式分解"></a>5 | 模式分解</h2><p><img src="https://youpai.roccoshi.top/img/20210102192836.png" srcset="/img/loading.gif" alt=""></p>
+<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><p><img src="https://youpai.roccoshi.top/img/20210102192835.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h2 id="5-模式分解"><a href="#5-模式分解" class="headerlink" title="5 | 模式分解"></a>5 | 模式分解</h2><p><img src="https://youpai.roccoshi.top/img/20210102192836.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>分解应该考虑的问题</p>
 <ul>
 <li>分解不能丢失信息</li>
@@ -584,8 +585,8 @@
 <h3 id="考点-模式的无损连接性判定算法"><a href="#考点-模式的无损连接性判定算法" class="headerlink" title="考点: 模式的无损连接性判定算法"></a>考点: 模式的无损连接性判定算法</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p>R的一个分解为R1, R2</p>
 <p><strong>若$\mathrm{U}_1\cap \mathrm{U}_2\rightarrow \mathrm{U}_1-\mathrm{U}_2\in \mathrm{F}^+$或者$\mathrm{U}_1\cap \mathrm{U}_2\rightarrow \mathrm{U}_2-\mathrm{U}_1\in \mathrm{F}^+$则分解R1, R2保持无损连接</strong> (<strong>充分必要条件</strong>, 用于一分为二模式的无损连接判断)</p>
 <h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><p>构造表</p>
-<p><img src="https://youpai.roccoshi.top/img/20210102192837.png" srcset="/img/loading.gif" alt=""></p>
-<h3 id="将模式分解为BCNF并保持无损连接"><a href="#将模式分解为BCNF并保持无损连接" class="headerlink" title="将模式分解为BCNF并保持无损连接"></a>将模式分解为BCNF并保持无损连接</h3><p><img src="https://youpai.roccoshi.top/img/20210102192838.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://youpai.roccoshi.top/img/20210102192837.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h3 id="将模式分解为BCNF并保持无损连接"><a href="#将模式分解为BCNF并保持无损连接" class="headerlink" title="将模式分解为BCNF并保持无损连接"></a>将模式分解为BCNF并保持无损连接</h3><p><img src="https://youpai.roccoshi.top/img/20210102192838.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h1 id="8-嵌入式SQL"><a href="#8-嵌入式SQL" class="headerlink" title="8. 嵌入式SQL"></a>8. 嵌入式SQL</h1><h2 id="1-主语言-SQLCA-主变量-游标"><a href="#1-主语言-SQLCA-主变量-游标" class="headerlink" title="1 | 主语言 SQLCA 主变量 游标"></a>1 | 主语言 SQLCA 主变量 游标</h2><p>主语言: C++, JAVA</p>
 <p>SQLCA: sql communication area (SQL通信区)</p>
 <p>主变量: sql使用主语言中的变量</p>
@@ -634,7 +635,7 @@
 <li><p>遵守两段锁协议是可串行化调度的充分条件</p>
 </li>
 </ul>
-<h2 id="脚注"><a href="#脚注" class="headerlink" title="脚注"></a>脚注</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><img src="https://youpai.roccoshi.top/img/20210102192839.png" srcset="/img/loading.gif" alt="">
+<h2 id="脚注"><a href="#脚注" class="headerlink" title="脚注"></a>脚注</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><img src="https://youpai.roccoshi.top/img/20210102192839.png" srcset="/img/loading.gif" lazyload alt="">
 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://wws.lanzous.com/b01nwkgzi">https://wws.lanzous.com/b01nwkgzi</a> 密码:auqv
 <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://wws.lanzous.com/iM3nSk4bira">https://wws.lanzous.com/iM3nSk4bira</a>
 <a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
@@ -664,7 +665,11 @@
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
               
               
                 <div class="post-prevnext">
@@ -694,29 +699,23 @@
 
             
               <!-- Comments -->
-              <article class="comments" id="comments">
+              <article class="comments" id="comments" lazyload>
+                
+                  
                 
                 
   <div id="gitalk-container"></div>
   <script type="text/javascript">
-    Fluid.utils.waitElementVisible('gitalk-container', function() {
+    Fluid.utils.loadComments('#gitalk-container', function() {
       Fluid.utils.createCssLink('/css/gitalk.css')
-      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
-        var gitalk = new Gitalk({
-          clientID: '334a894b9dc165e734f9',
-          clientSecret: '17d676f1f917d8ec89496cb03d4428ac32b54618',
-          repo: 'Lincest.github.io',
-          owner: 'Lincest',
-          admin: ["Lincest"],
-          id: '9f1c49aea200504c1f9fbaa296761df9',
-          language: 'zh-CN',
-          labels: ["Gitalk"],
-          perPage: 10,
-          pagerDirection: 'last',
-          createIssueManually: false,
-          distractionFreeMode: false,
-          proxy: 'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token',
-        });
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"334a894b9dc165e734f9","clientSecret":"17d676f1f917d8ec89496cb03d4428ac32b54618","repo":"Lincest.github.io","owner":"Lincest","admin":["Lincest"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":false,"proxy":"https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token"},
+          {
+            id: '9f1c49aea200504c1f9fbaa296761df9'
+          }
+        )
+        var gitalk = new Gitalk(options);
         gitalk.render('gitalk-container');
       });
     });
@@ -815,8 +814,9 @@
   
 </footer>
 
-<!-- SCRIPTS -->
 
+  <!-- SCRIPTS -->
+  
   <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
@@ -831,7 +831,6 @@
 
 <script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
 <script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
-<script  src="/js/debouncer.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
@@ -839,7 +838,7 @@
 
 
   
-    <script  src="/js/lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -864,6 +863,10 @@
 
 
 
+  <script  src="/js/local-search.js" ></script>
+
+
+
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
@@ -878,20 +881,6 @@
       typing(title)
       
     })(window, document);
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    (function () {
-      var path = "/local-search.xml";
-      var inputArea = document.querySelector("#local-search-input");
-      inputArea.onclick = function () {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-        this.onclick = null
-      }
-    })()
   </script>
 
 
@@ -976,7 +965,6 @@
 
 <!-- 主题的启动项 保持在最底部 -->
 <script  src="/js/boot.js" ></script>
-
 
 
 </body>
