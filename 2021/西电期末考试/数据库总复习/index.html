@@ -697,30 +697,24 @@
               <article class="comments" id="comments">
                 
                 
-  <div id="gitalk-container"></div>
-  <script type="text/javascript">
-    Fluid.utils.waitElementVisible('gitalk-container', function() {
-      Fluid.utils.createCssLink('/css/gitalk.css')
-      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js', function () {
-        var gitalk = new Gitalk({
-          clientID: '334a894b9dc165e734f9',
-          clientSecret: '2682f62ff5c94d84323e7fbab37d41fad18f70a1',
-          repo: 'Lincest.github.io',
-          owner: 'Lincest',
-          admin: ["Lincest"],
-          id: '9f1c49aea200504c1f9fbaa296761df9',
-          language: 'zh-CN',
-          labels: ["Gitalk"],
-          perPage: 10,
-          pagerDirection: 'last',
-          createIssueManually: false,
-          distractionFreeMode: false
-        });
-        gitalk.render('gitalk-container');
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_config = function() {
+        this.page.url = 'https://blog.roccoshi.top/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E5%A4%8D%E4%B9%A0/';
+        this.page.identifier = '/2021/%E8%A5%BF%E7%94%B5%E6%9C%9F%E6%9C%AB%E8%80%83%E8%AF%95/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E5%A4%8D%E4%B9%A0/';
+      };
+      Fluid.utils.waitElementVisible('disqus_thread', function () {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + '' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
       });
-    });
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
+    </script>
+    <noscript>Please enable JavaScript to view the
+      <a target="_blank" href="https://disqus.com/?ref_noscript" rel="nofollow noopener noopener">comments powered by Disqus.</a>
+    </noscript>
+  </div>
 
 
               </article>
