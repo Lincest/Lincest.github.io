@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.3k 字
+      5.4k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      61
+      63
        分钟
     </span>
   
@@ -288,7 +288,11 @@
 <li>编译器的各阶段工作中, <strong>中间代码生成和代码优化</strong>部分不是每个编译程序都必须的</li>
 <li>词法分析器用于识别<strong>单词</strong></li>
 <li>语法分析器可以发现源程序中的<strong>语法错误</strong></li>
+<li>解释器处理程序语言时, 大多数采用的是先将程序转化为<strong>中间代码</strong>, 再解释执行</li>
 <li>高级语言的语言处理程序分为解释程序和编译程序两种, 编译程序有五个阶段, 而解释程序通常缺少<strong>目标代码生成</strong>和<strong>代码优化</strong></li>
+<li>受到具体机器主存容量的限制, 编译程序几个不同阶段的工作往往被组合成<strong>遍</strong>, 诸阶段的工作往往是<strong>穿插</strong>进行的</li>
+<li>编译方式和解释方式的根本区别在于<strong>是否生成目标代码</strong></li>
+<li>从功能上说, 程序语言的语句大体可分为<strong>执行性语句</strong>和<strong>声明性语句</strong>两大类</li>
 </ol>
 <h2 id="作业-词法分析"><a href="#作业-词法分析" class="headerlink" title="作业-词法分析"></a>作业-词法分析</h2><ol>
 <li>词法分析器用于识别<strong>单词</strong></li>
@@ -421,8 +425,8 @@
 <ol>
 <li>词法错误</li>
 <li>语法错误</li>
-<li>静态语义错误</li>
-<li>动态语义错误</li>
+<li>静态语义错误 (如算符作用于不相容的运算对象)</li>
+<li>动态语义错误 (逻辑错误, 如无穷的递归调用)</li>
 </ol>
 </blockquote>
 </li>

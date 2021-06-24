@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.1k 字
+      2.2k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      24
+      26
        分钟
     </span>
   
@@ -246,10 +246,16 @@
 <li>简述人工智能三大学派及其观点</li>
 </ol>
 </blockquote>
-<h2 id="1-1-人工智能三大学派"><a href="#1-1-人工智能三大学派" class="headerlink" title="1.1 | 人工智能三大学派"></a>1.1 | 人工智能三大学派</h2><p><strong>符号学派, 连接学派, 行为学派</strong></p>
-<p>符号学派认为人工智能源于数理逻辑</p>
-<p>连接学派认为人工智能源于仿生学</p>
-<p>行为学派认为人工智能只是在与环境的交互作用中表现出来</p>
+<h2 id="1-1-人工智能三大学派"><a href="#1-1-人工智能三大学派" class="headerlink" title="1.1 | 人工智能三大学派"></a>1.1 | 人工智能三大学派</h2><p>图灵的学术贡献:</p>
+<ol>
+<li>1936发表论文, 提出图灵机理论</li>
+<li>1950年发表论文, 提出图灵测试</li>
+</ol>
+<p><u>1956年达特矛斯会议</u>「人工智能」正式诞生</p>
+<p><strong>符号学派, 连接学派, 行为学派</strong></p>
+<p>符号学派认为人工智能源于数理逻辑, <u>代表人物:</u> 纽厄尔, 肖, 西蒙, 尼尔逊</p>
+<p>连接学派认为人工智能源于仿生学(神经网络), <u>代表人物:</u> 麦克洛奇, 皮兹</p>
+<p>行为学派认为人工智能只是在与环境的交互作用中表现出来, <u>代表人物:</u> 布鲁克(Brooks)研制的机器虫</p>
 <h1 id="2-知识表示"><a href="#2-知识表示" class="headerlink" title="2 | 知识表示"></a>2 | 知识表示</h1><h2 id="2-0-考题"><a href="#2-0-考题" class="headerlink" title="2.0 | 考题"></a>2.0 | 考题</h2><blockquote>
 <ol>
 <li>至少简述四种知识表示方法及其特点</li>
@@ -366,7 +372,10 @@ P\left( A|B \right) =\frac{P\left( AB \right)}{P\left( B \right)}</script><p><st
 P\left( B \right)=\sum_{i=1}^n{P\left( A_i \right) \times P\left( B|A_i \right)}</script><p><strong>贝叶斯公式:</strong></p>
 <p>若事件$A_i$满足全概率公式的条件, 则对任何事件B有下式成立</p>
 <script type="math/tex; mode=display">
-P\left( A_i|B \right) =\frac{P\left( B|A_i \right) P\left( A_i \right)}{P\left( B \right)}</script><h2 id="4-2-主观贝叶斯方法"><a href="#4-2-主观贝叶斯方法" class="headerlink" title="4.2 | 主观贝叶斯方法"></a>4.2 | 主观贝叶斯方法</h2><p><strong>形式:</strong></p>
+P\left( A_i|B \right) =\frac{P\left( B|A_i \right) P\left( A_i \right)}{P\left( B \right)}</script><h2 id="4-2-主观贝叶斯方法"><a href="#4-2-主观贝叶斯方法" class="headerlink" title="4.2 | 主观贝叶斯方法"></a>4.2 | 主观贝叶斯方法</h2><blockquote>
+<p>这里老师说不考, 哭了, 白看一天</p>
+</blockquote>
+<p><strong>形式:</strong></p>
 <script type="math/tex; mode=display">
 IF\,\,E\,\,THEN\,\,\left( LS, LN \right) \,\,H</script><p>其中$E$表示规则前提条件, $H$是结论</p>
 <p>$LS$是规则的<strong>充分性度量</strong>, 定义为:</p>
@@ -471,7 +480,7 @@ IF\,\,E_1\left( w_1 \right) \,\,AND\,\,E_2\left( w_2 \right) \,\,THEN\,\,H\,\,(C
 <p>观察第一个元素, 实际上就是<code>max&#123;min(0.4, 0.2), min(0.5, 0.4), min(0.1, 0.6)&#125; = 0.4</code></p>
 <p>这部分得例题:</p>
 <p><code>e.g.</code></p>
-<p><img src="人工智能总复习.assets/image-20210613160359652.png" srcset="/img/loading.gif" alt="image-20210613160359652"></p>
+<p><img src="https://youpai.roccoshi.top/image-20210613160359652.png" srcset="/img/loading.gif" alt=""></p>
 <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs txt">解题步骤:<br><br>step 1:<br><br>先补全A = 1/1 + 0.5/2 + 0/3 + 0/4 + 0/5 即 A = [1, 0.5, 0, 0, 0]<br>B = 0/1 + 0/2 + 0.4/3 + 0.6/4 + 1/5 即 B = [0, 0, 0.4, 0.6, 1]<br><br>step 2:<br><br>利用扎德方法求Rm, Ra<br><br>step3 :<br><br>B&#x27;m = A&#x27; ° Rm = [0.4,0.4,0.4,0.6,1]<br> <br>B&#x27;a = A&#x27; ° Ra = [0.4,0.4,0.4,0.6,1]<br></code></pre></td></tr></table></figure>
 <p>其中step2的Rm, Ra如下:</p>
 <p><img src="https://youpai.roccoshi.top/20210613161222.png" srcset="/img/loading.gif" alt=""></p>
