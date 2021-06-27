@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.7k 字
+      3.9k 字
     </span>
   
 
@@ -196,7 +196,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      40
+      42
        分钟
     </span>
   
@@ -321,6 +321,13 @@
 </ul>
 <h2 id="节点故障模式"><a href="#节点故障模式" class="headerlink" title="节点故障模式"></a>节点故障模式</h2><p><strong>失效停止（Fail-Stop）模式</strong></p>
 <p>节点失效后停止工作</p>
+<p><strong>失效停止恢复模式</strong></p>
+<ul>
+<li><p>节点失效后停止工作，但经过一段时间后又重新启动，失效之前的程序重新运行。</p>
+</li>
+<li><p>失效之前缓存的接收消息和内存中的私有状态全部丢失，但是非易失性存储器中的数据仍然存在。</p>
+</li>
+</ul>
 <p><strong>拜占庭模式</strong></p>
 <p>节点失效后行为模式任意，例如可以故意发送恶意消息破坏分布式系统正常运行</p>
 <h1 id="第二章-分布式通信技术"><a href="#第二章-分布式通信技术" class="headerlink" title="第二章 分布式通信技术"></a>第二章 分布式通信技术</h1><h2 id="三种并发服务技术"><a href="#三种并发服务技术" class="headerlink" title="三种并发服务技术"></a>三种并发服务技术</h2><div class="table-container">
@@ -433,7 +440,15 @@
 <li>最小响应时间</li>
 <li>根据各服务器实际负载的动态负载均衡算法</li>
 </ul>
-<h2 id="HDFS分布式文件系统"><a href="#HDFS分布式文件系统" class="headerlink" title="HDFS分布式文件系统"></a>HDFS分布式文件系统</h2><h3 id="HDFS读数据流程"><a href="#HDFS读数据流程" class="headerlink" title="HDFS读数据流程"></a>HDFS读数据流程</h3><ol>
+<h2 id="HDFS分布式文件系统"><a href="#HDFS分布式文件系统" class="headerlink" title="HDFS分布式文件系统"></a>HDFS分布式文件系统</h2><h3 id="NameNode-DataNode"><a href="#NameNode-DataNode" class="headerlink" title="NameNode, DataNode"></a>NameNode, DataNode</h3><p>NameNode是整个文件系统的管理节点。它维护：</p>
+<ol>
+<li>整个文件系统的文件目录树</li>
+<li>文件目录元信息和每个文件对应的数据块列表</li>
+<li>接受用户的操作需求</li>
+</ol>
+<p>NamedNode维护着两张表：文件名-数据块对应表和数据块-物理节点对应表。</p>
+<p>DataNode：负责存储client发来的数据块，执行数据块的读写操作，使用多备份策略。</p>
+<h3 id="HDFS读数据流程"><a href="#HDFS读数据流程" class="headerlink" title="HDFS读数据流程"></a>HDFS读数据流程</h3><ol>
 <li><p>客户端将读请求发送给NameNode，读请求参数中包含了文件名、偏移量和长度。</p>
 </li>
 <li><p>NameNode根据文件名、偏移量查找自己内存中“文件名—数据块对应表”和“数据块—物理节点对应表”，并将包含目标数据块的数据节点IP列表发送给客户端。</p>
