@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.2k 字
+      2k 字
     </span>
   
 
@@ -196,7 +196,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      26
+      24
        分钟
     </span>
   
@@ -267,11 +267,9 @@
 <p><strong>知识:</strong>  把有关信息关联在一起所形成的信息结构</p>
 <p><strong>知识表示:</strong> 计算机可以接受的用于描述知识的数据结构</p>
 <p>状态空间法三要素: <strong>状态, 算符, 状态空间方法</strong></p>
-<p>问题归约法: 从要解决的问题出发, 把问题归成一个个直接可解的本原问题(<strong>本原问题:</strong> 不能再分解或变换且直接可解的子问题)</p>
+<p>问题归约法: 从要解决的问题出发, 把问题归成一个个直接可解的本原问题(<strong>本原问题:</strong> 不能再分解或变换且直接可解的子问题), 代表: 汉诺塔/梵塔问题</p>
+<p><img src="https://youpai.roccoshi.top/20210626161932.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>语义网络: 是知识的一种图解表示, 它由节点和弧线组成, 节点用于表示实体, 概念和情况等, 弧线用于表示节点间的关系</p>
-<p>框架: 一种结构化的方法, 框架通常由指定事务各个方面的<strong>槽</strong>组成, 每个槽拥有若干个侧面, 每个侧面又有若干个值。大多数实用系统必须同时拥有许多框架，并将之组成一个框架系统。</p>
-<p>剧本：框架的一种特殊表示形式，用一组槽来描述事件的发生序列，剧本表示特别适用于描述顺序性动作或事件，但使用不如框架灵活。</p>
-<p>过程：过程是一种知识的过程式表示，它将某一有关问题领域知识同这些使用方法一起，隐式地表示为一个问题求解过程。</p>
 <h1 id="3-经典逻辑推理"><a href="#3-经典逻辑推理" class="headerlink" title="3 | 经典逻辑推理"></a>3 | 经典逻辑推理</h1><h2 id="3-0-考题"><a href="#3-0-考题" class="headerlink" title="3.0 | 考题"></a>3.0 | 考题</h2><blockquote>
 <p>2道必考题: </p>
 <ul>
@@ -485,7 +483,10 @@ IF\,\,E_1\left( w_1 \right) \,\,AND\,\,E_2\left( w_2 \right) \,\,THEN\,\,H\,\,(C
 <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs txt">解题步骤:<br><br>step 1:<br><br>先补全A = 1/1 + 0.5/2 + 0/3 + 0/4 + 0/5 即 A = [1, 0.5, 0, 0, 0]<br>B = 0/1 + 0/2 + 0.4/3 + 0.6/4 + 1/5 即 B = [0, 0, 0.4, 0.6, 1]<br><br>step 2:<br><br>利用扎德方法求Rm, Ra<br><br>step3 :<br><br>B&#x27;m = A&#x27; ° Rm = [0.4,0.4,0.4,0.6,1]<br> <br>B&#x27;a = A&#x27; ° Ra = [0.4,0.4,0.4,0.6,1]<br></code></pre></td></tr></table></figure>
 <p>其中step2的Rm, Ra如下:</p>
 <p><img src="https://youpai.roccoshi.top/20210613161222.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h1 id="6-搜索"><a href="#6-搜索" class="headerlink" title="6 | 搜索"></a>6 | 搜索</h1><p>三种搜索方式(DFA, BFS, A*), 让你画八数码问题的搜索树..</p>
+<h1 id="6-搜索"><a href="#6-搜索" class="headerlink" title="6 | 搜索"></a>6 | 搜索</h1><blockquote>
+<p>大概率考A*</p>
+</blockquote>
+<p>三种搜索方式(DFA, BFS, A*), 让你画八数码问题的搜索树..</p>
 <p>A*的h(x)有两种策略: </p>
 <ul>
 <li>错放的棋子数</li>
@@ -505,6 +506,10 @@ IF\,\,E_1\left( w_1 \right) \,\,AND\,\,E_2\left( w_2 \right) \,\,THEN\,\,H\,\,(C
 <p><img src="https://youpai.roccoshi.top/20210613162701.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>DFS得搜索树如下:(老师上课说画图不能提前猜到答案直接一路DFS直接搜到了, 所以我们要伪装一下…)</p>
 <p><img src="https://youpai.roccoshi.top/20210613162721.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h1 id="7-计算智能"><a href="#7-计算智能" class="headerlink" title="7 | 计算智能"></a>7 | 计算智能</h1><p>根据老师的说法, 最后一道题应该是一个开放问题</p>
+<p>谈谈<strong>计算智能的应用</strong>或者是什么之类的…<strong>算法可以用来干什么</strong></p>
+<p>alphago: 神经网络系统, 蒙特卡洛算法, 深度学习</p>
+<p>分类, 数字识别, 图像识别</p>
 
             </div>
             <hr>

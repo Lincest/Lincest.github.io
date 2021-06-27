@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.4k 字
+      6.6k 字
     </span>
   
 
@@ -196,7 +196,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      63
+      76
        分钟
     </span>
   
@@ -247,7 +247,7 @@
 <p>考试重点但不局限于以下内容：词法分析、Thompson算法、子集法构造DFA、DFA最小化；自上而下语法分析、LL(1)文法、预测分析表；自下而上语法分析、短语、直接短语、句柄、识别活前缀的DFA、LR(0)分析表或SLR(1)分析表；语法制导翻译、布尔表达式短路计算、拉链回填。</p>
 <h1 id="1-填空题总结"><a href="#1-填空题总结" class="headerlink" title="1 | 填空题总结"></a>1 | 填空题总结</h1><h2 id="19年填空"><a href="#19年填空" class="headerlink" title="19年填空"></a>19年填空</h2><ol>
 <li>识别3型文法描述语言的自动机是<strong>有限自动机</strong></li>
-<li>描述含010的01串的正规式是<code>(01)*010(0|1)*</code></li>
+<li>描述含010的01串的正规式是<code>(0|1)*010(0|1)*</code>a</li>
 <li>词法分析器的输入是<strong>源程序</strong>, 输出是<strong>记号流</strong></li>
 <li>自下而上的语法分析中, 需要对输入序列进行规范归约, 反复用产生式的左部替换句型中的<strong>句柄</strong>, 最终得到开始符号</li>
 <li>在自上而下的语法分析中, 需要消除左递归以避免<strong>死循环</strong>, 需要提取左因子以避免<strong>虚假匹配</strong>(陷入回溯)</li>
@@ -257,7 +257,7 @@
 <li>CFG无法描述语法中的变量声明与引用, 可以在语义规则中通过对<strong>符号表</strong>的插入, 查找等操作实现</li>
 <li>参数传递的方法有<strong>值调用, 引用调用, 复写-恢复, 换名调用</strong>, 其中<strong>引用调用和复写-恢复</strong>要求实参一定是左值</li>
 <li>LL(1)分析中, 第一个L表示<strong>自左向右扫描输入串</strong>, 第二个L表示<strong>最左推导</strong>, 1表示<strong>向前看1个终结符</strong></li>
-<li>常见的中间代码形式有<strong>三地址码, 后缀式, 四元式</strong></li>
+<li>常见的中间代码形式有<strong>三地址码, 后缀式, 树</strong></li>
 <li>程序变量的重复定义会在<strong>_</strong>阶段被发现</li>
 </ol>
 <h2 id="14年填空"><a href="#14年填空" class="headerlink" title="14年填空"></a>14年填空</h2><ol>
@@ -272,7 +272,7 @@
 </ol>
 <h2 id="15年填空"><a href="#15年填空" class="headerlink" title="15年填空"></a>15年填空</h2><ol>
 <li>Lex和Yacc是用于生成<strong>词法分析器</strong>和<strong>语法分析器</strong>的工具</li>
-<li>描述含010和01串的正规式是<code>(01)*010(0|1)*</code></li>
+<li>描述含010和01串的正规式是<code>(0|1)*010(0|1)*</code></li>
 <li>识别3型文法描述语言的自动机是<strong>有限自动机</strong></li>
 <li>CFG的定义包含有<strong>非终结符集合, 终结符集合, 开始符号, 产生式</strong></li>
 <li>自下而上的分析中, 需要对输入序列进行规范归约, 反复用产生式的左部替换句型的<strong>句柄</strong>, 最终得到开始符号</li>
@@ -524,7 +524,7 @@
 <p>简化的NFA如下: </p>
 <p><img src="https://youpai.roccoshi.top/20210611113952.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>NFA-&gt;DFA(子集法) 确定化</p>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs txt">ε-闭包(smove(&#123;0&#125;)) = &#123;0&#125;           A    <br>ε-闭包(smove(A, a)) = &#123;0, 1&#125;       B<br>ε-闭包(smove(A, b)) = 		     A<br>ε-闭包(smove(B, a)) = &#123;0, 1, 2&#125;    C<br>ε-闭包(smove(B, b)) = &#123;0, 2&#125;       D<br>ε-闭包(smove(C, a)) = &#123;0, 1, 2, 3&#125; E(终)<br>ε-闭包(smove(C, b)) = &#123;0, 2, 3&#125;    F(终)<br>ε-闭包(smove(D, a)) = &#123;0, 1, 3&#125;    G(终)<br>ε-闭包(smove(D, b)) = &#123;0, 3&#125;		 H(终)<br>ε-闭包(smove(E, a)) = 			 E(终)<br>ε-闭包(smove(E, b)) = 			 F(终)		 <br>ε-闭包(smove(F, a)) = 			 G<br>ε-闭包(smove(F, b)) = 			 H<br>ε-闭包(smove(G, a)) = 			 C<br>ε-闭包(smove(G, b)) = 			 D<br>ε-闭包(smove(H, a)) = 			 B<br>ε-闭包(smove(H, b)) = 			 A<br></code></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs txt">ε-闭包(smove(&#123;0&#125;))  = &#123;0&#125;          A    <br>ε-闭包(smove(A, a)) = &#123;0, 1&#125;       B<br>ε-闭包(smove(A, b)) = 		     A<br>ε-闭包(smove(B, a)) = &#123;0, 1, 2&#125;    C<br>ε-闭包(smove(B, b)) = &#123;0, 2&#125;       D<br>ε-闭包(smove(C, a)) = &#123;0, 1, 2, 3&#125; E(终)<br>ε-闭包(smove(C, b)) = &#123;0, 2, 3&#125;    F(终)<br>ε-闭包(smove(D, a)) = &#123;0, 1, 3&#125;    G(终)<br>ε-闭包(smove(D, b)) = &#123;0, 3&#125;		 H(终)<br>ε-闭包(smove(E, a)) = 			 E(终)<br>ε-闭包(smove(E, b)) = 			 F(终)		 <br>ε-闭包(smove(F, a)) = 			 G<br>ε-闭包(smove(F, b)) = 			 H<br>ε-闭包(smove(G, a)) = 			 C<br>ε-闭包(smove(G, b)) = 			 D<br>ε-闭包(smove(H, a)) = 			 B<br>ε-闭包(smove(H, b)) = 			 A<br></code></pre></td></tr></table></figure>
 <p>得到确定化的DFA</p>
 <p><img src="https://youpai.roccoshi.top/20210611115332.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>最小化: </p>
@@ -535,8 +535,10 @@
 <blockquote>
 <ol>
 <li>首先消除左递归和左因子, 构造原来文法G的等价的LL(1)文法G’</li>
-<li>求每一个非终结符的FIRST集合和FOLLOW集合</li>
-<li>画出预测分析表M, 第一列是所有非终结符, 第二列是所有终结符 + <code>#</code></li>
+<li>求每一个非终结符的FIRST集合和FOLLOW集合<ol>
+<li>画出预测分析表M, 第一列是所有非终结符, 第一行是所有终结符(不包括ε) + <code>#</code></li>
+</ol>
+</li>
 <li>对于每一个产生式<code>A-&gt;α</code>, 对于每一个FIRST(α) = a, 在M[A, a]上填上这个产生式, 如果FIRST(α) = ε, 则找到FOLLOW(A) = b, 在所有M[A, b]上填上产生式<code>A-&gt;ε</code></li>
 </ol>
 </blockquote>
@@ -630,6 +632,23 @@
 </tbody>
 </table>
 </div>
+<p>(4) 分析过程</p>
+<ul>
+<li><p>格局：三元组(栈内容^top，剩余输入^ip，改变格局的动作)</p>
+</li>
+<li><p>改变格局的动作</p>
+<ol>
+<li>匹配终结符：若^top = ^ip(但≠‘#’)，则pop且next(ip)；</li>
+<li>展开非终结符：若^top = X且^ip=a且M[X, a] = α(X→α)，则pop且push(α)（α逆序入栈）;</li>
+<li>报告分析成功：若^top = ^ip = #，则分析成功并结束;</li>
+<li>报告出错：其它情况，调用错误恢复例程。</li>
+</ol>
+</li>
+<li><p>初始状态</p>
+<p>| 栈内容 | 剩余输入 | 动作 |<br>| ——— | ———— | —— |<br>| #S     | xxxxx#   |      |</p>
+</li>
+</ul>
+<p><img src="https://youpai.roccoshi.top/20210626140343.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h3 id="题型2-LR-0-分析表和SLR-1-分析表"><a href="#题型2-LR-0-分析表和SLR-1-分析表" class="headerlink" title="题型2 | LR(0)分析表和SLR(1)分析表"></a>题型2 | LR(0)分析表和SLR(1)分析表</h3><p><img src="https://youpai.roccoshi.top/20210612131706.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>方法步骤:</p>
 <blockquote>
@@ -912,6 +931,152 @@
 <li>将语句<code>while a &lt; b or not c &lt; d do if b &lt; a then a := b * d else c := a + b</code>, 其中a, b为整型, c, d为实型, 布尔表达式采用短路计算</li>
 </ol>
 <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs txt">1. if a &lt; b goto 5<br>2. goto 3<br>3. if c &lt; d goto -<br>4. goto 5<br>5. if b &lt; a goto 7<br>6. goto 11<br>7. t1 = itr b<br>8. t2 = t1 * d<br>9. a = rti t2<br>10. goto 1<br>11. t3 = a + b<br>12. c = itr t3<br>13. goto 1<br></code></pre></td></tr></table></figure>
+<h1 id="4-其他补充知识点"><a href="#4-其他补充知识点" class="headerlink" title="4 | 其他补充知识点"></a>4 | 其他补充知识点</h1><h2 id="4-1-绪论-词法分析"><a href="#4-1-绪论-词法分析" class="headerlink" title="4.1 | 绪论+词法分析"></a>4.1 | 绪论+词法分析</h2><p><strong>二义性:</strong> 一个句子对应多于一颗语法树</p>
+<blockquote>
+<p>上下文无关文法的二义性是不可判定的, 即不存在这样一种算法, 对于任意一个上下文无关文法G, 该算法都可以计算出G是否是一个二义文法。</p>
+</blockquote>
+<p><strong>消除二义文法:</strong></p>
+<ul>
+<li>改写二义文法为非二义文法。</li>
+<li>规定二义文法中符号的结合性和优先级， 使得仅产生一棵语法树。</li>
+</ul>
+<blockquote>
+<p>改写二义文法的关键步骤：</p>
+<ol>
+<li>引入一个新的非终结符，增加一个子结构并提高一级优先级；</li>
+<li>递归非终结符在终结符左边，运算具有左结合性，否则具有右结合性。</li>
+</ol>
+</blockquote>
+<h2 id="4-2-语法分析"><a href="#4-2-语法分析" class="headerlink" title="4.2 | 语法分析"></a>4.2 | 语法分析</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>定义</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>句型</td>
+<td>设G是一个给定的文法，S是文法的开始符号，如果<code>S*=&gt;x</code>（其中<code>x∈（N∪T)*</code>），则称x是文法的一个句型。</td>
+</tr>
+<tr>
+<td>句子</td>
+<td>设G是一个给定的文法，S是文法的开始符号，如果<code>S*=&gt;x</code>(其中<code>x∈T*</code>)，则称x是文法的一个句子。</td>
+</tr>
+<tr>
+<td>短语</td>
+<td>设αβδ是文法G的一个句型，若存在<code>S *=&gt; αAδ</code>，<code>A=+&gt;β</code>，则称β是句型<code>αβδ</code>(相对于A)的短语。</td>
+</tr>
+<tr>
+<td>直接短语</td>
+<td>设αβδ是文法G的一个句型，若存在<code>S *=&gt; αAδ</code>， <code>A=+&gt;β</code>，则称β是句型<code>αβδ</code>(相对于A)的短语, 特别地, 若有<code>A→β</code> ，则称 β 是句型 αβδ 相对于产生式 <code>A→β</code> 的 直接短语。</td>
+</tr>
+<tr>
+<td>句柄</td>
+<td>一个句型的最左直接短语。</td>
+</tr>
+<tr>
+<td>活前缀</td>
+<td>给定文法 G ，如果在符号序列 α 的右边增添零个或多个终结符之后，能够形成一个右句型并且 α 不含该句型句柄之后的任何符号，则称 α 为文法 G 的活前缀。</td>
+</tr>
+<tr>
+<td>右句型</td>
+<td>最后推导产生的句型。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>文法, 语言和自动机</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>文法</th>
+<th>语言</th>
+<th>自动机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0型文法(短语文法)</td>
+<td>短语结构语言</td>
+<td>图灵机</td>
+</tr>
+<tr>
+<td>1型文法(CSG)</td>
+<td>CSL</td>
+<td>线性界限自动机</td>
+</tr>
+<tr>
+<td>2型文法(CFG)</td>
+<td>CFL</td>
+<td>下推自动机</td>
+</tr>
+<tr>
+<td>3型文法(正规文法)</td>
+<td>正规集</td>
+<td>有限自动机</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>判断LL(1)文法的方法:</strong></p>
+<ul>
+<li>构造分析表</li>
+<li>推论判断：$G$是$LL(1)$的，当且仅当$G$的任何两个产生式$A \rightarrow \alpha | \beta$条件<ol>
+<li>$FIRST(\alpha) \cap FIRST(\beta) = \emptyset$</li>
+<li>若$\beta \overset{*}{=&gt;} \epsilon$，则$FIRST(\alpha) \cap FOLLOW(A)=\emptyset$</li>
+</ol>
+</li>
+</ul>
+<p><strong>移进-归约分析器和预测分析器对比:</strong></p>
+<p><img src="https://youpai.roccoshi.top/20210627151850.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分析器</th>
+<th>改变格局的动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>预测分析器</strong></td>
+<td>①<strong>匹配</strong>：若匹配终结符：若 ^top = ^ip 但 <code>≠#</code>，则 pop 且 next(ip);<br/>②<strong>推导</strong>：若 ^top = X 且 ^ip=a 且 M[X, a] = α( X→α ))，则 pop 且push(α) (α 逆序入栈)<br/>③<strong>接受</strong>：若 ^top = ^ip = #，则分析成功并结束。<br/>④<strong>报错</strong>：其它情况，调用错误恢复例程。</td>
+</tr>
+<tr>
+<td><strong>移进-归约分析器</strong></td>
+<td>①<strong>移进</strong> ( shift)：输入序列中的终结符进栈。（当栈顶没有形成句柄时）<br/>②<strong>归约</strong> ( reduce)：将栈顶句柄替换为对应非终结符。（当栈顶形成句柄时）<br/>③<strong>接受</strong> ( accept)：宣告分析成功。<br/>④<strong>报错</strong> ( error)：发现语法错误，调用错误恢复例程。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="4-3-语法制导翻译"><a href="#4-3-语法制导翻译" class="headerlink" title="4.3 | 语法制导翻译"></a>4.3 | 语法制导翻译</h2><p><strong>中间代码:</strong> </p>
+<p>中间代码起到编译器前端和后端分水岭的作用。</p>
+<p>中间代码需要便于编译器的开发移植和代码优化，需要满足如下特性：</p>
+<ul>
+<li>便于语法制导翻译。</li>
+<li>既与机器指令的结构相近，又与具体的机器无关。</li>
+</ul>
+<pre><code class=" mermaid">graph LR
+
+A[中间代码主要形式]--&gt;后缀式
+A--&gt;B[三地址码]
+B--&gt;三元式
+B--&gt;四元式
+A--&gt;树
+</code></pre>
+<p><strong>符号表:</strong></p>
+<p><u>符号表的作用:</u> 连接声明与引用的桥梁</p>
+<p><strong>左值与右值:</strong></p>
+<p>左值是容器, 具有存储空间</p>
+<p>右值可以仅仅是一个值(内容), 没有存储空间</p>
+<p><strong>拉链-回填技术的基本思想</strong></p>
+<ol>
+<li>当三地址码中的转向不确定时，将所有转向同一地址的三<br>地址码拉成一个链；</li>
+<li>一旦所转向的地址被确定，则沿此链将所有的三地址码中<br>回填入此地址。</li>
+</ol>
 
             </div>
             <hr>
@@ -1203,6 +1368,13 @@
 
 
 
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
 
 
 
