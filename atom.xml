@@ -6,7 +6,7 @@
   <link href="https://blog.roccoshi.top/atom.xml" rel="self"/>
   
   <link href="https://blog.roccoshi.top/"/>
-  <updated>2021-07-20T03:29:37.142Z</updated>
+  <updated>2021-07-20T05:55:55.591Z</updated>
   <id>https://blog.roccoshi.top/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>「cmu15-445」初见</title>
+    <link href="https://blog.roccoshi.top/2021/cmu-15445/cmu15-445%E5%88%9D%E8%A7%81/"/>
+    <id>https://blog.roccoshi.top/2021/cmu-15445/cmu15-445%E5%88%9D%E8%A7%81/</id>
+    <published>2021-07-20T03:33:19.000Z</published>
+    <updated>2021-07-20T05:55:55.591Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>cmu15-445是一门非常著名的数据库课程, 之前一直很想看看, 但是一直没太多时间, 今天花点时间来做一下第一次的作业project-0, 并记录一下流程, 课程要求不能展示源代码, 故这里就给出一个环境配置的流程2333, 也当是一次记录吧</p></blockquote><p>课程相关资源:</p><p>「课程主页」: <a href="https://15445.courses.cs.cmu.edu/fall2020/">https://15445.courses.cs.cmu.edu/fall2020/</a></p><p>「b站视频」:<a href="https://search.bilibili.com/all?keyword=15-445&amp;from_source=webtop_search&amp;spm_id_from=333.851">https://search.bilibili.com/all?keyword=15-445&amp;from_source=webtop_search&amp;spm_id_from=333.851</a></p><p>「youtube」: <a href="https://www.youtube.com/watch?v=oeYBdghaIjc&amp;list=PLSE8ODhjZXjbohkNBWQs_otTrBTrjyohi">https://www.youtube.com/watch?v=oeYBdghaIjc&amp;list=PLSE8ODhjZXjbohkNBWQs_otTrBTrjyohi</a></p><p>「知乎讨论组与简介」:<a href="https://zhuanlan.zhihu.com/p/366484273">https://zhuanlan.zhihu.com/p/366484273</a></p><p>「课程代码仓库」: <a href="https://github.com/cmu-db/bustub">https://github.com/cmu-db/bustub</a></p><p>「gradescope(交作业)」: <a href="https://www.gradescope.com/courses/163907/">https://www.gradescope.com/courses/163907/</a></p><h2 id="1-关于project0"><a href="#1-关于project0" class="headerlink" title="1 | 关于project0"></a>1 | 关于project0</h2><p>官网上是这么说的——</p><blockquote><p>All the programming projects this semester will be written on the <a href="https://github.com/cmu-db/bustub">BusTub</a> database management system. This system is written in C++. To ensure that you have the necessary C++ background, we are requiring everyone to complete a simple programming assignment to assess your knowledge of basic C++ features. You will not be given a grade for this project, but you are <strong>required</strong> to complete the project with a perfect score before being allowed to proceed in the course. Any student that is unable to complete this assignment before the deadline will be asked to drop the course.</p></blockquote><p>意思是就是测试一下你是否具备了完成该课程必要的c++基础, 借此机会也熟悉一下整个作业的完成和提交流程</p><p>首先为了按照作业上的介绍来完成, 需要:</p><ol><li>在<a href="https://www.gradescope.com/courses/163907/">gradescope</a>上注册一个账号并加入该课程, 用于<strong>提交作业</strong></li><li>由于需要使用课程提供的脚本<code>sudo ./build_support/packages.sh</code>, 需要linux环境, 或者windows使用WSL, 具体见课程要求<a href="https://github.com/cmu-db/bustub/blob/master/README.md">https://github.com/cmu-db/bustub/blob/master/README.md</a>, 我这里使用的是开着虚拟机用win下vscode连接, 主要是因为linux下敲代码懒得装环境+搞配置了~, 我是如何配置的具体见「<a href="https://blog.roccoshi.top/2021/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/vscode%E8%BF%9E%E6%8E%A5ssh/」">https://blog.roccoshi.top/2021/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/vscode%E8%BF%9E%E6%8E%A5ssh/」</a></li></ol><h2 id="2-作业完成与提交流程"><a href="#2-作业完成与提交流程" class="headerlink" title="2 | 作业完成与提交流程"></a>2 | 作业完成与提交流程</h2><ol><li>首先clone下git仓库</li></ol><p><code>git clone https://github.com/cmu-db/bustub.git</code></p><ol><li>用提供的shell脚本安装必要的环境</li></ol><p><code>sudo ./build_support/packages.sh</code></p><ol><li>按照project0中描述找到<code>p0_starter.h</code>文件</li></ol><blockquote><p>You will only need to modify a single file: <a href="https://github.com/cmu-db/bustub/blob/master/src/include/primer/p0_starter.h"><code>p0_starter.h</code></a> You can find the file in the <a href="https://github.com/cmu-db/bustub">BusTub repository</a> at <code>src/include/primer/p0_starter.h</code>.</p></blockquote><ol><li><p>按照project0的提示和程序中的注释修改<code>p0_starter.h</code>文件</p></li><li><p>配置环境</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> mkdir build</span><br><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> build</span><br><span class="hljs-meta">$</span><span class="bash"> cmake ..</span><br><span class="hljs-meta">$</span><span class="bash"> make</span><br></code></pre></td></tr></table></figure></li><li><p>编译文件并做测试</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> build</span><br><span class="hljs-meta">$</span><span class="bash"> make starter_test</span><br><span class="hljs-meta">$</span><span class="bash"> ./<span class="hljs-built_in">test</span>/starter_test</span><br></code></pre></td></tr></table></figure></li><li><p>必要的格式检查</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> build</span><br><span class="hljs-meta">$</span><span class="bash"> make format</span><br><span class="hljs-meta">$</span><span class="bash"> make check-lint</span><br><span class="hljs-meta">$</span><span class="bash"> make check-clang-tidy</span><br></code></pre></td></tr></table></figure></li><li><p>完成三个测试与检查后按照格式压缩成<code>project0-submission.zip</code>文件并提交到<code>gradescope</code></p></li><li><p>查看结果..</p></li></ol><p>第一次提交: </p><p><img src="https://youpai.roccoshi.top/20210720134851.png" alt=""></p><p>第二次提交: </p><p><img src="https://youpai.roccoshi.top/20210720135323.png" alt=""></p><p>nice！！！</p>]]></content>
+    
+    
+    <summary type="html">https://15445.courses.cs.cmu.edu/fall2020/</summary>
+    
+    
+    
+    <category term="数据库" scheme="https://blog.roccoshi.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="数据库" scheme="https://blog.roccoshi.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    <category term="cmu15-445" scheme="https://blog.roccoshi.top/tags/cmu15-445/"/>
+    
+  </entry>
   
   <entry>
     <title>vscode连接ssh或本地虚拟机</title>
@@ -271,9 +294,9 @@
     <category term="算法" scheme="https://blog.roccoshi.top/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="算法" scheme="https://blog.roccoshi.top/tags/%E7%AE%97%E6%B3%95/"/>
-    
     <category term="leetcode" scheme="https://blog.roccoshi.top/tags/leetcode/"/>
+    
+    <category term="算法" scheme="https://blog.roccoshi.top/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
@@ -366,9 +389,9 @@
     <category term="算法" scheme="https://blog.roccoshi.top/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="算法笔记" scheme="https://blog.roccoshi.top/tags/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="算法" scheme="https://blog.roccoshi.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="算法笔记" scheme="https://blog.roccoshi.top/tags/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -542,9 +565,9 @@
     <category term="算法" scheme="https://blog.roccoshi.top/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="算法笔记" scheme="https://blog.roccoshi.top/tags/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="算法" scheme="https://blog.roccoshi.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="算法笔记" scheme="https://blog.roccoshi.top/tags/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -651,11 +674,11 @@
     <category term="数据库" scheme="https://blog.roccoshi.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
+    <category term="数据库" scheme="https://blog.roccoshi.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
     <category term="大三期末复习" scheme="https://blog.roccoshi.top/tags/%E5%A4%A7%E4%B8%89%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/"/>
     
     <category term="西电" scheme="https://blog.roccoshi.top/tags/%E8%A5%BF%E7%94%B5/"/>
-    
-    <category term="数据库" scheme="https://blog.roccoshi.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
