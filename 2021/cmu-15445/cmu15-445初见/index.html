@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      667 字
+      661 字
     </span>
   
 
@@ -255,36 +255,25 @@
 <p>首先为了按照作业上的介绍来完成, 需要:</p>
 <ol>
 <li>在<a target="_blank" rel="noopener" href="https://www.gradescope.com/courses/163907/">gradescope</a>上注册一个账号并加入该课程, 用于<strong>提交作业</strong></li>
-<li>由于需要使用课程提供的脚本<code>sudo ./build_support/packages.sh</code>, 需要linux环境, 或者windows使用WSL, 具体见课程要求<a target="_blank" rel="noopener" href="https://github.com/cmu-db/bustub/blob/master/README.md">https://github.com/cmu-db/bustub/blob/master/README.md</a>, 我这里使用的是开着虚拟机用win下vscode连接, 主要是因为linux下敲代码懒得装环境+搞配置了~, 我是如何配置的具体见「<a href="https://blog.roccoshi.top/2021/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/vscode%E8%BF%9E%E6%8E%A5ssh/」">https://blog.roccoshi.top/2021/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/vscode%E8%BF%9E%E6%8E%A5ssh/」</a></li>
+<li>由于需要使用课程提供的脚本<code>sudo ./build_support/packages.sh</code>, 需要linux环境, 或者windows使用WSL, 具体见课程要求<a target="_blank" rel="noopener" href="https://github.com/cmu-db/bustub/blob/master/README.md">https://github.com/cmu-db/bustub/blob/master/README.md</a>, 我这里使用的是开着虚拟机用win下vscode连接, 主要是因为linux下敲代码懒得装环境+搞配置了~, 我是如何配置的具体见<a href="https://blog.roccoshi.top/2021/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/vscode%E8%BF%9E%E6%8E%A5ssh/"><a href="https://blog.roccoshi.top/2021/配置环境/vscode连接ssh/">vscode连接ssh或本地虚拟机</a></a></li>
 </ol>
-<h2 id="2-作业完成与提交流程"><a href="#2-作业完成与提交流程" class="headerlink" title="2 | 作业完成与提交流程"></a>2 | 作业完成与提交流程</h2><ol>
-<li>首先clone下git仓库</li>
-</ol>
+<h2 id="2-作业完成与提交流程"><a href="#2-作业完成与提交流程" class="headerlink" title="2 | 作业完成与提交流程"></a>2 | 作业完成与提交流程</h2><p>1 | 首先clone下git仓库</p>
 <p><code>git clone https://github.com/cmu-db/bustub.git</code></p>
-<ol>
-<li>用提供的shell脚本安装必要的环境</li>
-</ol>
+<p>2 | 用提供的shell脚本安装必要的环境</p>
 <p><code>sudo ./build_support/packages.sh</code></p>
-<ol>
-<li>按照project0中描述找到<code>p0_starter.h</code>文件</li>
-</ol>
+<p>3 | 按照project0中描述找到<code>p0_starter.h</code>文件</p>
 <blockquote>
 <p>You will only need to modify a single file: <a target="_blank" rel="noopener" href="https://github.com/cmu-db/bustub/blob/master/src/include/primer/p0_starter.h"><code>p0_starter.h</code></a> You can find the file in the <a target="_blank" rel="noopener" href="https://github.com/cmu-db/bustub">BusTub repository</a> at <code>src/include/primer/p0_starter.h</code>.</p>
 </blockquote>
-<ol>
-<li><p>按照project0的提示和程序中的注释修改<code>p0_starter.h</code>文件</p>
-</li>
-<li><p>配置环境</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> mkdir build</span><br><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> build</span><br><span class="hljs-meta">$</span><span class="bash"> cmake ..</span><br><span class="hljs-meta">$</span><span class="bash"> make</span><br></code></pre></td></tr></table></figure></li>
-<li><p>编译文件并做测试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> build</span><br><span class="hljs-meta">$</span><span class="bash"> make starter_test</span><br><span class="hljs-meta">$</span><span class="bash"> ./<span class="hljs-built_in">test</span>/starter_test</span><br></code></pre></td></tr></table></figure></li>
-<li><p>必要的格式检查</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> build</span><br><span class="hljs-meta">$</span><span class="bash"> make format</span><br><span class="hljs-meta">$</span><span class="bash"> make check-lint</span><br><span class="hljs-meta">$</span><span class="bash"> make check-clang-tidy</span><br></code></pre></td></tr></table></figure></li>
-<li><p>完成三个测试与检查后按照格式压缩成<code>project0-submission.zip</code>文件并提交到<code>gradescope</code></p>
-</li>
-<li><p>查看结果..</p>
-</li>
-</ol>
+<p>4 | 按照project0的提示和程序中的注释修改<code>p0_starter.h</code>文件</p>
+<p>5 | 配置环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> mkdir build</span><br><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> build</span><br><span class="hljs-meta">$</span><span class="bash"> cmake ..</span><br><span class="hljs-meta">$</span><span class="bash"> make</span><br></code></pre></td></tr></table></figure>
+<p>6 | 编译文件并做测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> build</span><br><span class="hljs-meta">$</span><span class="bash"> make starter_test</span><br><span class="hljs-meta">$</span><span class="bash"> ./<span class="hljs-built_in">test</span>/starter_test</span><br></code></pre></td></tr></table></figure>
+<p>7 | 必要的格式检查</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> build</span><br><span class="hljs-meta">$</span><span class="bash"> make format</span><br><span class="hljs-meta">$</span><span class="bash"> make check-lint</span><br><span class="hljs-meta">$</span><span class="bash"> make check-clang-tidy</span><br></code></pre></td></tr></table></figure>
+<p>8 | 完成三个测试与检查后按照格式压缩成<code>project0-submission.zip</code>文件并提交到<code>gradescope</code></p>
+<p>9 | 查看结果..</p>
 <p>第一次提交: </p>
 <p><img src="https://youpai.roccoshi.top/20210720134851.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>第二次提交: </p>

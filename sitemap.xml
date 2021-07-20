@@ -100,14 +100,14 @@
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/2021/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E3%80%8C%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E3%80%8D(%E4%BA%8C)%E5%88%86%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA/</loc>
+    <loc>https://blog.roccoshi.top/2021/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E3%80%8C%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E3%80%8D(%E4%B8%80)%E7%AE%97%E6%B3%95%E5%88%9D%E6%AD%A5/</loc>
     
     <lastmod>2021-03-23</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/2021/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E3%80%8C%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E3%80%8D(%E4%B8%80)%E7%AE%97%E6%B3%95%E5%88%9D%E6%AD%A5/</loc>
+    <loc>https://blog.roccoshi.top/2021/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E3%80%8C%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E3%80%8D(%E4%BA%8C)%E5%88%86%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA/</loc>
     
     <lastmod>2021-03-23</lastmod>
     
@@ -142,14 +142,14 @@
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E5%9B%9B)%20Numpy(%E4%B8%89)%20%E8%81%9A%E5%90%88%20%E5%B9%BF%E6%92%AD/</loc>
+    <loc>https://blog.roccoshi.top/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E5%85%AD)%20Pandas(%E4%B8%80)%20Pandas%E7%AE%80%E4%BB%8B/</loc>
     
     <lastmod>2021-03-23</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E5%85%AD)%20Pandas(%E4%B8%80)%20Pandas%E7%AE%80%E4%BB%8B/</loc>
+    <loc>https://blog.roccoshi.top/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E5%9B%9B)%20Numpy(%E4%B8%89)%20%E8%81%9A%E5%90%88%20%E5%B9%BF%E6%92%AD/</loc>
     
     <lastmod>2021-03-23</lastmod>
     
@@ -177,14 +177,14 @@
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%89)%20Numpy(%E4%BA%8C)%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0/</loc>
+    <loc>https://blog.roccoshi.top/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%83)%20Pandas(%E4%BA%8C)/</loc>
     
     <lastmod>2021-03-23</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%83)%20Pandas(%E4%BA%8C)/</loc>
+    <loc>https://blog.roccoshi.top/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%B8%89)%20Numpy(%E4%BA%8C)%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0/</loc>
     
     <lastmod>2021-03-23</lastmod>
     
@@ -214,20 +214,6 @@
 
   
   <url>
-    <loc>https://blog.roccoshi.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
-    <lastmod>2021-07-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.roccoshi.top/tags/cmu15-445/</loc>
-    <lastmod>2021-07-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.roccoshi.top/tags/socket/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
@@ -236,6 +222,20 @@
   
   <url>
     <loc>https://blog.roccoshi.top/tags/tcp/</loc>
+    <lastmod>2021-07-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.roccoshi.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <lastmod>2021-07-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.roccoshi.top/tags/cmu15-445/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -256,6 +256,20 @@
   </url>
   
   <url>
+    <loc>https://blog.roccoshi.top/tags/python/</loc>
+    <lastmod>2021-07-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.roccoshi.top/tags/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/</loc>
+    <lastmod>2021-07-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.roccoshi.top/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
@@ -270,28 +284,21 @@
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/tags/vscode/</loc>
+    <loc>https://blog.roccoshi.top/tags/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/tags/linux/</loc>
+    <loc>https://blog.roccoshi.top/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/tags/python/</loc>
-    <lastmod>2021-07-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.roccoshi.top/tags/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/</loc>
+    <loc>https://blog.roccoshi.top/tags/flex/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -326,21 +333,14 @@
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/tags/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://blog.roccoshi.top/tags/vscode/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</loc>
-    <lastmod>2021-07-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.roccoshi.top/tags/flex/</loc>
+    <loc>https://blog.roccoshi.top/tags/linux/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -391,14 +391,14 @@
 
   
   <url>
-    <loc>https://blog.roccoshi.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <loc>https://blog.roccoshi.top/categories/socket/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/categories/socket/</loc>
+    <loc>https://blog.roccoshi.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -412,6 +412,13 @@
   </url>
   
   <url>
+    <loc>https://blog.roccoshi.top/categories/python/</loc>
+    <lastmod>2021-07-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.roccoshi.top/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
@@ -419,14 +426,7 @@
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/categories/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/</loc>
-    <lastmod>2021-07-20</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.roccoshi.top/categories/python/</loc>
+    <loc>https://blog.roccoshi.top/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -447,7 +447,7 @@
   </url>
   
   <url>
-    <loc>https://blog.roccoshi.top/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</loc>
+    <loc>https://blog.roccoshi.top/categories/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/</loc>
     <lastmod>2021-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
