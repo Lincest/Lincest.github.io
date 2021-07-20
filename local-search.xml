@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>几种运算中基于分治的优化</title>
+    <link href="/2021/%E7%AE%97%E6%B3%95/%E5%87%A0%E7%A7%8D%E8%BF%90%E7%AE%97%E4%B8%AD%E5%9F%BA%E4%BA%8E%E5%88%86%E6%B2%BB%E7%9A%84%E4%BC%98%E5%8C%96/"/>
+    <url>/2021/%E7%AE%97%E6%B3%95/%E5%87%A0%E7%A7%8D%E8%BF%90%E7%AE%97%E4%B8%AD%E5%9F%BA%E4%BA%8E%E5%88%86%E6%B2%BB%E7%9A%84%E4%BC%98%E5%8C%96/</url>
+    
+    <content type="html"><![CDATA[<h2 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h2><p>众所周知, 快速幂主要基于平方法进行优化, 当指数为偶数的时候</p><script type="math/tex; mode=display">a ^ b = a ^ {\frac{b}{2}} \times a ^ {\frac{b}{2}}</script><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">ll <span class="hljs-title">qpow</span><span class="hljs-params">(ll x, ll y, ll mod)</span>  </span>&#123;<br>    ll ans = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (y) &#123;<br>        <span class="hljs-keyword">if</span>(y &amp; <span class="hljs-number">1</span>) ans = ans * x % mod;<br>        x = x * x % mod;<br>        y &gt;&gt;= <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="龟速乘"><a href="#龟速乘" class="headerlink" title="龟速乘"></a>龟速乘</h2><p>龟速乘主要用来解决两个数相乘直接爆long long的问题</p><p>比如这题: <a href="https://www.acwing.com/problem/content/92/">https://www.acwing.com/problem/content/92/</a></p><p>思想和快速幂基本一致, 即当b为偶数时</p><script type="math/tex; mode=display">a \times b = a \times 2 \times \frac{b}{2}</script><p>换句话说, 即用二进制的思想, 对64位整数b, 我们循环他的每一个二进制位, 第n位为1就加上$2^n \times a$即可</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">ll <span class="hljs-title">qadd</span><span class="hljs-params">(ll a, ll b, ll mod)</span> </span>&#123;<br>    ll ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (b) &#123;<br>        <span class="hljs-keyword">if</span> (b &amp; <span class="hljs-number">1</span>) &#123;<br>            ans = (ans + a) % mod;<br>        &#125;<br>        a = (a + a) % mod;<br>        b &gt;&gt;= <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="等比数列求和"><a href="#等比数列求和" class="headerlink" title="等比数列求和"></a>等比数列求和</h2><p>对于一个等比数列</p><script type="math/tex; mode=display">p^0 + p^1 + p^2 + ...+ p^n \text{(共k=n+1项)}</script><p>当n非常大, 我们需要对答案取mod</p><p>首先可以利用等比数列求和公式解决取模的问题, 不过<strong>需要考虑逆元</strong></p><p>现在来考虑用分治的方法解决这个问题</p><p>首先分情况讨论k为奇和偶</p><p>当k为偶数时, 可知</p><script type="math/tex; mode=display">p^0 + p^1 + p^2 + ...+ p^n = (p^0 + p^1 + ... + p^{k/2-1}) + (p^{k/2}+...+p^n)</script><p>此时可化为</p><script type="math/tex; mode=display">=(1+p^{k/2})(p^0 + p^1 + ... + p^{k/2-1})</script><p>我们用<code>sum(p, k - 1)</code>来表示$p^0 + p^1 + p^2 + …+ p^n$</p><p>即当k为偶数时<code>sum(p, k) = sum(p, k / 2) * (1 + qpow(p, k / 2))</code></p><p>当k为奇数时很简单, 只需要将第一项或者最后一项拿出, 再把剩余部分当作偶数情况考虑即可, 我们这里选择将最后一项拿出,</p><p>即当k为奇数时<code>sum(p, k) = sum(p, k - 1) + qpow(p, k - 1)</code></p><p>代码:</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 求a^0 + a^1 + a^2 + ... + a^(b - 1)</span><br><span class="hljs-function">ll <span class="hljs-title">sum</span> <span class="hljs-params">(ll a, ll b)</span> </span>&#123;<br>    ll ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (b &lt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (b &amp; <span class="hljs-number">1</span>) &#123;<br>        ans = sum(a, b - <span class="hljs-number">1</span>) + qpow(a, b - <span class="hljs-number">1</span>);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        ans = (<span class="hljs-number">1</span> + qpow(a, b / <span class="hljs-number">2</span>)) * sum (a, b / <span class="hljs-number">2</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans % mod;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>算法</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>算法</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>「cmu15-445」初见</title>
     <link href="/2021/cmu-15445/cmu15-445%E5%88%9D%E8%A7%81/"/>
     <url>/2021/cmu-15445/cmu15-445%E5%88%9D%E8%A7%81/</url>
@@ -132,11 +157,11 @@
     
     <tags>
       
+      <tag>编译原理</tag>
+      
       <tag>大三期末复习</tag>
       
       <tag>西电</tag>
-      
-      <tag>编译原理</tag>
       
     </tags>
     
@@ -629,31 +654,6 @@
     <tags>
       
       <tag>算法笔记</tag>
-      
-      <tag>算法</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>几种运算中基于分治的优化</title>
-    <link href="/2021/%E7%AE%97%E6%B3%95/%E5%87%A0%E7%A7%8D%E8%BF%90%E7%AE%97%E4%B8%AD%E5%9F%BA%E4%BA%8E%E5%88%86%E6%B2%BB%E7%9A%84%E4%BC%98%E5%8C%96/"/>
-    <url>/2021/%E7%AE%97%E6%B3%95/%E5%87%A0%E7%A7%8D%E8%BF%90%E7%AE%97%E4%B8%AD%E5%9F%BA%E4%BA%8E%E5%88%86%E6%B2%BB%E7%9A%84%E4%BC%98%E5%8C%96/</url>
-    
-    <content type="html"><![CDATA[<h2 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h2><p>众所周知, 快速幂主要基于平方法进行优化, 当指数为偶数的时候</p><script type="math/tex; mode=display">a ^ b = a ^ {\frac{b}{2}} \times a ^ {\frac{b}{2}}</script><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">ll <span class="hljs-title">qpow</span><span class="hljs-params">(ll x, ll y, ll mod)</span>  </span>&#123;<br>    ll ans = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (y) &#123;<br>        <span class="hljs-keyword">if</span>(y &amp; <span class="hljs-number">1</span>) ans = ans * x % mod;<br>        x = x * x % mod;<br>        y &gt;&gt;= <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="龟速乘"><a href="#龟速乘" class="headerlink" title="龟速乘"></a>龟速乘</h2><p>龟速乘主要用来解决两个数相乘直接爆long long的问题</p><p>比如这题: <a href="https://www.acwing.com/problem/content/92/">https://www.acwing.com/problem/content/92/</a></p><p>思想和快速幂基本一致, 即当b为偶数时</p><script type="math/tex; mode=display">a \times b = a \times 2 \times \frac{b}{2}</script><p>换句话说, 即用二进制的思想, 对64位整数b, 我们循环他的每一个二进制位, 第n位为1就加上$2^n \times a$即可</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">ll <span class="hljs-title">qadd</span><span class="hljs-params">(ll a, ll b, ll mod)</span> </span>&#123;<br>    ll ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (b) &#123;<br>        <span class="hljs-keyword">if</span> (b &amp; <span class="hljs-number">1</span>) &#123;<br>            ans = (ans + a) % mod;<br>        &#125;<br>        a = (a + a) % mod;<br>        b &gt;&gt;= <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="等比数列求和"><a href="#等比数列求和" class="headerlink" title="等比数列求和"></a>等比数列求和</h2><p>对于一个等比数列</p><script type="math/tex; mode=display">p^0 + p^1 + p^2 + ...+ p^n \text{(共k=n+1项)}</script><p>当n非常大, 我们需要对答案取mod</p><p>首先可以利用等比数列求和公式解决取模的问题, 不过<strong>需要考虑逆元</strong></p><p>现在来考虑用分治的方法解决这个问题</p><p>首先分情况讨论k为奇和偶</p><p>当k为偶数时, 可知</p><script type="math/tex; mode=display">p^0 + p^1 + p^2 + ...+ p^n = (p^0 + p^1 + ... + p^{k/2-1}) + (p^{k/2}+...+p^n)</script><p>此时可化为</p><script type="math/tex; mode=display">=(1+p^{k/2})(p^0 + p^1 + ... + p^{k/2-1})</script><p>我们用<code>sum(p, k - 1)</code>来表示$p^0 + p^1 + p^2 + …+ p^n$</p><p>即当k为偶数时<code>sum(p, k) = sum(p, k / 2) * (1 + qpow(p, k / 2))</code></p><p>当k为奇数时很简单, 只需要将第一项或者最后一项拿出, 再把剩余部分当作偶数情况考虑即可, 我们这里选择将最后一项拿出,</p><p>即当k为奇数时<code>sum(p, k) = sum(p, k - 1) + qpow(p, k - 1)</code></p><p>代码:</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 求a^0 + a^1 + a^2 + ... + a^(b - 1)</span><br><span class="hljs-function">ll <span class="hljs-title">sum</span> <span class="hljs-params">(ll a, ll b)</span> </span>&#123;<br>    ll ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (b &lt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (b &amp; <span class="hljs-number">1</span>) &#123;<br>        ans = sum(a, b - <span class="hljs-number">1</span>) + qpow(a, b - <span class="hljs-number">1</span>);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        ans = (<span class="hljs-number">1</span> + qpow(a, b / <span class="hljs-number">2</span>)) * sum (a, b / <span class="hljs-number">2</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans % mod;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-    
-    
-    <categories>
-      
-      <category>算法</category>
-      
-    </categories>
-    
-    
-    <tags>
       
       <tag>算法</tag>
       
