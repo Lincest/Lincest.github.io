@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      6.6k 字
+      6.8k 字
     </span>
   
 
@@ -196,7 +196,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      76
+      78
        分钟
     </span>
   
@@ -258,7 +258,7 @@
 <li>参数传递的方法有<strong>值调用, 引用调用, 复写-恢复, 换名调用</strong>, 其中<strong>引用调用和复写-恢复</strong>要求实参一定是左值</li>
 <li>LL(1)分析中, 第一个L表示<strong>自左向右扫描输入串</strong>, 第二个L表示<strong>最左推导</strong>, 1表示<strong>向前看1个终结符</strong></li>
 <li>常见的中间代码形式有<strong>三地址码, 后缀式, 树</strong></li>
-<li>程序变量的重复定义会在<strong>_</strong>阶段被发现</li>
+<li>程序变量的重复定义会在<strong>语义分析</strong>阶段被发现</li>
 </ol>
 <h2 id="14年填空"><a href="#14年填空" class="headerlink" title="14年填空"></a>14年填空</h2><ol>
 <li><strong>符号表管理</strong>和<strong>出错处理</strong>是编译程序各阶段都涉及到的工作</li>
@@ -278,7 +278,7 @@
 <li>自下而上的分析中, 需要对输入序列进行规范归约, 反复用产生式的左部替换句型的<strong>句柄</strong>, 最终得到开始符号</li>
 <li>文法产生二义性的原因是缺少对文法符号<strong>优先级</strong>和<strong>结合性</strong>的规定</li>
 <li>语义规则的两种表示方式是<strong>语法制导定义</strong>和<strong>翻译方案</strong></li>
-<li>综合属性再分析树上的计算次序与<strong>自下而上</strong>语法分析形成分析树的过程一致</li>
+<li>综合属性在分析树上的计算次序与<strong>自下而上</strong>语法分析形成分析树的过程一致</li>
 <li>LR分析的语法制导翻译将语义规则放在产生式右部的<strong>最右边</strong>, LR分析器在执行<strong>归约</strong>动作时执行语义动作</li>
 <li>赋值语句<code>x = a + (b * c)</code>的后缀式是<code>xabc*+=</code></li>
 <li>CFG无法描述在语法中的变量声明与引用, 可在语义规则中通过对<strong>符号表</strong>的插入, 查找等操作实现</li>
@@ -288,7 +288,6 @@
 <li>一个编译程序中包含的部分除了<strong>词法分析, 语法分析, 语义分析, 中间代码生成, 代码优化, 目标代码生成</strong>五个部分, 还应包括<strong>出错处理和符号表管理</strong></li>
 <li>编译器的各阶段工作中, <strong>中间代码生成和代码优化</strong>部分不是每个编译程序都必须的</li>
 <li>词法分析器用于识别<strong>单词</strong></li>
-<li>语法分析器可以发现源程序中的<strong>语法错误</strong></li>
 <li>解释器处理程序语言时, 大多数采用的是先将程序转化为<strong>中间代码</strong>, 再解释执行</li>
 <li>高级语言的语言处理程序分为解释程序和编译程序两种, 编译程序有五个阶段, 而解释程序通常缺少<strong>目标代码生成</strong>和<strong>代码优化</strong></li>
 <li>受到具体机器主存容量的限制, 编译程序几个不同阶段的工作往往被组合成<strong>遍</strong>, 诸阶段的工作往往是<strong>穿插</strong>进行的</li>
@@ -332,11 +331,30 @@
 <li>画出表达式的注释语法树</li>
 </ol>
 <h2 id="14年简答"><a href="#14年简答" class="headerlink" title="14年简答"></a>14年简答</h2><ol>
-<li>解释什么是LR(0)项目中的移进/归约冲突, 简单说明SLR(1)方法如何解决移进-归约冲突</li>
-<li>为什么在一般情况下用正规式而不用CFG来描述语言的词法</li>
-<li>符号表的作用是什么? 符号表的操作有哪些?</li>
-<li>控制栈中的活动记录保存的信息有什么? 具体内容有什么?</li>
-<li>句子按找某文法归约值是多少, 判定文法是否是二义文法</li>
+<li><p>解释什么是LR(0)项目中的移进/归约冲突, 简单说明SLR(1)方法如何解决移进-归约冲突</p>
+</li>
+<li><p>为什么在一般情况下用正规式而不用CFG来描述语言的词法</p>
+<blockquote>
+<ol>
+<li>词法规则简单, 用正规式描述已经足够</li>
+<li>正规式的表达比CFG更加直观, 简介, 易于理解</li>
+<li>有限自动机的构造比下推自动机简单, 且分析效率高</li>
+<li>区分词法和语法, 为编译器前端模块的划分提供方便</li>
+</ol>
+</blockquote>
+</li>
+<li><p>符号表的作用是什么? 符号表的操作有哪些?</p>
+<blockquote>
+<p>符号表的作用: </p>
+<p>连接声明与引用的桥梁。一个名字在声明时，相关信息被填写进符号表；而在引用时，根据符号表中的信息生成相应的可执行语句。有效记录各类符号的信息，以便于在编译的各个阶段对符号表进行快速、有效的查找、插入、修改、删除等操作。</p>
+<p>符号表的操作:</p>
+<p>插入, 修改, 删除, 查找</p>
+</blockquote>
+</li>
+<li><p>控制栈中的活动记录保存的信息有什么? 具体内容有什么?</p>
+</li>
+<li><p>句子按找某文法归约值是多少, 判定文法是否是二义文法</p>
+</li>
 </ol>
 <h2 id="15年简答"><a href="#15年简答" class="headerlink" title="15年简答"></a>15年简答</h2><ol>
 <li>解释什么是编译器的扫描遍数</li>
@@ -459,10 +477,15 @@
 <p>基本思想是根据翻译的需要设置文法符号的属性，以描述语法结构的语义</p>
 </blockquote>
 </li>
-<li><p>常用的中间语言种类有哪几种, 使用中间语言的好处有哪些?</p>
+<li><p>常用的中间语言种类有哪几种, 使用中间语言的好1处有哪些?  中间语言的特性?</p>
 <blockquote>
 <p>常用的中间语言种类有<strong>逆波兰表示、三元式、四元式和树形表示。</strong></p>
 <p>中间代码上起一个编译器前端与后端分水岭的作用，目的是便于编译器的开发移植和代码的优化。</p>
+<p>特性:</p>
+<ol>
+<li>便于语法制导翻译</li>
+<li>既与机器指令的结构相近, 又与具体机器无关</li>
+</ol>
 </blockquote>
 </li>
 <li><p>三元式和四元式的表示</p>
@@ -535,10 +558,8 @@
 <blockquote>
 <ol>
 <li>首先消除左递归和左因子, 构造原来文法G的等价的LL(1)文法G’</li>
-<li>求每一个非终结符的FIRST集合和FOLLOW集合<ol>
+<li>求每一个非终结符的FIRST集合和FOLLOW集合</li>
 <li>画出预测分析表M, 第一列是所有非终结符, 第一行是所有终结符(不包括ε) + <code>#</code></li>
-</ol>
-</li>
 <li>对于每一个产生式<code>A-&gt;α</code>, 对于每一个FIRST(α) = a, 在M[A, a]上填上这个产生式, 如果FIRST(α) = ε, 则找到FOLLOW(A) = b, 在所有M[A, b]上填上产生式<code>A-&gt;ε</code></li>
 </ol>
 </blockquote>
@@ -567,7 +588,7 @@
 </li>
 </ul>
 <blockquote>
-<p>注意FIRST集合中包含ε, FOLLOW集合中不包含ε, FOLLOW集中首先要加上<code>#</code>, 构造M[A, a]时是对于每一个<code>A-&gt;α</code>中的FIRST(α)而不是FIRST(A)</p>
+<p>注意FIRST集合中包含ε, FOLLOW集合中不包含ε, FOLLOW集中首先要加上<code>#</code>, 构造M[A, a]时是对于每一个<code>A-&gt;α</code>中的FIRST(α)</p>
 </blockquote>
 <p><code>e.g.</code></p>
 <p><img src="https://youpai.roccoshi.top/20210612125446.png" srcset="/img/loading.gif" lazyload alt=""></p>
@@ -924,13 +945,13 @@
 <p>即先把int-&gt;real, 计算后再把结果real-&gt;int</p>
 <p><code>e.g.</code></p>
 <ol>
-<li>将语句<code>if a &lt; b or b &gt; d then while a &gt; 3 and b &lt; 4 do a := a + b;</code>翻译成三地址码, 其中<code>a, c</code>为整型, <code>b, d</code>为实型, 布尔表达式采用短路计算</li>
+<li>将语句<code>if a &lt; c or b &gt; d then while a &gt; 3 and b &lt; 4 do a := a + b;</code>翻译成三地址码, 其中<code>a, c</code>为整型, <code>b, d</code>为实型, 布尔表达式采用短路计算</li>
 </ol>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs txt">1. if a &lt; c goto 5<br>2. goto 3<br>3. if b &gt; d goto 5<br>4. goto -<br>5. if a &gt; 3 goto 7<br>6. goto -<br>7. if b &lt; 4 goto 9<br>8. goto -<br>9. t1 = itr a<br>10. t2 = t1 + b<br>11. a = rti t2<br>12. goto 5<br></code></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs txt">1. if a &lt; c goto 5<br>2. goto 3<br>3. if b &gt; d goto 5<br>4. goto -<br>5. if a &gt; 3 goto 7<br>6. goto -<br>7. if b &lt; 4 goto 9<br>8. goto -<br>9. t1 := itr a<br>10. t2 := t1 + b<br>11. a := rti t2<br>12. goto 5<br></code></pre></td></tr></table></figure>
 <ol>
 <li>将语句<code>while a &lt; b or not c &lt; d do if b &lt; a then a := b * d else c := a + b</code>, 其中a, b为整型, c, d为实型, 布尔表达式采用短路计算</li>
 </ol>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs txt">1. if a &lt; b goto 5<br>2. goto 3<br>3. if c &lt; d goto -<br>4. goto 5<br>5. if b &lt; a goto 7<br>6. goto 11<br>7. t1 = itr b<br>8. t2 = t1 * d<br>9. a = rti t2<br>10. goto 1<br>11. t3 = a + b<br>12. c = itr t3<br>13. goto 1<br></code></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs txt">1. if a &lt; b goto 5<br>2. goto 3<br>3. if c &lt; d goto -<br>4. goto 5<br>5. if b &lt; a goto 7<br>6. goto 11<br>7. t1 := itr b<br>8. t2 := t1 * d<br>9. a := rti t2<br>10. goto 1<br>11. t3 := a + b<br>12. c := itr t3<br>13. goto 1<br></code></pre></td></tr></table></figure>
 <h1 id="4-其他补充知识点"><a href="#4-其他补充知识点" class="headerlink" title="4 | 其他补充知识点"></a>4 | 其他补充知识点</h1><h2 id="4-1-绪论-词法分析"><a href="#4-1-绪论-词法分析" class="headerlink" title="4.1 | 绪论+词法分析"></a>4.1 | 绪论+词法分析</h2><p><strong>二义性:</strong> 一个句子对应多于一颗语法树</p>
 <blockquote>
 <p>上下文无关文法的二义性是不可判定的, 即不存在这样一种算法, 对于任意一个上下文无关文法G, 该算法都可以计算出G是否是一个二义文法。</p>
@@ -1074,8 +1095,8 @@ A--&gt;树
 <p>右值可以仅仅是一个值(内容), 没有存储空间</p>
 <p><strong>拉链-回填技术的基本思想</strong></p>
 <ol>
-<li>当三地址码中的转向不确定时，将所有转向同一地址的三<br>地址码拉成一个链；</li>
-<li>一旦所转向的地址被确定，则沿此链将所有的三地址码中<br>回填入此地址。</li>
+<li>当三地址码中的转向不确定时，将所有转向同一地址的三地址码拉成一个链；</li>
+<li>一旦所转向的地址被确定，则沿此链将所有的三地址码中回填入此地址。</li>
 </ol>
 
             </div>
@@ -1094,11 +1115,11 @@ A--&gt;树
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
-                    
                       <a class="hover-with-bg" href="/tags/%E5%A4%A7%E4%B8%89%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/">大三期末复习</a>
                     
                       <a class="hover-with-bg" href="/tags/%E8%A5%BF%E7%94%B5/">西电</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
                     
                   </div>
                 
