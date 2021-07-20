@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Welcome to ShootZone, I&#39;m RoccoShi, this a place where I focus on creation and sharing.">
+  <meta name="description" content="总结一下这几天刷题碰到的很牛的基于分治的常见公式的优化">
   <meta name="author" content="RoccoShi">
   <meta name="keywords" content="roccoshi,shootzone">
   
-  <title>python数据科学(三) Numpy(二) 通用函数 - ShootZone</title>
+  <title>几种运算中基于分治的优化 - ShootZone</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -164,7 +164,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="python数据科学(三) Numpy(二) 通用函数">
+            <span class="h2" id="subtitle" title="几种运算中基于分治的优化">
               
             </span>
 
@@ -174,7 +174,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-01-15 17:27" pubdate>
+      <time datetime="2021-01-15 14:42" pubdate>
         2021年1月15日 下午
       </time>
     </span>
@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      555 字
+      532 字
     </span>
   
 
@@ -196,7 +196,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6
+      7
        分钟
     </span>
   
@@ -234,106 +234,34 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">python数据科学(三) Numpy(二) 通用函数</h1>
+            <h1 style="display: none">几种运算中基于分治的优化</h1>
             
             <div class="markdown-body">
-              <h1 id="python数据科学-三-Numpy-二-通用函数"><a href="#python数据科学-三-Numpy-二-通用函数" class="headerlink" title="python数据科学(三) Numpy(二) 通用函数"></a>python数据科学(三) Numpy(二) 通用函数</h1><blockquote>
-<p>NumPy 为很多类型的操作提供了非常方便的、静态类型的、可编译程序的接口，也被称作向量操作。你可以通过简单地对数组执行操作来实现，这里对数组的操作将会被用于数组中的每一个元素。这种向量方法被用于将循环推送至 NumPy 之下的编译层，这样会取得更快的执行效率。  </p>
-</blockquote>
-<h2 id="1-数组的运算"><a href="#1-数组的运算" class="headerlink" title="1 | 数组的运算"></a>1 | 数组的运算</h2><p><img src="https://youpai.roccoshi.top/img/20210115174127.png" srcset="/img/loading.gif" lazyload alt="NumPy实现的算数运算符"></p>
-<p>对数组应用这些运算符, 相当于对数组的每一个元素应用+-x/之类</p>
-<p><img src="https://youpai.roccoshi.top/img/20210115174334.png" srcset="/img/loading.gif" lazyload alt="数组的运算"></p>
-<h2 id="2-绝对值"><a href="#2-绝对值" class="headerlink" title="2 | 绝对值"></a>2 | 绝对值</h2><p><img src="https://youpai.roccoshi.top/img/20210115174624.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h2 id="3-三角函数"><a href="#3-三角函数" class="headerlink" title="3 | 三角函数"></a>3 | 三角函数</h2><p>角度数组的定义: </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">theta = np.linspace(<span class="hljs-number">0</span>, np.pi, <span class="hljs-number">3</span>)  <span class="hljs-comment"># 0, pi/2, pi</span><br></code></pre></td></tr></table></figure>
-<p>三角函数: <code>np.sin</code> <code>np.cos</code> <code>np.tan</code></p>
-<p><img src="https://youpai.roccoshi.top/img/20210115175233.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>同样可以使用逆三角函数<code>np.arccos</code> <code>np.arcsin</code> <code>np.arctan</code></p>
-<h2 id="4-指数和对数"><a href="#4-指数和对数" class="headerlink" title="4 | 指数和对数"></a>4 | 指数和对数</h2><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>指数运算</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>np.exp(x)</code></td>
-<td>$e^x$</td>
-</tr>
-<tr>
-<td><code>np.exp2(x)</code></td>
-<td>$2^x$</td>
-</tr>
-<tr>
-<td><code>np.power(n, x)</code></td>
-<td>$n^x$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>对数运算</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>np.log(x)</code></td>
-<td>$\ln \left( \mathrm{x} \right) $</td>
-</tr>
-<tr>
-<td><code>np.log2(x)</code></td>
-<td>$\log _2\mathrm{x}$</td>
-</tr>
-<tr>
-<td><code>np.log10(x)</code></td>
-<td>$\lg\mathrm{x}$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>还有一些特殊版本: </p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>运算</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>np.expm1(x)</code></td>
-<td>$\mathrm{e}^{\mathrm{x}}-1$</td>
-</tr>
-<tr>
-<td><code>np.log1p(x)</code></td>
-<td>$\ln \left( 1+\mathrm{x} \right) $</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>当x值很小时, 这两个特殊运算给出的计算较<code>np.log</code>和<code>np.exp</code>更加精确</p>
-<h2 id="5-专用通用函数"><a href="#5-专用通用函数" class="headerlink" title="5 | 专用通用函数"></a>5 | 专用通用函数</h2><p>NumPy除了上述常用的通用函数之外, 还提供了双曲三角函数, 比特位运算, 比较运算, 弧度转角度, 求,整取余等运算符, 见: </p>
-<p><a target="_blank" rel="noopener" href="https://www.numpy.org.cn/reference/ufuncs.html#%E5%8F%AF%E7%94%A8ufuncs">Numpy文档-可用ufuncs</a></p>
-<p>除此之外, 还有一个专用的通用函数子模块用于进行晦涩的数学计算, 叫做<code>scipy.special</code></p>
-<p><a target="_blank" rel="noopener" href="https://docs.scipy.org/doc/scipy/reference/special.html#scipy.special">scipy.special文档</a></p>
-<p>(具体用的时候再看吧..)</p>
-<h2 id="6-高级的通用函数特性"><a href="#6-高级的通用函数特性" class="headerlink" title="6 | 高级的通用函数特性"></a>6 | 高级的通用函数特性</h2><h3 id="6-1-指定输出"><a href="#6-1-指定输出" class="headerlink" title="6-1 | 指定输出"></a>6-1 | 指定输出</h3><p>所有的通用函数都可以通过out参数来指定输出的位置: </p>
-<p>比如我先定义一个全0数组y</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">y = np.zeros(<span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure>
-<p>然后指定x*10存放在y数组中, 每间隔一个存放</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">np.multiply(x, <span class="hljs-number">10</span>, out = y[::<span class="hljs-number">2</span>])<br></code></pre></td></tr></table></figure>
-<p><img src="https://youpai.roccoshi.top/img/20210115181225.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="6-2-聚合"><a href="#6-2-聚合" class="headerlink" title="6-2 | 聚合"></a>6-2 | 聚合</h3><p>reduce方法: </p>
-<p><img src="https://youpai.roccoshi.top/img/20210115181819.png" srcset="/img/loading.gif" lazyload alt="reduce方法"></p>
-<h3 id="6-3-外积"><a href="#6-3-外积" class="headerlink" title="6-3 | 外积"></a>6-3 | 外积</h3><p>任何通用函数都可以用<code>outer</code>方法获得两个不同输入数组<strong>所有元素对的函数运算结果</strong></p>
-<p><img src="https://youpai.roccoshi.top/img/20210115185354.png" srcset="/img/loading.gif" lazyload alt="外积"></p>
+              <h2 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h2><p>众所周知, 快速幂主要基于平方法进行优化, 当指数为偶数的时候</p>
+<script type="math/tex; mode=display">
+a ^ b = a ^ {\frac{b}{2}} \times a ^ {\frac{b}{2}}</script><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">ll <span class="hljs-title">qpow</span><span class="hljs-params">(ll x, ll y, ll mod)</span>  </span>&#123;<br>    ll ans = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (y) &#123;<br>        <span class="hljs-keyword">if</span>(y &amp; <span class="hljs-number">1</span>) ans = ans * x % mod;<br>        x = x * x % mod;<br>        y &gt;&gt;= <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="龟速乘"><a href="#龟速乘" class="headerlink" title="龟速乘"></a>龟速乘</h2><p>龟速乘主要用来解决两个数相乘直接爆long long的问题</p>
+<p>比如这题: <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/92/">https://www.acwing.com/problem/content/92/</a></p>
+<p>思想和快速幂基本一致, 即当b为偶数时</p>
+<script type="math/tex; mode=display">
+a \times b = a \times 2 \times \frac{b}{2}</script><p>换句话说, 即用二进制的思想, 对64位整数b, 我们循环他的每一个二进制位, 第n位为1就加上$2^n \times a$即可</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">ll <span class="hljs-title">qadd</span><span class="hljs-params">(ll a, ll b, ll mod)</span> </span>&#123;<br>    ll ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (b) &#123;<br>        <span class="hljs-keyword">if</span> (b &amp; <span class="hljs-number">1</span>) &#123;<br>            ans = (ans + a) % mod;<br>        &#125;<br>        a = (a + a) % mod;<br>        b &gt;&gt;= <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="等比数列求和"><a href="#等比数列求和" class="headerlink" title="等比数列求和"></a>等比数列求和</h2><p>对于一个等比数列</p>
+<script type="math/tex; mode=display">
+p^0 + p^1 + p^2 + ...+ p^n \text{(共k=n+1项)}</script><p>当n非常大, 我们需要对答案取mod</p>
+<p>首先可以利用等比数列求和公式解决取模的问题, 不过<strong>需要考虑逆元</strong></p>
+<p>现在来考虑用分治的方法解决这个问题</p>
+<p>首先分情况讨论k为奇和偶</p>
+<p>当k为偶数时, 可知</p>
+<script type="math/tex; mode=display">
+p^0 + p^1 + p^2 + ...+ p^n = (p^0 + p^1 + ... + p^{k/2-1}) + (p^{k/2}+...+p^n)</script><p>此时可化为</p>
+<script type="math/tex; mode=display">
+=(1+p^{k/2})(p^0 + p^1 + ... + p^{k/2-1})</script><p>我们用<code>sum(p, k - 1)</code>来表示$p^0 + p^1 + p^2 + …+ p^n$</p>
+<p>即当k为偶数时<code>sum(p, k) = sum(p, k / 2) * (1 + qpow(p, k / 2))</code></p>
+<p>当k为奇数时很简单, 只需要将第一项或者最后一项拿出, 再把剩余部分当作偶数情况考虑即可, 我们这里选择将最后一项拿出,</p>
+<p>即当k为奇数时<code>sum(p, k) = sum(p, k - 1) + qpow(p, k - 1)</code></p>
+<p>代码:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 求a^0 + a^1 + a^2 + ... + a^(b - 1)</span><br><span class="hljs-function">ll <span class="hljs-title">sum</span> <span class="hljs-params">(ll a, ll b)</span> </span>&#123;<br>    ll ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (b &lt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (b &amp; <span class="hljs-number">1</span>) &#123;<br>        ans = sum(a, b - <span class="hljs-number">1</span>) + qpow(a, b - <span class="hljs-number">1</span>);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        ans = (<span class="hljs-number">1</span> + qpow(a, b / <span class="hljs-number">2</span>)) * sum (a, b / <span class="hljs-number">2</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans % mod;<br>&#125;<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
@@ -343,7 +271,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/python/">python</a>
+                      <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     
                   </div>
                 
@@ -351,9 +279,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/python/">python</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/">数据科学</a>
+                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
                     
                   </div>
                 
@@ -370,9 +296,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/%E6%8A%A5%E5%91%8A/%E3%80%8C%E7%AE%97%E6%B3%95%E3%80%8D%E4%B8%8A%E6%9C%BA%E6%8A%A5%E5%91%8A/">
+                      <a href="/2021/%E7%AE%97%E6%B3%95/%E3%80%8C%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E3%80%8D(%E4%B8%80)%E7%AE%97%E6%B3%95%E5%88%9D%E6%AD%A5/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">「算法上机报告」</span>
+                        <span class="hidden-mobile">「算法笔记」(一) 算法初步</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -380,8 +306,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/%E7%AE%97%E6%B3%95/%E3%80%8C%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E3%80%8D(%E4%B8%80)%E7%AE%97%E6%B3%95%E5%88%9D%E6%AD%A5/">
-                        <span class="hidden-mobile">「算法笔记」(一) 算法初步</span>
+                      <a href="/2021/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/python%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6(%E4%BA%8C)%20Numpy(%E4%B8%80)%E6%95%B0%E7%BB%84/">
+                        <span class="hidden-mobile">python数据科学(二) Numpy(一) 数组</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -406,7 +332,7 @@
         var options = Object.assign(
           {"clientID":"334a894b9dc165e734f9","clientSecret":"17d676f1f917d8ec89496cb03d4428ac32b54618","repo":"Lincest.github.io","owner":"Lincest","admin":["Lincest"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":false,"proxy":"https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token"},
           {
-            id: '58924e4ce0039947b567b45a9f4613df'
+            id: 'bd46e73f3a0f655b9949b50d32e29ae9'
           }
         )
         var gitalk = new Gitalk(options);
