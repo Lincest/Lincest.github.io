@@ -1,0 +1,923 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="整体的记录一下 emby 搭建起来的配置, 包括技术, 成本以及链路加速">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我是如何用 VPS 自建 Emby 的">
+<meta property="og:url" content="https://moreality.net/posts/41540/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="整体的记录一下 emby 搭建起来的配置, 包括技术, 成本以及链路加速">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://youpai.roccoshi.top/img/202408171358215.png">
+<meta property="article:published_time" content="2024-08-17T05:59:30.000Z">
+<meta property="article:modified_time" content="2025-01-17T03:47:10.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="影音">
+<meta property="article:tag" content="emby">
+<meta property="article:tag" content="Google Drive">
+<meta property="article:tag" content="One Drive">
+<meta property="article:tag" content="VPS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://youpai.roccoshi.top/img/202408171358215.png">
+  
+  
+  
+  <title>我是如何用 VPS 自建 Emby 的 - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">我是如何用 VPS 自建 Emby 的</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-17 13:59" pubdate>
+          2024年8月17日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">我是如何用 VPS 自建 Emby 的</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2025年1月17日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>最近放假回家，准备秋招之余有一些闲功夫，又正好在帮家里更新一些软硬件设备，就把自己目前搭建 Emby 的技术栈做一些简单的记录和配置罗列。</p>
+</blockquote>
+<h2 id="1-Emby-的-Docker-配置">1 - Emby 的 Docker 配置</h2>
+<p>我的所有自建基本能放在 <code>docker-compose</code> 中的就尽量用 docker compose 管理，emby 也不例外。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&quot;3&quot;</span><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">emby:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">emby/embyserver:latest</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">embyserver</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">user:</span> <span class="hljs-string">root</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./config:/config</span> <span class="hljs-comment"># Configuration directory</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/theater/movie:/mnt/share1</span> <span class="hljs-comment"># Media directory</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/theater/tv:/mnt/share2</span> <span class="hljs-comment"># Media directory</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-number">8096</span><span class="hljs-string">:8096</span> <span class="hljs-comment"># HTTP port</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-number">8920</span><span class="hljs-string">:8920</span> <span class="hljs-comment"># HTTPS port</span><br></code></pre></td></tr></table></figure>
+<p>其中需要备份的目录就是 <code>./config</code> 目录，而 <code>/theater/movie</code> 和 <code>/theater/tv</code> 用于挂载自己的影视盘，这里我选用的是 rclone 挂载 Google Drive / One Drive，具体配置和方案会在下面说明。</p>
+<p>光是 Emby 本身的搭建不是很吃 CPU 和内存，不过建议至少 2C2G 的 VPS 起步吧，我自己搭建的这个占用情况（运行了半年没重启和停机后的状态）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">docker stats --no-stream | grep emby</span><br>384f61138e22   embyserver                      0.03%     1.412GiB / 9.716GiB   14.53%    4.31GB / 498GB    2.74GB / 5.23GB   82<br></code></pre></td></tr></table></figure>
+<p>也就是大概需要 1.4G 左右的 MEM，仅供参考。</p>
+<h3 id="关于-Emby-服务器启动后的配置">关于 Emby 服务器启动后的配置</h3>
+<p>这里不对具体的每一项配置做多的说明，只说个比较重要的：<strong>由于 VPS 没有 GPU 并且 CPU 一般很拉胯, 记得把服务端解码全关了。</strong></p>
+<p><img src="https://youpai.roccoshi.top/img/202408171421488.png" alt="由于 VPS 配置有限，需要关闭服务端转码"></p>
+<h2 id="2-Rclone-挂载-Google-Drive">2 - Rclone 挂载 Google Drive</h2>
+<p>要说国外挂载 Emby 最合适的网盘，目前比较合适的方案就是用 Google Drive 或者 One Drive，其他网盘的读写实测都受到了不同程度的限制，并且稳定性肯定也不如大厂（当然，也有可能还有很多更好更实惠的方案我没有探索出来）。</p>
+<ul>
+<li>One Drive 可以上闲鱼购买合租的 Office365 套餐，大概 20 左右 1 年，有 1T 的空间，感觉也是挺划算的。</li>
+<li>Google Drive 可以直接开土区的套餐，2T 大概在 100 RMB 左右（不过目前好像土区受到限制了，不知道未来是否会受影响）。</li>
+</ul>
+<h3 id="Google-Drive-的-Plan">Google Drive 的 Plan</h3>
+<p>目前我用的 Plan 是土耳其 2TB 的套餐，目前资费是 500 土耳其里拉，换算成人民币也就是大概 100 块左右每年的样子。</p>
+<p><img src="https://youpai.roccoshi.top/img/202408171409685.png" alt="img"></p>
+<h3 id="Rclone-的配置">Rclone 的配置</h3>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">version:</span> <span class="hljs-string">&quot;3&quot;</span><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">rclone:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">mumiehub/rclone-mount</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">rclone</span><br>    <span class="hljs-attr">user:</span> <span class="hljs-string">root</span><br>    <span class="hljs-attr">network_mode:</span> <span class="hljs-string">host</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">cap_add:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">SYS_ADMIN</span><br>    <span class="hljs-attr">devices:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/dev/fuse</span><br>    <span class="hljs-attr">security_opt:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">apparmor:unconfined</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/root/.config/rclone:/root/.config/rclone</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/theater:/mnt/mediaefs:shared</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">RemotePath=gdtry:/</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">ConfigDir=/root/.config/rclone</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">ConfigName=rclone.conf</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">MountCommands=--use-mmap</span> <span class="hljs-string">--umask</span> <span class="hljs-number">000</span> <span class="hljs-string">--default-permissions</span> <span class="hljs-string">--no-check-certificate</span> <span class="hljs-string">--allow-other</span> <span class="hljs-string">--allow-non-empty</span> <span class="hljs-string">--vfs-cache-mode</span> <span class="hljs-string">full</span> <span class="hljs-string">--buffer-size</span> <span class="hljs-string">256M</span> <span class="hljs-string">--vfs-read-ahead</span> <span class="hljs-string">512M</span> <span class="hljs-string">--vfs-read-chunk-size</span> <span class="hljs-string">32M</span> <span class="hljs-string">--vfs-read-chunk-size-limit</span> <span class="hljs-string">off</span> <span class="hljs-string">--vfs-cache-max-size</span> <span class="hljs-string">30G</span> <span class="hljs-string">--low-level-retries</span> <span class="hljs-number">200</span><br></code></pre></td></tr></table></figure>
+<p>rclone 的配置我也是用的 docker-compose，主要是为了方便日志管理和自动重启。</p>
+<p>然后直接将宿主机的 rclone config 也就是 <code>~/.config/rclone</code> 挂载到容器内部，这样就不需要容器内部再重新登录了。</p>
+<p>这里的 <code>Environment</code> 部分添加了一些乱七八糟的 <code>MountCommands</code> 参数，也是网上搜索了一波后配的，自我感觉比较重要的是 <code>--vfs-cache-mode full --vfs-cache-max-size 30G</code> ，可以根据 VPS 的硬盘大小尽量扩大这个值，文件缓存到本地了自然就快了~。</p>
+<h2 id="3-反代服务器的配置">3 - 反代服务器的配置</h2>
+<p>我的 emby 服务器本身是找了个大流量高性能的 US VPS (5C10G)，然后实际上一般这种性能的美西服务器都不会配备一个好的线路，这时候就需要进行一波反代。</p>
+<p>反代的线路如何选择就各种各样了，我本身是为了方便家里观看，实际上如果是自己看的话完全可以用代理连接，就不用再套一层反代了。</p>
+<p>反代的配置我也写的很简单，就是单纯用 caddy 代理一层 https，实测也有不错的效果。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini">https://&lt;反代域名&gt; &#123;<br>  tls &#123;$EMAIL&#125;<br>  encode gzip zstd<br>  reverse_proxy &lt;emby-ip&gt;:8096<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="4-PT-下载和上传">4 - PT 下载和上传</h2>
+<p>这部分就是涉及到如何从网上找资源，以及上传到 Google Drive。</p>
+<p>这一部分内容只是我自己的极为简单的配置，仅仅为了满足我自己追剧的需要，不涉及刷 PT 这一系列的骚操作。</p>
+<h3 id="qbittorrent-配置">qbittorrent 配置</h3>
+<p>简单说一下我的 qbittorrent 的配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&quot;3&quot;</span><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">qbittorrent:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">lscr.io/linuxserver/qbittorrent:latest</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">qbittorrent</span><br>    <span class="hljs-attr">network_mode:</span> <span class="hljs-string">host</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">PUID=0</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">PGID=0</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">TZ=Etc/UTC</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">WEBUI_PORT=8080</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./config:/config</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./downloads:/downloads</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/resources:/resources</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span><br></code></pre></td></tr></table></figure>
+<h3 id="上传到-Google-Drive-的-Shell-Script">上传到 Google Drive 的 Shell Script</h3>
+<p>我用写了个简单的 script 用于在 qbit 下载结束后快速将资源上传到 Google Drive 对应的目录，这里也记录一下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">uptv () &#123;<br>	local source_path=&quot;$1&quot;<br>	local destination=&quot;&lt;google drive 目录&gt;&quot;<br>	local filename=$(basename &quot;$source_path&quot;)<br>	echo &quot;upload tv: $filename&quot;<br>	if [ -d &quot;$source_path&quot; ]<br>	then<br>		destination_path=&quot;$destination/$filename&quot;<br>	else<br>		destination_path=&quot;$destination/&quot;<br>	fi<br>	echo &quot;source: $source_path --&gt; destination: $destination_path&quot;<br>	rclone copy &quot;$source_path&quot; &quot;$destination_path&quot; -Pv<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="QB-自动删除脚本">QB 自动删除脚本</h3>
+<p>一般在上传到 Google Drive 后，不能马上删除种子和文件。</p>
+<p>需要在满足 PT 站的保种规则一段时间后，就可以删除种子了，我使用的是 autoremove-torrents  来做到自动清除，由于这个工具本身对于 qbittorrent 4.5.4+ 具有一些兼容性问题，我 fork 了一个并且把我的配置也记录在了其中：<a target="_blank" rel="noopener" href="https://github.com/Lincest/autoremove-torrents/tree/master">https://github.com/Lincest/autoremove-torrents/tree/master</a></p>
+<p><strong>安装</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd &amp;&amp; git clone https://github.com/lincest/autoremove-torrents.git &amp;&amp; cd autoremove-torrents &amp;&amp; python3 setup.py install<br></code></pre></td></tr></table></figure>
+<p><strong>配置文件</strong>:</p>
+<p>PS: 这个配置文件的主要是用来适配北洋园的规则，可以根据自己的需求自助修改。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">my_task:</span><br>  <span class="hljs-attr">client:</span> <span class="hljs-string">qbittorrent</span><br>  <span class="hljs-attr">host:</span> <span class="hljs-string">http://127.0.0.1:8080</span><br>  <span class="hljs-attr">username:</span> <br>  <span class="hljs-attr">password:</span> <br>  <span class="hljs-attr">strategies:</span><br>    <span class="hljs-attr">my_strategy:</span><br>      <span class="hljs-attr">remove:</span> <span class="hljs-string">&#x27; </span><br><span class="hljs-string">        (size &lt; 10 and seeding_time &gt; 86400) or </span><br><span class="hljs-string">        (size &gt; 10 and size &lt; 20 and seeding_time &gt; 172800) or </span><br><span class="hljs-string">        (size &gt; 20 and size &lt; 30 and seeding_time &gt; 259200) or </span><br><span class="hljs-string">        (size &gt; 30 and size &lt; 40 and seeding_time &gt; 345600) or </span><br><span class="hljs-string">        (size &gt; 40 and size &lt; 50 and seeding_time &gt; 432000) or </span><br><span class="hljs-string">        seeding_time &gt; 604800 or </span><br><span class="hljs-string">        ratio &gt; 10 &#x27;</span><br>  <span class="hljs-attr">delete_data:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+<p><strong>cronjob 配置</strong>:</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">*<span class="hljs-string">/15</span> * * * * <span class="hljs-string">/usr/local/bin/autoremove-torrents</span> <span class="hljs-params">--conf=</span>&lt;配置目录&gt;<span class="hljs-string">/autoremove-config.yml</span> <span class="hljs-params">--log=/root/logs</span><br></code></pre></td></tr></table></figure>
+<h2 id="5-Emby-的客户端">5 - Emby 的客户端</h2>
+<p>整体可以参考 Misakaf 的 <a target="_blank" rel="noopener" href="https://wiki.misakaf.org/#/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8">Wiki</a> 来下载各个平台的安卓客户端，个人体验下来比较好用的：</p>
+<ul>
+<li>MacOS / IOS: infuse 和 vidhub</li>
+<li>Windows: 小秘的客户端, <a target="_blank" rel="noopener" href="https://t.me/EmbyNoisyX">TG Channel</a></li>
+<li>Android: 小秘的客户端和 <a target="_blank" rel="noopener" href="https://t.me/yamby_release">Yamby</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%8A%80%E6%9C%AF/" class="print-no-link">#技术</a>
+      
+        <a href="/tags/%E5%BD%B1%E9%9F%B3/" class="print-no-link">#影音</a>
+      
+        <a href="/tags/emby/" class="print-no-link">#emby</a>
+      
+        <a href="/tags/Google-Drive/" class="print-no-link">#Google Drive</a>
+      
+        <a href="/tags/One-Drive/" class="print-no-link">#One Drive</a>
+      
+        <a href="/tags/VPS/" class="print-no-link">#VPS</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>我是如何用 VPS 自建 Emby 的</div>
+      <div>https://moreality.net/posts/41540/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/61943/" title="Raycast Pro 初见，一些我喜欢的功能">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Raycast Pro 初见，一些我喜欢的功能</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/11296/" title="第一台 mini主机: 零刻 EQ13">
+                        <span class="hidden-mobile">第一台 mini主机: 零刻 EQ13</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,977 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="漫谈一些分布式可观测性(Observability)的概念，以及其中的链路追踪部分和 OpenTelemetry 的应用等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式可观测性，链路追踪与OpenTelemetry">
+<meta property="og:url" content="https://moreality.net/posts/25969/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="漫谈一些分布式可观测性(Observability)的概念，以及其中的链路追踪部分和 OpenTelemetry 的应用等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://youpai.roccoshi.top/img/202406150910359.png">
+<meta property="article:published_time" content="2024-06-14T14:31:03.000Z">
+<meta property="article:modified_time" content="2025-01-17T03:47:10.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="可观测性">
+<meta property="article:tag" content="Observability">
+<meta property="article:tag" content="Trace">
+<meta property="article:tag" content="Metric">
+<meta property="article:tag" content="Log">
+<meta property="article:tag" content="OpenTelemetry">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://youpai.roccoshi.top/img/202406150910359.png">
+  
+  
+  
+  <title>分布式可观测性，链路追踪与OpenTelemetry - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">分布式可观测性，链路追踪与OpenTelemetry</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-14 22:31" pubdate>
+          2024年6月14日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">分布式可观测性，链路追踪与OpenTelemetry</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2025年1月17日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>一些写在前面的碎碎念</strong>：</p>
+<blockquote>
+<p>在 Amazon 已经实习了三个多月，很幸运没有被分配到做业务的活，想到实习的内容还是有一定价值的，值得我将其记录并进行一定的输出。</p>
+<p>本来想着等实习结束后再进行总结，但是最近发生的一些事情让我意识到许多事情不要过分计划，有了想法就尽快 Demo 出来，哪怕只是一些零散的东西。</p>
+<p>因此有了这篇博客，在总结输出的过程顺便让我理一理思绪。看心情可能会分为很多章，由于我做的内容仅仅只涉及到链路追踪（Tracing）部分，因此不对其他（Logging、Metrics）做过分详细的介绍。</p>
+<p>由于我也是从 0 开始的小白，不保证内容的深刻程度。</p>
+</blockquote>
+<ul>
+<li>在概念部分，我尽量引用别人的文字和图，辅以部分个人理解，以确保内容的可靠性。</li>
+<li>在技术部分，我会更多的阐述一些 OpenTelemetry 的 SDK 实现和用途，以及个人对「为什么这么做」的一些浅薄的想法。</li>
+</ul>
+<h2 id="1-什么是可观测性-Observability">1 - 什么是可观测性 (Observability)</h2>
+<p><img src="https://youpai.roccoshi.top/img/202406142239030.png" alt="安利周志明的「凤凰架构」这本书"></p>
+<p>写著名「深入理解Java虚拟机」的周志明老师写过一本个人认为同样极其出色的书籍「凤凰架构」<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://icyfenix.cn/distribution/observability/">[1]</span></a></sup>，在 <a target="_blank" rel="noopener" href="https://icyfenix.cn/distribution/observability/">可观测性</a> 这一章有对这个概念非常棒的总结和解释，这里直接引用一下：</p>
+<blockquote>
+<p>在学术界，虽然“可观测性”这个名词是近几年才从控制理论中借用的舶来概念，不过其内容实际在计算机科学中已有多年的实践积累。学术界一般会将可观测性分解为三个更具体方向进行研究，分别是：<a target="_blank" rel="noopener" href="https://icyfenix.cn/distribution/observability/logging.html">事件日志</a>、<a target="_blank" rel="noopener" href="https://icyfenix.cn/distribution/observability/tracing.html">链路追踪</a>和<a target="_blank" rel="noopener" href="https://icyfenix.cn/distribution/observability/metrics.html">聚合度量</a></p>
+<ul>
+<li>
+<p><strong>日志</strong>（Logging）：日志的职责是记录离散事件，通过这些记录事后分析出程序的行为，譬如曾经调用过什么方法，曾经操作过哪些数据，等等。打印日志被认为是程序中最简单的工作之一，调试问题时常有人会说“当初这里记得打点日志就好了”，可见这就是一项举手之劳的任务。输出日志的确很容易，但收集和分析日志却可能会很复杂，面对成千上万的集群节点，面对迅速滚动的事件信息，面对数以 TB 计算的文本，传输与归集都并不简单。对大多数程序员来说，分析日志也许就是最常遇见也最有实践可行性的“大数据系统”了。</p>
+</li>
+<li>
+<p><strong>追踪</strong>（Tracing）：单体系统时代追踪的范畴基本只局限于<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Stack_trace">栈追踪</a>（Stack Tracing），调试程序时，在 IDE 打个断点，看到的 Call Stack 视图上的内容便是追踪；编写代码时，处理异常调用了 <code>Exception::printStackTrace()</code>方法，它输出的堆栈信息也是追踪。微服务时代，追踪就不只局限于调用栈了，一个外部请求需要内部若干服务的联动响应，这时候完整的调用轨迹将跨越多个服务，同时包括服务间的网络传输信息与各个服务内部的调用堆栈信息，因此，分布式系统中的追踪在国内常被称为“全链路追踪”（后文就直接称“链路追踪”了），许多资料中也称它为“<a target="_blank" rel="noopener" href="https://opentracing.io/docs/overview/what-is-tracing/">分布式追踪</a>”（Distributed Tracing）。追踪的主要目的是排查故障，如分析调用链的哪一部分、哪个方法出现错误或阻塞，输入输出是否符合预期，等等。</p>
+</li>
+<li>
+<p><strong>度量</strong>（Metrics）：度量是指对系统中某一类信息的统计聚合。譬如，证券市场的每一只股票都会定期公布财务报表，通过财报上的营收、净利、毛利、资产、负债等等一系列数据来体现过去一个财务周期中公司的经营状况，这便是一种信息聚合。Java 天生自带有一种基本的度量，就是由虚拟机直接提供的 JMX（Java Management eXtensions）度量，诸如内存大小、各分代的用量、峰值的线程数、垃圾收集的吞吐量、频率，等等都可以从 JMX 中获得。度量的主要目的是监控（Monitoring）和预警（Alert），如某些度量指标达到风险阈值时触发事件，以便自动处理或者提醒管理员介入。</p>
+</li>
+</ul>
+<p><img src="https://youpai.roccoshi.top/img/202406142325405.png" alt="img"></p>
+</blockquote>
+<h2 id="2-链路追踪-Distributed-Tracing-是如何进行的">2 - 链路追踪 (Distributed Tracing) 是如何进行的</h2>
+<p>在单体服务的时代，我们仅仅只需要跟踪代码的调用栈就可以获得清晰的调用图关系，以及出现异常时的 Stack Trace。</p>
+<p>但在微服务时代，各类服务间可能形态各异（不同语言，不同框架），并通过不同的方式（RPC，HTTP，.etc）进行相互调用。于是如何追踪一次业务级别的服务调用相比单体服务的复杂程度就完全不是一个量级了。</p>
+<p>因此我们不仅需要一个统一的「数据表示」来正确的表达这种追踪关系，而且需要一套大而全的「体系规范」来进行程序级别的实现。</p>
+<p>Google 在 2010 年发布的这篇论文 <strong>Dapper</strong>：《<a target="_blank" rel="noopener" href="https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/papers/dapper-2010-1.pdf">Dapper : a Large-Scale Distributed Systems Tracing Infrastructure</a>》<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/papers/dapper-2010-1.pdf">[2]</span></a></sup> 就奠定了之后十余年分布式链路追踪的数据表示的概念，其实抽象出来十分的简单，就是两个基本的概念：</p>
+<ol>
+<li><strong>Trace</strong>：一次业务级别的请求调用 (Client &lt;-&gt; Service A &lt;-&gt; Service B &lt;-&gt; … )</li>
+<li><strong>Span</strong>：
+<ul>
+<li>可以是粗粒度的一个 Service 级别的 call</li>
+<li>也可以是细粒度的 Service 内部的函数调用 (Function A -&gt; Function B -&gt; …)</li>
+</ul>
+</li>
+</ol>
+<p>如何具体的规范化表示和收集这些信息，会在后面详细谈谈。</p>
+<p>这里先看看一下在 UI 端，如何展示这些信息：</p>
+<p><img src="https://youpai.roccoshi.top/img/202406142306198.png" alt="Jaeger UI 展示的 Tracing"></p>
+<p>这里是以 <a target="_blank" rel="noopener" href="https://www.jaegertracing.io/">Jaeger</a> 为例，展示的一个 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Trace_tree">Trace Tree</a>，其表示了一个请求/服务调用：</p>
+<ul>
+<li>花费了多长的时间</li>
+<li>与哪些内部组件/外部服务进行了交互</li>
+<li>每个步骤中延迟是多少</li>
+</ul>
+<p>可以稍微抽象化一些：</p>
+<p><img src="https://youpai.roccoshi.top/img/202406150910359.png" alt="img"></p>
+<p>Talk is cheap，用伪代码可以这么表示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">A</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title function_">B</span>();<br>  <span class="hljs-title function_">E</span>();<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">B</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title function_">C</span>();<br>  <span class="hljs-title function_">D</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这就是「分布式链路追踪」的基本概念，听起来很简单，因为系统的复杂性也确实不在这里。</p>
+<h2 id="3-OpenTelemetry-下的链路追踪">3 - OpenTelemetry 下的链路追踪</h2>
+<p>就在前几周，在 v2ex 上看到一个有意思的问题：</p>
+<p><img src="https://youpai.roccoshi.top/img/202406150913473.png" alt="img"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://v2ex.com/t/1043751"><strong>“有人能解释一下 OpenTelemetry 这类遥测方案解决了什么问题，和自己写两个 API 把数据存进 MongoDB 有什么区别吗?&quot;</strong></a></p>
+</blockquote>
+<p>在结果上，确实没有区别，如果是针对一个小组织的的内部服务，这么做完全可以，但是一但服务多了起来，就需要处理许多的规范化和兼容性问题。</p>
+<p>例如，对于异构的服务（来自不同语言，不同平台，不同框架）：</p>
+<ol>
+<li><strong>Collect:</strong> 如何收集这些信息？格式是什么？</li>
+<li><strong>Export:</strong> 如何导出（发送）这些信息？</li>
+<li><strong>Protocol:</strong> 用什么协议导出这些信息?</li>
+<li><strong>Persistence:</strong> 信息应该存储在哪里？</li>
+<li><strong>UI:</strong> 如何统一的进行展示？</li>
+</ol>
+<blockquote>
+<p>这也就是 OpenTelemetry 出现的原因，在 OpenTelemetry 出现之前，几乎市面上所有的追踪系统都是以 Dapper 的论文为原型发展出来的，基本上都算是同门师兄弟，功能上并没有太本质的差距，却又受制于实现细节，彼此互斥，很难搭配工作。譬如该怎样进行埋点、Span 上下文具体该有什么数据结构，怎样设计追踪系统与探针或者界面端的 API 接口，等等，都没有权威的规定。</p>
+</blockquote>
+<p>OpenTelemetry （简称 Otel）的出现，除了统一 Tracing 规范，还一口气把可观测性全部大一统了。光是开箱即用的兼容了 Otel 的 Java Library（可以在 <a target="_blank" rel="noopener" href="https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/docs/supported-libraries.md">https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/docs/supported-libraries.md</a> 看到）就包含了绝大部分常用的热门框架。即使没有原生支持，也可以通过统一的协议和 SDK 来以较低的成本实现扩展和兼容。</p>
+<h3 id="为什么是-OpenTelemetry">为什么是 OpenTelemetry</h3>
+<p>为什么各个大厂愿意放弃自己实现的规范和技术架构，跑过来兼容 OpenTelemetry？其实 OpenTelemetry 的统一已经是大厂之间妥协后达成一致的结果，在 Otel 之前，主要有这两种 Tracing 规范标准：</p>
+<ul>
+<li>在 2016 年，CNCF 技术委员会接受了 OpenTracing 作为基金会第三个项目。（第一个是Kubernetes，第二个是Prometheus）OpenTracing制定了一套平台无关、厂商无关的Trace协议，使得开发人员能够方便的添加或更换分布式追踪系统的实现。OpenTracing 规范公布后，几乎所有业界有名的追踪系统，譬如 <a target="_blank" rel="noopener" href="https://github.com/openzipkin/zipkin">Zipkin</a>、<a target="_blank" rel="noopener" href="https://github.com/jaegertracing/jaeger">Jaeger</a>、<a target="_blank" rel="noopener" href="https://github.com/apache/skywalking">SkyWalking</a> (都是 github 20k+ star 的开源项目) 等都很快宣布支持 OpenTracing。</li>
+<li>这时候大一统本来都要完成统一了，结果google并不认为这个东西是标准，所以推出了自己的 OpenCensus 规范。要是换一家公司来肯定都干不过 OpenTracing 了，但：
+<ul>
+<li>这可是 Google，要知道最先就是 Google 提出了分布式 Tracing 这个概念。</li>
+<li>OpenCensus 并不是单纯的规范制定，实现了Agent、Collector、SDK 等一系列工具链。</li>
+<li>OpenCensus 又得到了微软的支持。</li>
+</ul>
+</li>
+</ul>
+<p>于是一段时间内都是两架马车并驾齐驱的形势。直到在2019年， 两者和解，共同发起了OpenTelemetry开源项目。最终目标是作为CNCF技术委员会可观测性的终极解决方案，大一统 Tracing，Metrics 和 Logging。<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="https://www.cnblogs.com/zhangmingcheng/p/16720995.html">[4]</span></a></sup></p>
+<h3 id="OpenTelemetry-提供了什么">OpenTelemetry 提供了什么</h3>
+<p>目前 OpenTelemetry 的工作主要集中在如下部分：</p>
+<ul>
+<li>适用于所有组件的<a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/otel">规范 </a> (specification)</li>
+<li>定义遥测数据形状的标准<a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/otlp/">协议 </a> (protocol)</li>
+<li>为常见遥测数据类型定义标准命名方案的<a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/semconv/">语义约定</a> (semantic conventions)</li>
+<li>定义如何生成遥测数据的 API</li>
+<li>实现规范、API 和遥测数据导出的<a target="_blank" rel="noopener" href="https://opentelemetry.io/zh/docs/languages">SDK</a></li>
+<li>实现常见库和框架的仪表化的 <a target="_blank" rel="noopener" href="https://opentelemetry.io/ecosystem/registry">Library Ecosystem</a></li>
+<li>可自动生成遥测数据的 Auto Instrumentation 组件</li>
+<li><a target="_blank" rel="noopener" href="https://opentelemetry.io/zh/docs/collector">OpenTelemetry Collector</a>：接收、处理和导出遥测数据的代理</li>
+</ul>
+<p>同时，可以通过 <a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/migration/">官方的迁移指南</a> 将 OpenTracing / OpenCensus 迁移到 OpenTelemetry。</p>
+<p><img src="https://youpai.roccoshi.top/img/202406142352062.png" alt="2019 年 CNCF 展示的路线图"></p>
+<h2 id="Reference">Reference</h2>
+<section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://icyfenix.cn/distribution/observability/">https://icyfenix.cn/distribution/observability/</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/papers/dapper-2010-1.pdf">https://static.googleusercontent.com/media/research.google.com/zh-CN//archive/papers/dapper-2010-1.pdf</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.aspecto.io/blog/what-is-opentelemetry-the-infinitive-guide/">https://www.aspecto.io/blog/what-is-opentelemetry-the-infinitive-guide/</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhangmingcheng/p/16720995.html">https://www.cnblogs.com/zhangmingcheng/p/16720995.html</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.51cto.com/article/665025.html">https://www.51cto.com/article/665025.html</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/74930691">https://zhuanlan.zhihu.com/p/74930691</a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI5ODk5ODI4Nw==&amp;mid=2247487034&amp;idx=1&amp;sn=6055d501703bdc4d399a6de898900758&amp;chksm=ec9c015adbeb884c733793202bf663d543a75b9b26f137e5d8370faa2559703b2e1cb6b15a41&amp;scene=21%23wechat_redirect">https://mp.weixin.qq.com/s?__biz=MzI5ODk5ODI4Nw==&amp;mid=2247487034&amp;idx=1&amp;sn=6055d501703bdc4d399a6de898900758&amp;chksm=ec9c015adbeb884c733793202bf663d543a75b9b26f137e5d8370faa2559703b2e1cb6b15a41&amp;scene=21%23wechat_redirect</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:8" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://opentelemetry.io/zh/docs/what-is-opentelemetry/">https://opentelemetry.io/zh/docs/what-is-opentelemetry/</a>
+<a href="#fnref:8" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7/" class="print-no-link">#可观测性</a>
+      
+        <a href="/tags/Observability/" class="print-no-link">#Observability</a>
+      
+        <a href="/tags/Trace/" class="print-no-link">#Trace</a>
+      
+        <a href="/tags/Metric/" class="print-no-link">#Metric</a>
+      
+        <a href="/tags/Log/" class="print-no-link">#Log</a>
+      
+        <a href="/tags/OpenTelemetry/" class="print-no-link">#OpenTelemetry</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>分布式可观测性，链路追踪与OpenTelemetry</div>
+      <div>https://moreality.net/posts/25969/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/23154/" title="OpenTelemetry Instrumentation 与 Java Agent">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">OpenTelemetry Instrumentation 与 Java Agent</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/59390/" title="时间，舒适圈惯性和破窗效应">
+                        <span class="hidden-mobile">时间，舒适圈惯性和破窗效应</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

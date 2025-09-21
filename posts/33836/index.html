@@ -1,0 +1,972 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="Braintorm, 一个用于优化动态神经网络的深度学习框架 (OSDI 2023)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文阅读: Optimizing Dynamic Neural Networks with Brainstorm">
+<meta property="og:url" content="https://moreality.net/posts/33836/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="Braintorm, 一个用于优化动态神经网络的深度学习框架 (OSDI 2023)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://youpai.roccoshi.top/img/202311082002566.png">
+<meta property="article:published_time" content="2023-11-08T12:03:29.000Z">
+<meta property="article:modified_time" content="2025-01-17T03:47:10.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="NN">
+<meta property="article:tag" content="Dynamic Neural Networks">
+<meta property="article:tag" content="DL">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="训练框架">
+<meta property="article:tag" content="OSDI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://youpai.roccoshi.top/img/202311082002566.png">
+  
+  
+  
+  <title>论文阅读: Optimizing Dynamic Neural Networks with Brainstorm - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">论文阅读: Optimizing Dynamic Neural Networks with Brainstorm</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-08 20:03" pubdate>
+          2023年11月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">论文阅读: Optimizing Dynamic Neural Networks with Brainstorm</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2025年1月17日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>Optimizing Dynamic Neural Networks with Brainstorm</h1>
+<ul>
+<li>OSDI 2023</li>
+<li>presentation: <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=qBPBQ495YP4&amp;t=2s">https://www.youtube.com/watch?v=qBPBQ495YP4&amp;t=2s</a></li>
+<li>开源 github: <a target="_blank" rel="noopener" href="https://github.com/Raphael-Hao/brainstorm">https://github.com/Raphael-Hao/brainstorm</a></li>
+</ul>
+<h2 id="摘要">摘要</h2>
+<blockquote>
+<p>Dynamic neural networks (NNs), which can adapt sparsely activated sub-networks to inputs during inference, have shown significant advantages over static ones in terms of accuracy, computational efficiency, and adaptiveness. However, exist- ing deep learning frameworks and compilers mainly focus on optimizing static NNs with deterministic execution, missing optimization opportunities brought by non-uniform distribu- tion of activation in dynamic NNs. The key to optimizing dynamic NNs is the traceability of how data are dynamically dispatched to different paths at inference. Such dynamism often happens at sub-tensor level (e.g., conditional dispatching tokens of a tensor), thus hard for existing tensor-centric frameworks to trace due to misaligned expression granularity.</p>
+<p>In this paper, we present <strong>Brainstorm</strong>, a deep learning frame- work for optimizing dynamic NNs, which bridges the gap by unifying how dynamism should be expressed. Brainstorm proposes (1) Cell, the key data abstraction that lets model de- velopers express the data granularity where dynamism exists, and (2) Router, a unified interface to let model developers express how Cells should be dynamically dispatched. Brain- storm handles efficient execution of routing actions. This design allows Brainstorm to collect profiles of fine-grained dataflow at the correct granularity. The traceability further opens up a new space of dynamic optimization for dynamic NNs to specialize their execution to the runtime dynamism distribution. Extensive evaluations show Brainstorm brings up to 11.7× speedup (3.29× on average) or leads to 42% less memory consumption for popular dynamic neural networks with the proposed dynamic optimizations.</p>
+</blockquote>
+<ul>
+<li>目前的深度学习框架和编译器主要侧重于优化具有确定性执行的 <strong>静态神经网络</strong></li>
+<li>优化 <strong>动态神经网络</strong> 的关键主要是在推理时数据如何动态分配到不同路径的 <strong>可追溯性</strong></li>
+<li>由于动态通常发生在 sub-tensor 级别, 现有的框架难以跟踪</li>
+<li>本文提出了 Brainstorm, 一个用于优化动态神经网络的深度学习框架, 通过统一的动态表达方式来弥补这个差距</li>
+<li>Brainstorm 主要提出了两个概念:
+<ul>
+<li><strong>cell</strong>: 关键的数据抽象, 用于让模型的开发者表达动态存在的数据的粒度</li>
+<li><strong>router</strong>: 一个统一接口, 让模型开发者能表达如何动态调度 cell</li>
+</ul>
+</li>
+</ul>
+<h2 id="Introduction-background">Introduction &amp; background</h2>
+<p>三种不同的 Dynamic NN 模式:</p>
+<p><img src="https://youpai.roccoshi.top/img/202311081954017.png" alt="img"></p>
+<ul>
+<li>对输入 token 的 route</li>
+<li>根据超分辨率的难度将图像 patch 到不同的分支</li>
+<li>route new pixels to computation and skips duplicated pixels of previous frames</li>
+</ul>
+<h3 id="一些优化动态网络的机会">一些优化动态网络的机会</h3>
+<p><img src="https://youpai.roccoshi.top/img/202311081954039.png" alt="img"></p>
+<p>上图的 (a), (b) 显示了在两个动态网络中 token / patch 被分配到不同的 expert / branch 的情况, 图中显示这种分配是不均匀的, 可以通过调整分配策略来高效的利用计算资源</p>
+<p><img src="https://youpai.roccoshi.top/img/202311081954050.png" alt="img"></p>
+<p>图 © 显示了一个 MoE 网络的多层相关性, 文中发现两个连续层的分支激活具有相关性, 可以在同一 GPU 上共置专家 (co-locating experts) 来节省 GPU 通信</p>
+<p>图 (d) 显示了 DynamicRouting 中选定 router 的分支激活, 其中有 186 个经过训练的路由器, 可以将图像转发到三个分支中的 1-2 个分支, 然而文中发现许多 router 具有偏向分布, 如图所示</p>
+<p>优化上述动态神经网络的机会主要是能够<strong>以动态发生的粒度来收集和统计</strong></p>
+<p>因此本文的 brainstorm 提出了一种原则性设计: <strong>让模型开发人员公开需要跟踪的信息</strong>, 并利用收集到配置文件进行动态优化</p>
+<h2 id="核心数据抽象-Cell-和-Router">核心数据抽象: Cell 和 Router</h2>
+<h3 id="Cell">Cell</h3>
+<p>为了让模型开发者定义动态发生的数据粒度, brainstorm 使用 cell 这个数据抽象对传统的 tensor 进行增强, cell 是多个 branch 之间动态调度的单位, 模型开发人员可以使用:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">brt.annotate_cell(tensor, dims, shape)<br></code></pre></td></tr></table></figure>
+<p>这个 API 对任何 tensor 进行注释</p>
+<h3 id="Router">Router</h3>
+<p>同时为了动态调度 Cell, Brainstorm 引入了统一的 Router API, 可以支持通过 <code>router_fn</code> 来决定 cell 在多个分支之间的动态放置:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Router</span>:  <br>	<span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">router_fn : Func</span>)  <br>	<span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">x : Tensor, kwargs</span>) : <span class="hljs-type">Tuple</span>[Tensor], Routes<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">router_fn</span>(<span class="hljs-params">x : Tensor, kwargs</span>) : Routes<br></code></pre></td></tr></table></figure>
+<p>使用 cell 和 router 进行动态调度的例子:</p>
+<p><img src="https://youpai.roccoshi.top/img/202311081954063.png" alt="img"></p>
+<p>通过 cell 和 router 可以实现多种优化, 文章主要介绍了如下几种, 以及这些优化所需的信息:</p>
+<p><img src="https://youpai.roccoshi.top/img/202311081954074.png" alt="img"></p>
+<h2 id="动态优化策略-Dynamic-Optimizations">动态优化策略 Dynamic Optimizations</h2>
+<h3 id="Dynamic-Horizontal-Fusion">Dynamic Horizontal Fusion</h3>
+<p>Horizontal Fusion (水平融合) 是一种编译优化, 可以讲模型的并发分支融合进入融合运算符中, 以提高 GPU 的利用率并减少启动开销</p>
+<p>现有的水平融合方法不能用于动态 DNN, 因为它们假设的是一个<strong>静态数据流图</strong>, 其分支全部由相同的输入激活 (==没太看懂什么意思==)</p>
+<p><img src="https://youpai.roccoshi.top/img/202311081954086.png" alt="img"></p>
+<h3 id="Profile-Guided-Model-Placement">Profile-Guided Model Placement</h3>
+<p><img src="https://youpai.roccoshi.top/img/202404242108969.png" alt="Alt Text"></p>
+<p>如图 c 所示, 两个 expert 同时被激活的概率很高, 这些高度相关的 experts 之间的通信较多, 因此可以将相关的子网络共置在同一个 GPU 上, 以减少 GPU 之间的通信</p>
+<p><img src="https://youpai.roccoshi.top/img/202311081954094.png" alt="img"></p>
+<h3 id="Speculative-Routing">Speculative Routing</h3>
+<p>Speculative Routing (投机路由), 基于分支路由的高度可预测性, 可以投机的跳过 <code>router_fn</code> 的执行来隐藏开销, 当错误预测时再重新执行分支</p>
+<p><img src="https://youpai.roccoshi.top/img/202404242108620.png" alt="Alt Text"></p>
+<h3 id="Speculative-Weight-Preloading">Speculative Weight Preloading</h3>
+<p>为了在有限的 GPU 内存上运行大型模型的推理, 通常需要在 GPU 内存和 CPU 内存之间交换层的 weights 以减少 GPU 的内存需求, 为了隐藏内存迁移的延迟, 现有的解决方案需要知道各层的执行顺序, 以便在以流水线方式执行前面的层时预加载必要的权重, 但是动态神经网络没有确定的层执行顺序, 动态激活的分支只有在做出路由决策的时候才能知道</p>
+<p>和 speculative routing 相似, 本文采用分支激活的统计分布来进行 weight 的预加载, 当预测失败的时候重新执行分支</p>
+<h2 id="跟踪-Cell-level-的数据流">跟踪 Cell-level 的数据流</h2>
+<p>为了实现之前所说的动态优化策略, 最重要的是判断 cell 是如何沿着网络传输的, 在动态 NN 中, 有两种类型的单元级数据流:</p>
+<ol>
+<li><strong>static dataflow</strong>: 绝大多数静态算子, 比如 <code>Conv2D</code></li>
+<li><strong>dyanmic dataflow</strong>: 由 <code>Router</code> 在运行时确定的数据流</li>
+</ol>
+<p>前者是为了确定 cell 在静态层之间的关系; 后者是为了确定 cell 是如何在分支之间被路由的.</p>
+<h3 id="static-cell-level-dataflow">static cell-level dataflow</h3>
+<blockquote>
+<p>Tensor-centric dataflow graphs only preserve relations be- tween tensors without the information of Cells. To trace all possible Cell-level dataflow of static operators, Brainstorm uses symbolic execution at Cell-level to extract finer-grained relations in ahead-of-time compiling.</p>
+</blockquote>
+<p>为了追踪 cell-level 的信息, brainstorm 采用了符号执行 (symbolic execution) 来在编译前提取更加细粒度的信息</p>
+<p><img src="https://youpai.roccoshi.top/img/202311081954104.png" alt="img"></p>
+<p>Figure 8(a) 展示了几种包含多个 cell 的 tensor 的乘法示例, 其中 A 和 B 表示 cell:</p>
+<ol>
+<li>The first preserves cell positions</li>
+<li>The second reorders cells</li>
+<li>The third mixes all cells in the output</li>
+</ol>
+<p>Figure 8(b) 展示了两个 MoE 层之间的自注意力算子的静态 cell 级数据流, ==这里也没太看懂==</p>
+<h3 id="dynamic-cell-level-dataflow">dynamic cell-level dataflow</h3>
+<p>路由策略由开发者在 <code>router_fn</code> 中指定 , Brainstorm 只收集路由决策的统计概况, 而不关心他们的生成方式</p>
+<p>如果 Cell-level 的分析策略被启用, 每次调用 <code>Router</code> 时, brainstorm 将 routing decision 收集到一个 buffer 中, brainstorm 设计了一个单独的线程将缓冲区流式传输到配置文件</p>
+<h2 id="Implementation">Implementation</h2>
+<p>braintstorm 基于 pytorch, 13000 line of code:</p>
+<ul>
+<li>3000 lines: brainstorm core abstraction</li>
+<li>3000 lines: dynamic optimizations</li>
+<li>3000 lines: c++ code for kernel scheduling &amp; sparse cell communication</li>
+<li>1500 lines: 1500 lines for auto-transformation</li>
+</ul>
+<p><img src="https://youpai.roccoshi.top/img/202311081954114.png" alt="img"></p>
+<h2 id="相关概念">相关概念</h2>
+<h3 id="MoE-mixture-of-expert">MoE (mixture-of-expert)</h3>
+<p>MoE(Mixture of Experts) 是一种将多个神经网络专家组合起来进行训练和预测的方法。其主要思想是:</p>
+<ol>
+<li>将输入数据分配给不同的专家网络。通常使用一个 <strong>门控网络</strong> 来学习如何将数据分配给不同的专家。</li>
+<li>每个专家网络只专注于处理部分数据,从而整体模型能够 Capture 更多的distribution modes。</li>
+<li>在预测时,将输入同时提供给每个专家网络,由门控网络合并每个专家的预测得到最终结果。</li>
+<li>通过端到端的训练,门控网络和专家网络都能够协同优化。</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%98%85%E8%AF%BB/" class="category-chain-item">阅读</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/NN/" class="print-no-link">#NN</a>
+      
+        <a href="/tags/Dynamic-Neural-Networks/" class="print-no-link">#Dynamic Neural Networks</a>
+      
+        <a href="/tags/DL/" class="print-no-link">#DL</a>
+      
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="print-no-link">#深度学习</a>
+      
+        <a href="/tags/%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6/" class="print-no-link">#训练框架</a>
+      
+        <a href="/tags/OSDI/" class="print-no-link">#OSDI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>论文阅读: Optimizing Dynamic Neural Networks with Brainstorm</div>
+      <div>https://moreality.net/posts/33836/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/62538/" title="2024-生活剪影">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2024-生活剪影</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/1991/" title="Nvidia MPS 的简单介绍">
+                        <span class="hidden-mobile">Nvidia MPS 的简单介绍</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

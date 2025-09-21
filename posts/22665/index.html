@@ -1,0 +1,964 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="对这段时间的折腾做一个小结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个新服务器, 一些折腾">
+<meta property="og:url" content="https://moreality.net/posts/22665/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="对这段时间的折腾做一个小结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://youpai.roccoshi.top/img/202311021619995.png">
+<meta property="article:published_time" content="2023-04-14T15:12:15.000Z">
+<meta property="article:modified_time" content="2023-11-02T08:31:26.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="proxy">
+<meta property="article:tag" content="vaultwarden">
+<meta property="article:tag" content="password">
+<meta property="article:tag" content="nps">
+<meta property="article:tag" content="chatgpt">
+<meta property="article:tag" content="caddy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://youpai.roccoshi.top/img/202311021619995.png">
+  
+  
+  
+  <title>一个新服务器, 一些折腾 - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">一个新服务器, 一些折腾</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-14 23:12" pubdate>
+          2023年4月14日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">一个新服务器, 一些折腾</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2023年11月2日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p class="note note-info">
+最近两周在云服务器上部署了一些小插件, 这里对这段时间不多不少的折腾做一个小小的总结, 不会对配置做很详细的介绍, 主要是一些碎碎念.
+</p>
+<h2 id="1-动机-自建bitwarden服务">1 - 动机: 自建bitwarden服务</h2>
+<p>最初买这台阿里云的服务器的动机其实是出于希望方便的有一个全平台密码管理工具</p>
+<p>在一个下午我登录github的时候, 发现github强制要求2FA认证了</p>
+<p>目前免费的2FA totp authenticator有:</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&amp;hl=en&amp;pli=1">Google Authenticator</a></li>
+<li><a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.azure.authenticator&amp;hl=en_US">Microsoft Authenticator</a></li>
+</ol>
+<p>然而这些authenticator不仅具有不方便的特性, 而且服务器大多位于国外, 通信/备份都具有十足的问题.</p>
+<p>之前我一直再用一个叫<a target="_blank" rel="noopener" href="https://bitwarden.com/">Bitwarden</a>的密码管理软件, 其在各大浏览器上都有插件, 并且具有安卓/ios的app适配, 几乎可以在所有设备上无缝使用, 而且代码开源, 具有比较高的安全性, 在我没有自建服务器时就已经几乎把所有的密码管理从google转移到bitwarden了</p>
+<p>然而bitwarden的totp是收费项目:</p>
+<p>但是收费还是比较良心的, 只是我觉得没有必要为了一个feature去额外付几十块/年的费用</p>
+<p>在很早之前调研密码管理工具的时候就了解到bitwarden可以自建服务器, 并且有一个开源的rust后端实现<a target="_blank" rel="noopener" href="https://community.bitwarden.com/t/bitwarden-vs-vaultwarden-rust-formerly-bitwarden-rs/15382">Bitwarden_RS</a> (后面改名为<a target="_blank" rel="noopener" href="https://github.com/dani-garcia/vaultwarden">vaultwarden</a>):</p>
+<blockquote>
+<p>This is the Rust implementation backend, <em>not</em> the official server backend, but fully compatible with the Client apps.</p>
+<p>Bitwarden is a self-hosted password manager. It allows you to store and manage your passwords, credit cards, and other private information in a secure way while still allowing you to access it from your browser, phone, or desktop.</p>
+</blockquote>
+<p>vaultwarden实现了与bitwarden完全兼容的绝大多数api, 可以直接作为bitwarden客户端的上游, 支持所有的高级会员的功能, 同时具有多方面的优化, 并且<a target="_blank" rel="noopener" href="https://rs.ppgg.in/">更加的轻量</a>:</p>
+<blockquote>
+<p>Vaultwarden 比官方版更轻量。官方版使用 .Net 开发，使用 MSSQL 数据库，要求至少 2GB 内存；Vaultwarden 使用 Rust 编写，改用 SQLite 数据库（现在也支持 MySQL 和 PostgreSQL），运行时只需要 10M 内存，可以说对硬件基本没有要求。Vaultwarden 比官方版更轻量。官方版使用 .Net 开发，使用 MSSQL 数据库，要求至少 2GB 内存；Vaultwarden 使用 Rust 编写，改用 SQLite 数据库（现在也支持 MySQL 和 PostgreSQL），运行时只需要 10M 内存，可以说对硬件基本没有要求。</p>
+</blockquote>
+<p>于是乎我直接开始搜寻一个轻量的服务器来部署vaultwarden服务:</p>
+<ol>
+<li>腾讯云国内: 老用户与狗不得入内系列</li>
+<li>阿里云国内: 同上</li>
+<li>国内其他云服务厂商: 不太放心, 并且价格也不便宜, 且几乎所有国内服务器都是小水管, 干不了什么东西</li>
+<li>vultr / 搬瓦工等国外服务器: 延迟过高</li>
+</ol>
+<p>于是最后把眼光瞄准了阿里云轻量海外/腾讯云轻量海外</p>
+<p>最后入手了阿里云的<a target="_blank" rel="noopener" href="https://common-buy.aliyun.com/">新加坡轻量服务器</a></p>
+<p>价格还是比较良心, 同时30Mbps带宽也基本够用, 测了一下延迟大概70ms左右, 对比其他的海外服务器已经是绝佳的表现了</p>
+<p>海外服务器在延迟低的情况下优势是很明显的:</p>
+<ol>
+<li>各种包管理不用配一大堆镜像</li>
+<li>github可以直接访问, 拉代码很方便, 国内经常抽风</li>
+<li>在把阿里云盾删除的情况下, 可以干点你懂得</li>
+</ol>
+<p>同时这次服务器部署希望全采用docker的方式, 这样迁移非常方便, 然后用rclone备份数据卷到google drive / one drive即可, 下面简单介绍下这一周来折腾的一些东西(2G内存还是能干很多事的!):</p>
+<h2 id="2-基础建设-反代-caddy">2 - 基础建设(反代): caddy</h2>
+<p>caddy相比nginx除了配置方便外很吸引我的一个点就是: <strong>自动部署证书</strong></p>
+<p>实际使用下来真是太方便了, 配置一个简单的反向代理 + https只需要:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">&#123;$DOMAIN&#125; &#123;<br>  tls &#123;$EMAIL&#125;<br>  reverse_proxy localhost:&#123;$PORT&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>就搞定了, 结合docker-compose:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3&#x27;</span><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">caddy:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">caddy:2</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">caddy</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">network_mode:</span> <span class="hljs-string">host</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./Caddyfile:/etc/caddy/Caddyfile:ro</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./caddy-config:/config</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./caddy-data:/data</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">DOMAIN:</span> <span class="hljs-string">&quot;https://helloworld.com&quot;</span> <span class="hljs-string">//</span> <span class="hljs-string">域名，以</span> <span class="hljs-string">http</span> <span class="hljs-string">或</span> <span class="hljs-string">https</span> <span class="hljs-string">作为前缀</span><br>      <span class="hljs-attr">PORT:</span> <span class="hljs-string">&quot;80&quot;</span><br>	  <span class="hljs-attr">EMAIL:</span> <span class="hljs-string">&quot;whatever@helloworld.com&quot;</span><br></code></pre></td></tr></table></figure>
+<p>原理就是自动用你的$EMAIL进行acme的自动续签(基于let’s encrypt)</p>
+<p>之后如果需要使用证书的话直接到<code>./caddy-data</code>中找就好了</p>
+<h2 id="3-vaultwarden">3 - vaultwarden</h2>
+<p>在搞完基础建设后直接开始部署vaultwarden</p>
+<p>其实单纯配置vaultwarden非常的简单(直接上docker-compose):</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3&#x27;</span><br><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">vaultwarden:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">vaultwarden/server:latest</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">vaultwarden</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-number">80</span><span class="hljs-string">:80</span> <br>      <span class="hljs-bullet">-</span> <span class="hljs-number">3012</span><span class="hljs-string">:3012</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">WEBSOCKET_ENABLED:</span><br>      <span class="hljs-attr">ADMIN_TOKEN:</span> <br>      <span class="hljs-attr">SIGNUPS_ALLOWED:</span> <br>      <span class="hljs-attr">SMTP_HOST:</span> <br>      <span class="hljs-attr">SMTP_FROM:</span> <br>      <span class="hljs-attr">SMTP_PORT:</span> <br>      <span class="hljs-attr">SMTP_SECURITY:</span><br>      <span class="hljs-attr">SMTP_USERNAME:</span> <br>      <span class="hljs-attr">SMTP_PASSWORD:</span> <br>      <span class="hljs-attr">DOMAIN:</span> <br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">vaultwarden-data:/data</span><br></code></pre></td></tr></table></figure>
+<p>然后直接在各个bitwarden的插件里填上服务器地址就可以用了</p>
+<p>然而这样一个密码管理服务数据备份是相当重要的, 我直接采用了一个项目的备份方案:</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ttionya/vaultwarden-backup">https://github.com/ttionya/vaultwarden-backup</a></p>
+<p>我自己在配置的是保留5天的数据, 并且中途多次尝试从备份中恢复, 还是相当稳的:</p>
+<p>在搭建完vaultwarden后我发现我1GB(后面升级到2GB了)的服务器还剩下大几百兆, 如果我只用来做一个密码管理那不是浪费钱吗, 必经一年也要好几百, 那还不如直接去买bitwarden的服务, 后面越想越气, 就开始发觉服务器其他的用途:</p>
+<h2 id="4-nps">4 - nps</h2>
+<p>一个内网穿透服务</p>
+<blockquote>
+<p>一款轻量级、高性能、功能强大的内网穿透代理服务器。支持tcp、udp、socks5、http等几乎所有流量转发，可用来访问内网网站、本地支付接口调试、ssh访问、远程桌面，内网dns解析、内网socks5代理等等……，并带有功能强大的web管理端。a lightweight, high-performance, powerful intranet penetration proxy server, with a powerful web management terminal.</p>
+</blockquote>
+<p>nps比frp好的一点就是提供了非常方便的web ui, 不需要登录服务器搞配置了</p>
+<p>docker: <a target="_blank" rel="noopener" href="https://hub.docker.com/r/ffdfgdfg/nps">https://hub.docker.com/r/ffdfgdfg/nps</a></p>
+<p>基本写一个这样的compose:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3&#x27;</span><br><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">nps:</span> <br>    <span class="hljs-attr">image:</span> <span class="hljs-string">&quot;ffdfgdfg/nps&quot;</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">nps</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">network_mode:</span> <span class="hljs-string">&quot;host&quot;</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./conf:/conf</span><br></code></pre></td></tr></table></figure>
+<p>然后复制config: <a target="_blank" rel="noopener" href="https://github.com/ehang-io/nps/tree/master/conf">https://github.com/ehang-io/nps/tree/master/conf</a></p>
+<p>就可用了.</p>
+<p>感觉nps的用处还是很大的, 只是现在我校园网基本全是内网, 用不太上就闲置了, 之后在家里想连接实验室的服务器之类的还是很有用的 (遵纪守法)</p>
+<h2 id="5-chatgpt">5 - chatgpt</h2>
+<p>那自然是要跟随潮流(:</p>
+<p>几个典型的项目:</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/binary-husky/chatgpt_academic">https://github.com/binary-husky/chatgpt_academic</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Chanzhaoyu/chatgpt-web">https://github.com/Chanzhaoyu/chatgpt-web</a></li>
+<li>…</li>
+</ol>
+<p>这里基本都不需要任何配置, 填个api-key开箱即用, 并且内存占用都很小</p>
+<p>这里就不得不说新加坡节点的另一个好处了:</p>
+<p><strong>服务器IP几乎不会被openai ban掉, 同时新加坡又不属于管制范围</strong>, 总之就是不用开代理畅享API</p>
+<h2 id="6-proxy">6 - proxy</h2>
+<p>这是能说的吗</p>
+<p>反正搭了三天还没被封, 后面再看</p>
+<h2 id="7-rss-bot">7 - rss-bot</h2>
+<p>这几天高强度看别人的博客, 又想部署一个简单的rss通知服务, 之前一直用的feedly, 但是不知道为什么总是挂图片/样式很烂/收不到通知</p>
+<p>于是这次直接顺手部署了一个rss的bot:</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Rongronggg9/RSS-to-Telegram-Bot">https://github.com/Rongronggg9/RSS-to-Telegram-Bot</a></p>
+<p>直接推送rss到tg, 并且还可以自动渲染, 还是挺方便的</p>
+<h2 id="8-总结">8 - 总结</h2>
+<p>这几天在服务器上的折腾大概就总结成了这几点, 期间服务器经过了一次从1G到2G的升级, 多次重启, 但是用docker的好处就是, 一切服务器重启几乎都是无感的(记得配置<code>restart: always</code>或<code>restart: unless-stopped</code>)</p>
+<p>然后同时利用tmux, 运行着<code>docker compose logs -f</code>监控每一个服务, 基本登录服务器看日志可以做到一键化</p>
+<p>然后让chatgpt帮我写了个一键备份的脚本:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">定义变量</span><br>CURRENT_DIR=<br>BACKUP_DIR=     # 需要备份的目录<br>RCLONE_REMOTE=  # rclone远程服务名<br>DAYS_TO_KEEP=3                               # 保留备份文件的天数<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">生成备份文件名</span><br>BACKUP_FILE=docker-$(date +%Y-%m-%d).zip<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">打包备份文件</span><br>echo &quot;开始打包备份文件...&quot;<br>cd $BACKUP_DIR &amp;&amp; zip -r $CURRENT_DIR/$BACKUP_FILE .<br>if [ $? -eq 0 ]; then<br>    echo &quot;备份文件打包成功！&quot;<br>else<br>    echo &quot;备份文件打包失败，请检查备份目录是否存在！&quot;<br>    exit 1<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">上传备份文件到rclone远程服务</span><br>echo &quot;开始上传备份文件到rclone远程服务(onedrive)...&quot;<br>rclone copy $CURRENT_DIR/$BACKUP_FILE $RCLONE_REMOTE &gt; /dev/null 2&gt;&amp;1<br>if [ $? -eq 0 ]; then<br>    echo &quot;备份文件上传成功！&quot;<br>else<br>    echo &quot;备份文件上传失败，请检查rclone配置是否正确！&quot;<br>    exit 1<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除历史备份文件</span><br>FILE_NAME=docker-$(date -d &quot;$DAYS_TO_KEEP days ago&quot; +&quot;%Y-%m-%d&quot;).zip<br>echo &quot;开始删除历史备份文件(onedrive): $FILE_NAME&quot;<br>if rclone ls $RCLONE_REMOTE/$FILE_NAME &gt; /dev/null 2&gt;&amp;1; then<br>    rclone delete $RCLONE_REMOTE/$FILE_NAME &gt; /dev/null 2&gt;&amp;1<br>    if [ $? -eq 0 ]; then<br>        echo &quot;历史备份文件删除成功！&quot;<br>    else<br>        echo &quot;历史备份文件删除失败，请检查rclone配置是否正确！&quot;<br>        exit 1<br>    fi<br>else<br>    echo &quot;历史备份文件不存在！&quot;<br>fi<br><br><br>echo &quot;备份完成！&quot;<br>exit 0<br></code></pre></td></tr></table></figure>
+<p>整体感觉就是: 服务器非常的清爽, 几乎在不用快照的情况下也可以做到快速迁移</p>
+<p>目前内存还剩将近1个G, 感觉还可以折腾进好几个服务…</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/" class="category-chain-item">配置环境</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/blog/" class="print-no-link">#blog</a>
+      
+        <a href="/tags/proxy/" class="print-no-link">#proxy</a>
+      
+        <a href="/tags/vaultwarden/" class="print-no-link">#vaultwarden</a>
+      
+        <a href="/tags/password/" class="print-no-link">#password</a>
+      
+        <a href="/tags/nps/" class="print-no-link">#nps</a>
+      
+        <a href="/tags/chatgpt/" class="print-no-link">#chatgpt</a>
+      
+        <a href="/tags/caddy/" class="print-no-link">#caddy</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>一个新服务器, 一些折腾</div>
+      <div>https://moreality.net/posts/22665/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/64403/" title="一次致命的失误">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">一次致命的失误</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/40367/" title="多核并行体系结构-投机同步">
+                        <span class="hidden-mobile">多核并行体系结构-投机同步</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
