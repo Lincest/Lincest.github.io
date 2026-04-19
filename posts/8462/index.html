@@ -1,0 +1,975 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="录音转文本(STT)的几种主要方案，包括自部署、API、平台方案。同时也总结了一些 MacOS 上可以同时录制麦克风和系统声音的方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一些录音转文本(STT)的方案总结">
+<meta property="og:url" content="https://moreality.net/posts/8462/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="录音转文本(STT)的几种主要方案，包括自部署、API、平台方案。同时也总结了一些 MacOS 上可以同时录制麦克风和系统声音的方案。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://youpai.roccoshi.top/img/202501291951308.png">
+<meta property="article:published_time" content="2025-01-29T11:26:37.000Z">
+<meta property="article:modified_time" content="2025-01-30T14:48:17.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="STT(Speech-to-Text)">
+<meta property="article:tag" content="录音">
+<meta property="article:tag" content="录音转文本">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://youpai.roccoshi.top/img/202501291951308.png">
+  
+  
+  
+  <title>一些录音转文本(STT)的方案总结 - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">一些录音转文本(STT)的方案总结</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-29 19:26" pubdate>
+          2025年1月29日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">一些录音转文本(STT)的方案总结</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2025年1月30日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>这几天有个需求，就是将一些中英文对话录音文件转文本，然后进行一些分析。所以就调研了一下录音转文本的方案。顺便总结一下 MacOS 上的录音／录屏方案。</p>
+<p>STT 全称 Speech-to-Text，即语音转文本。一般有两种常见的需求：一种是将实时语音转文本的识别（流式处理），一种是将录音文件转文本。本文主要记录后者的一些方案。</p>
+<h2 id="1-录音转文本的方案">1 - 录音转文本的方案</h2>
+<h3 id="自部署方案">自部署方案</h3>
+<p>目前最常见的模型是 <a target="_blank" rel="noopener" href="https://github.com/openai/whisper">OpenAI 的 Whisper 模型</a>。</p>
+<p>使用起来也非常简单，只需要两步：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装</span><br>pip install openai-whisper<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用</span><br>whisper --model base --language zh --output-dir ./output ./input.m4a<br></code></pre></td></tr></table></figure>
+<p>目前一些其他的「自建」方案基本都是基于 OpenAI 的 whisper 模型: <a target="_blank" rel="noopener" href="https://huggingface.co/models?sort=likes&amp;search=whisper">HuggingFace 的 Whisper 模型</a></p>
+<p>这种自部署的优势就是安全，缺点是需要消耗本地算力，如果算力不足会比较慢，其次感觉 Whipser 对于纯英语识别来说比较好，但是对于中英文混杂的环境，效果还是比较差的。</p>
+<h3 id="API-方案">API 方案</h3>
+<p>用几家大厂的 API 方案, 比如：</p>
+<ul>
+<li><strong>OpenAI 的 Whisper API</strong></li>
+</ul>
+<p>目前价格是每分钟 $0.006：<a target="_blank" rel="noopener" href="https://openai.com/api/pricing/">https://openai.com/api/pricing/</a></p>
+<p><img src="https://youpai.roccoshi.top/img/202501292051697.png" alt="OpenAI Whisper Price"></p>
+<p>其实这个价格也不算便宜了，转一个 1 小时左右的文本就要 3 RMB 左右。</p>
+<ul>
+<li><strong>Google 的 STT API</strong></li>
+</ul>
+<p>这个更贵，目前价格是每分钟 $0.016：<a target="_blank" rel="noopener" href="https://cloud.google.com/speech-to-text/pricing">https://cloud.google.com/speech-to-text/pricing</a></p>
+<p><img src="https://youpai.roccoshi.top/img/202501292004647.png" alt="Google STT V2 Price"></p>
+<p>更多的一些厂商:</p>
+<table>
+<thead>
+<tr>
+<th>服务提供商</th>
+<th>服务名称</th>
+<th>收费标准</th>
+<th>参考链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>微软 Azure</strong></td>
+<td>Azure 语音服务</td>
+<td>按秒计费，包含标准和自定义语音转文本，以及按字符计费的文本转语音服务</td>
+<td><a target="_blank" rel="noopener" href="https://azure.microsoft.com/zh-cn/pricing/details/cognitive-services/speech-services/">价格详情</a></td>
+</tr>
+<tr>
+<td><strong>百度智能云</strong></td>
+<td>语音识别服务</td>
+<td>支持预付费包和后付费阶梯计价，根据语言模型类型定价</td>
+<td><a target="_blank" rel="noopener" href="https://ai.baidu.com/ai-doc/SPEECH/Tldjm0i4c">价目详情</a></td>
+</tr>
+<tr>
+<td><strong>阿里云</strong></td>
+<td>智能语音服务</td>
+<td>一句话识别按次计费，录音文件按时长计费，语音合成按字符计费</td>
+<td><a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/vms/product-overview/voice-services-pricing-in-china">费用说明</a></td>
+</tr>
+<tr>
+<td><strong>腾讯云</strong></td>
+<td>语音识别</td>
+<td>实时识别和文件识别按日使用量计费</td>
+<td><a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1093/35686">计费概述</a></td>
+</tr>
+<tr>
+<td><strong>华为云</strong></td>
+<td>语音交互</td>
+<td>按调用时长收费，支持按量付费和套餐包</td>
+<td><a target="_blank" rel="noopener" href="https://www.huaweicloud.com/zhishi/price-sis.html">服务价格</a></td>
+</tr>
+<tr>
+<td><strong>Sonix</strong></td>
+<td>转录服务</td>
+<td>按小时收费或月度订阅制</td>
+<td><a target="_blank" rel="noopener" href="https://sonix.ai/zh/how-much-does-transcription-cost">价格详情</a></td>
+</tr>
+</tbody>
+</table>
+<p>总之，API的方案确实很方便，但是价格其实都并不便宜。</p>
+<p>于是最后我还是将眼光瞄向了国内的一些在线平台。</p>
+<h3 id="在线平台">在线平台</h3>
+<p>主要试用了科大讯飞的讯飞听见，阿里的通义听悟和字节的飞书妙记。</p>
+<p>用起来体验如下:</p>
+<h4 id="阿里：通义听悟">阿里：通义听悟</h4>
+<p>Link: <a target="_blank" rel="noopener" href="https://tingwu.aliyun.com/">https://tingwu.aliyun.com/</a></p>
+<p>阿里通义听悟在中英混合文本识别方面表现最为出色，且提供充足的免费额度（赠送500小时, 除此之外每天签到都可以领取 10 小时）</p>
+<p><img src="https://youpai.roccoshi.top/img/202501292021868.png" alt="活动界面"></p>
+<p>然后功能方面做的也很好，包括内容摘要，发言人识别，文本替换，AI改写等比较好用的功能。</p>
+<p><img src="https://youpai.roccoshi.top/img/202501292025757.png" alt="界面"></p>
+<h4 id="字节：飞书妙记">字节：飞书妙记</h4>
+<p>Link: <a target="_blank" rel="noopener" href="https://www.feishu.cn/product/minutes">https://www.feishu.cn/product/minutes</a></p>
+<p>飞书妙记也还不错，每月提供300分钟免费额度，勉强也还够用。</p>
+<p>但是如果额度一旦用完，价格就有点贵了，只能付费升级到「飞书 Plus」来用不限时。</p>
+<p><img src="https://youpai.roccoshi.top/img/202501292026445.png" alt="price"></p>
+<p><img src="https://youpai.roccoshi.top/img/202501292027373.png" alt="飞书妙记：界面"></p>
+<p>另外界面做的也挺朴素的，功能不像阿里的那么丰富，但是比较简练，作为常用的会议记录的用途也足够了。</p>
+<h4 id="科大讯飞-听见">科大讯飞: 听见</h4>
+<p>每月仅提供20分钟免费额度，识别效果也相对一般，充值也很贵，39.8RMB/月。</p>
+<p>性价比较低。</p>
+<p><img src="https://youpai.roccoshi.top/img/202501292030543.png" alt=""></p>
+<h2 id="2-MacOS-录音方案">2 - MacOS 录音方案</h2>
+<p>作为录制会议或者演讲等用途，经常有一个需求就是想同时录制 麦克风 + 系统声音.</p>
+<p>这里介绍一下我现在用的两种能获得录音音频的方式：</p>
+<h3 id="1-使用-Screenshot-录屏">1 - 使用 Screenshot 录屏</h3>
+<p>录屏的话 MacOS 的 Screeshot（截屏）可以直接做到：</p>
+<ol>
+<li><code>cmd + shift + 5</code> 打开录屏，在选项中选择「麦克风」即可。</li>
+<li>录制结束后获得一个 <code>.mov</code> 视频文件。</li>
+<li>用 <code>QuickTime Player</code> 打开视频文件，在「文件」菜单中选择「导出为音频文件」，即可获得一个 <code>.m4a</code> 音频文件。</li>
+</ol>
+<h3 id="2-单纯录音">2 - 单纯录音</h3>
+<p>有时候我们不被允许录制屏幕，这时候只能通过单独录音的方式，而 MacOS 自带的 “QuickTime” 录音只能单独录制麦克风声音，这时候就需要用到其他手段。</p>
+<h4 id="BlackHole">BlackHole</h4>
+<p>一种方案是利用 BlackHole，BlackHole 作为一个虚拟音频设备，可以将 macOS 系统的音频输出捕获并重新路由，使其既能被录制软件录下又能通过扬声器播放出来。具体操作可以看：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110962816">知乎：macOS使用BlackHole录制系统声音的同时输出声音<br>
+</a></p>
+<h4 id="QuickRecorder">QuickRecorder</h4>
+<p>另一种就是通过安装其他应用的方式，一般用的最多的是 obs，但是 obs 太大了，搞起来比较复杂和麻烦。</p>
+<p>于是我找到了一个使用起来还不错的很轻量的开源软件「QuickRecorder」：<a target="_blank" rel="noopener" href="https://github.com/lihaoyun6/QuickRecorder">https://github.com/lihaoyun6/QuickRecorder</a></p>
+<p><img src="https://youpai.roccoshi.top/img/202501292046765.png" alt="QuickRecorder"></p>
+<p>使用这个软件录制出来会生成一个 <code>.qma</code> 文件</p>
+<p><img src="https://youpai.roccoshi.top/img/202501292047086.png" alt=""></p>
+<p>qma 这种文件包格式可以容纳 2个音频文件，以及一个属性文件。</p>
+<p>使用 QuickRecorder 内置的 QMA 播放器打开 <code>.qma</code> 可以同步播放系统声音和麦克风声音，并且可以独立调节音量（调节之后，音量属性会被记录在文件信息里，下次打开这个文件还是这套音量配置）。如果不需要分享的话，直接用 qma 格式保存在硬盘上就行了。如果需要发给别人，qma 播放器自带导出功能，可以将两个音频文件按照用户设定的音量比例混缩成一个普通的单轨音频文件 <code>.mp3 / .m4a</code>。<a target="_blank" rel="noopener" href="https://github.com/lihaoyun6/QuickRecorder/issues/91#issuecomment-2196471712">ref</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%8A%80%E6%9C%AF/" class="print-no-link">#技术</a>
+      
+        <a href="/tags/STT-Speech-to-Text/" class="print-no-link">#STT(Speech-to-Text)</a>
+      
+        <a href="/tags/%E5%BD%95%E9%9F%B3/" class="print-no-link">#录音</a>
+      
+        <a href="/tags/%E5%BD%95%E9%9F%B3%E8%BD%AC%E6%96%87%E6%9C%AC/" class="print-no-link">#录音转文本</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>一些录音转文本(STT)的方案总结</div>
+      <div>https://moreality.net/posts/8462/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/51437/" title="一个实现自动网页剪藏的工作流">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">一个实现自动网页剪藏的工作流</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/16459/" title="2024 年度订阅总结: 降本增效">
+                        <span class="hidden-mobile">2024 年度订阅总结: 降本增效</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

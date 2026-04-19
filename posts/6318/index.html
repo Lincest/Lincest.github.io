@@ -1,0 +1,1130 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="晚上看了看 Google 最近出的一个叫「Prompt Engineering」的一个总结性质的文档，把笔记整理一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google「提示词工程」白皮书阅读总结">
+<meta property="og:url" content="https://moreality.net/posts/6318/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="晚上看了看 Google 最近出的一个叫「Prompt Engineering」的一个总结性质的文档，把笔记整理一下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://youpai.roccoshi.top/img/202504212254825.png">
+<meta property="article:published_time" content="2025-04-21T14:45:28.000Z">
+<meta property="article:modified_time" content="2025-04-21T15:12:22.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Gemini">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Google">
+<meta property="article:tag" content="Prompt">
+<meta property="article:tag" content="提示词">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://youpai.roccoshi.top/img/202504212254825.png">
+  
+  
+  
+  <title>Google「提示词工程」白皮书阅读总结 - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Google「提示词工程」白皮书阅读总结</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-21 22:45" pubdate>
+          2025年4月21日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Google「提示词工程」白皮书阅读总结</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2025年4月21日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="前言">前言</h2>
+<blockquote>
+<p>注意，本文不是翻译，只是针对自己觉得有用的一些地方的记录和总结；对于我自己觉得已经比较清楚的概念，就完全没有记录。其中最后的「最佳实践 Best Practice」部分个人感觉比较有用，强烈建议结合原版 PDF 的一些示例 demo 进行对比查看。</p>
+</blockquote>
+<p><strong>简单介绍：</strong></p>
+<p>「Prompt Engineering」是 Google 推出的提示词工程白皮书，一共 60 多页，原始版本可以在 <a target="_blank" rel="noopener" href="https://www.kaggle.com/whitepaper-prompt-engineering">https://www.kaggle.com/whitepaper-prompt-engineering</a> 上获取到，或者直接 <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1AbaBYbEa_EbPelsT40-vj64L-2IwUJHy/view">下载链接 (googledrive)</a>。</p>
+<p><img src="https://youpai.roccoshi.top/img/202504212246609.png" alt="封面"></p>
+<h2 id="1-采样控制">1 - 采样控制</h2>
+<p>主要三个可配置项:</p>
+<ul>
+<li>Top-P</li>
+<li>Top-K</li>
+<li>Temperature (温度)</li>
+</ul>
+<p>作用的先后顺序: Top-K -&gt; Top-P -&gt; Temperature</p>
+<h3 id="例子">例子</h3>
+<p>假设我们有以下设置：</p>
+<ul>
+<li>top-k = 5</li>
+<li>top-p = 0.9</li>
+<li>temperature = 0.7</li>
+</ul>
+<p>当模型预测下一个词时，可能给出了这样的概率分布：</p>
+<ul>
+<li>“的”: 0.3</li>
+<li>“是”: 0.25</li>
+<li>“在”: 0.2</li>
+<li>“了”: 0.1</li>
+<li>“有”: 0.05</li>
+<li>“和”: 0.03</li>
+<li>“人”: 0.02</li>
+<li>其他词: 各小于0.01</li>
+</ul>
+<p>应用步骤：</p>
+<ol>
+<li>top-k=5筛选后，只保留前5个词：“的”、“是”、“在”、“了”、“有”</li>
+<li>计算这5个词的累积概率：0.3+0.25+0.2+0.1+0.05=0.9，正好等于top-p的阈值0.9，所以这5个词都被保留</li>
+<li>应用temperature=0.7，通常来说，温度与模型的“创造力”有关。但事实并非如此。温度只是调整单词的概率分布。其最终的宏观效果是，<strong>在较低的温度下，我们的模型更具确定性，而在较高的温度下，则不那么确定</strong>。(ref: <a target="_blank" rel="noopener" href="https://www.zhihu.com/tardis/zm/art/647813179?source_id=1003">知乎: 大模型文本生成——解码策略（Top-k &amp; Top-p &amp; Temperature）</a>)</li>
+</ol>
+<h3 id="极端情况">极端情况</h3>
+<p>几种极端情况的 LLM 实现考虑:</p>
+<ul>
+<li>温度设为 0 时，Top-K 和 Top-P 无关，概率最高的令牌被选为下一个预测令牌；温度极高（如 10 量级）时，温度无关，Top-K 和/或 Top-P 标准的令牌将被随机采样。</li>
+<li>Top-K 设为 1 时，温度和 Top-P 无关，仅概率最高的令牌被选；Top-K 设为词汇表大小时，所有非零概率令牌均满足标准，无令牌被筛选。</li>
+<li>Top-P 设为 0 或极小时，仅概率最高的令牌满足标准，温度和 Top-K 无关；Top-P 设为 1 时，所有非零概率令牌均满足标准，无令牌被筛选。</li>
+</ul>
+<h3 id="推荐配置">推荐配置</h3>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Temperature</th>
+<th>Top-P</th>
+<th>Top-K</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通用场景 General Purpose</td>
+<td>0.2</td>
+<td>0.95</td>
+<td>30</td>
+<td>Relatively coherent results with some creativity</td>
+</tr>
+<tr>
+<td>高创造力场景 High Creativity</td>
+<td>0.9</td>
+<td>0.99</td>
+<td>40</td>
+<td>Especially creative results</td>
+</tr>
+<tr>
+<td>比较精确的场景 (比如coding) <br />Low Creativity</td>
+<td>0.1</td>
+<td>0.9</td>
+<td>20</td>
+<td>Less creative results</td>
+</tr>
+<tr>
+<td>Single Correct Answer</td>
+<td>0</td>
+<td>-</td>
+<td>-</td>
+<td>For tasks with only one correct answer (e.g., math problems)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-Guide-Prompt-分类">2 - Guide Prompt 分类</h2>
+<p>系统提示（System Prompting）、上下文提示（Contextual Prompting）和角色提示（Role Prompting）都是用于指导大型语言模型（LLMs）生成文本的技术，但它们关注的重点不同。尽管这些提示类型之间存在相当大的重叠（例如，一个提示可能同时为系统分配角色并提供上下文），但每种提示的主要目的略有不同。</p>
+<p>以下是三种提示类型的核心区别和作用：</p>
+<table>
+<thead>
+<tr>
+<th>提示类型</th>
+<th>主要目的与功能</th>
+<th>特点与作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>System Prompt</strong></td>
+<td>定义模型的基本能力和总体目的。</td>
+<td>设定语言模型的“大局观”，例如翻译语言、分类评论等，指导模型的整体行为。</td>
+</tr>
+<tr>
+<td><strong>Contextual Prompt</strong></td>
+<td>提供与当前对话或任务相关的具体细节或背景信息，指导模型生成针对性的回应。</td>
+<td>高度特定于当前任务或输入，具有动态性，帮助模型理解细微差别并调整回应。</td>
+</tr>
+<tr>
+<td><strong>Role Prompt</strong></td>
+<td>为模型分配特定的角色或身份，帮助模型生成与该角色一致的回应。</td>
+<td>塑造模型的输出风格和语气，增加具体性和个性，使回应符合角色的知识和行为。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="system-prompt">system prompt</h3>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">Classify movie reviews <span class="hljs-keyword">as</span> positive, neutral <span class="hljs-built_in">or</span> negative. Only<br><span class="hljs-keyword">return</span> the label <span class="hljs-keyword">in</span> uppercase.<br><span class="hljs-symbol">Review:</span> <span class="hljs-string">&quot;Her&quot;</span> <span class="hljs-built_in">is</span> a disturbing study revealing the direction<br>humanity <span class="hljs-built_in">is</span> headed <span class="hljs-keyword">if</span> AI <span class="hljs-built_in">is</span> allowed <span class="hljs-keyword">to</span> keep evolving,<br>unchecked. It<span class="hljs-comment">&#x27;s so disturbing I couldn&#x27;t watch it.</span><br><span class="hljs-symbol">Sentiment:</span><br></code></pre></td></tr></table></figure>
+<h3 id="contextual-prompt">contextual prompt</h3>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs applescript">Context: You are writing <span class="hljs-keyword">for</span> a blog <span class="hljs-keyword">about</span> retro <span class="hljs-number">80</span>&#x27;s arcade<br>video games.<br>Suggest <span class="hljs-number">3</span> topics <span class="hljs-keyword">to</span> <span class="hljs-built_in">write</span> an article <span class="hljs-keyword">about</span> <span class="hljs-keyword">with</span> a few lines <span class="hljs-keyword">of</span><br>description <span class="hljs-keyword">of</span> what this article should <span class="hljs-keyword">contain</span>.<br></code></pre></td></tr></table></figure>
+<h3 id="role-prompt">role prompt</h3>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs vim">I want you <span class="hljs-keyword">to</span> act <span class="hljs-keyword">as</span> <span class="hljs-keyword">a</span> travel guide. I will <span class="hljs-keyword">write</span> <span class="hljs-keyword">to</span> you<br>about my location <span class="hljs-built_in">and</span> you will suggest <span class="hljs-number">3</span> places <span class="hljs-keyword">to</span> visit near<br><span class="hljs-keyword">me</span>. In some cases, I will also give you the <span class="hljs-built_in">type</span> of places I<br>will visit.<br>My suggestion: <span class="hljs-comment">&quot;I am in Amsterdam and I want to visit</span><br><span class="hljs-keyword">only</span> museums.<span class="hljs-comment">&quot;</span><br>Travel Suggestions:<br></code></pre></td></tr></table></figure>
+<h2 id="3-示例个数-one-shot-few-shot">3 - 示例个数: one-shot &amp; few-shot</h2>
+<p>在为AI模型创建提示时，提供示例非常有帮助。示例可以帮助模型理解您的需求，尤其是在希望模型输出特定结构或模式时特别有用。</p>
+<ul>
+<li>One-shot 提示提供单个示例，因此得名one-shot，目的是让模型有一个可以模仿的示例来完成任务。</li>
+<li>Few-shot 提示则提供多个示例，向模型展示需要遵循的模式，增加模型遵循该模式的机会。Few-shot提示所需的示例数量取决于任务复杂性、示例质量以及所使用的generative AI (gen AI)模型的能力。一般建议至少使用三到五个示例，但对于复杂任务可能需要更多示例，或者由于模型输入长度限制可能需要更少。选择示例时，应确保示例与任务相关，具有多样性、高质量且编写良好，因为一个小错误就可能导致模型混淆并输出不符合预期的结果。此外，如果希望生成的输出能适应各种输入，包含edge cases（异常或意外输入）在示例中非常重要。</li>
+</ul>
+<h2 id="4-Step-back-Prompting-回退提示词">4 - Step-back Prompting (回退提示词)</h2>
+<p>Step-back prompting 是一种通过提示 LLM 先考虑与具体任务相关的一般性问题，然后将该问题的答案输入到后续的具体任务提示中来提升性能的技术。这种“step back”方法使 LLM 在尝试解决具体问题之前激活相关的背景知识和推理过程。通过考虑更广泛和基本的原则，LLM 能够生成更准确和有洞察力的回应。</p>
+<p>Step-back prompting 鼓励 LLM 批判性思考并以新的和创造性的方式应用知识，通过利用 LLM 参数中的更多知识来改变执行任务的最终提示，而这些知识在直接提示 LLM 时可能不会被激活。它还可以通过关注一般原则而非具体细节来帮助减轻 LLM 回应中的偏见。</p>
+<h3 id="传统-prompt-step-back-prompt-对比">传统 prompt &amp; step-back prompt 对比</h3>
+<p>传统 prompt:</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">Write <span class="hljs-keyword">a</span> <span class="hljs-literal">one</span> <span class="hljs-keyword">paragraph</span> storyline <span class="hljs-keyword">for</span> <span class="hljs-keyword">a</span> <span class="hljs-built_in">new</span> level <span class="hljs-keyword">of</span> <span class="hljs-keyword">a</span> firstperson shooter video game that is challenging <span class="hljs-keyword">and</span> engaging.<br></code></pre></td></tr></table></figure>
+<p>step-back prompt:</p>
+<ol>
+<li>首先询问:</li>
+</ol>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">Write <span class="hljs-keyword">a</span> <span class="hljs-literal">one</span> <span class="hljs-keyword">paragraph</span> storyline <span class="hljs-keyword">for</span> <span class="hljs-keyword">a</span> <span class="hljs-built_in">new</span> level <span class="hljs-keyword">of</span> <span class="hljs-keyword">a</span> firstperson shooter video game that is challenging <span class="hljs-keyword">and</span> engaging.<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>之后基于 LLM  的回答，追加提问:</li>
+</ol>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">Based <span class="hljs-keyword">on</span> popular <span class="hljs-keyword">first</span>-person shooter action games, what are<br><span class="hljs-number">5</span> fictional key settings <span class="hljs-keyword">that</span> contribute <span class="hljs-keyword">to</span> a challenging <span class="hljs-keyword">and</span><br>engaging level storyline <span class="hljs-keyword">in</span> a <span class="hljs-keyword">first</span>-person shooter video game?<br></code></pre></td></tr></table></figure>
+<h2 id="5-APE-Automatic-Prompt-Engineering-自动生成提示词">5 - APE: Automatic Prompt Engineering (自动生成提示词)</h2>
+<p>编写提示（prompt）可能是一项复杂的任务。为了解决这个问题，可以采用Automatic Prompt Engineering (APE)方法。这种方法不仅减少了人工输入的需求，还能提升模型在各种任务中的表现。你可以让模型生成更多提示，对它们进行评估，可能的话修改好的提示，然后重复这个过程。</p>
+<p>case:</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs applescript">We have a band merchandise t-shirt webshop, <span class="hljs-keyword">and</span> <span class="hljs-keyword">to</span> train a<br>chatbot we need various ways <span class="hljs-keyword">to</span> order: <span class="hljs-string">&quot;One Metallica t-shirt</span><br><span class="hljs-string">size S&quot;</span>. Generate <span class="hljs-number">10</span> variants, <span class="hljs-keyword">with</span> <span class="hljs-keyword">the</span> same semantics <span class="hljs-keyword">but</span> keep<br><span class="hljs-keyword">the</span> same meaning.<br></code></pre></td></tr></table></figure>
+<h2 id="6-Code-Prompting">6 - Code Prompting</h2>
+<blockquote>
+<p>这节没什么特别出彩的，就是列举了几个 coding 的用法，不过可以参考一下 Gemini 在 coding 时是如何推荐配置 topk, topp 和 temperature 的</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>Temperature</strong>：0.1</p>
+</li>
+<li>
+<p><strong>Token Limit</strong>：1024</p>
+</li>
+<li>
+<p><strong>Top-K</strong>：N/A</p>
+</li>
+<li>
+<p><strong>Top-P</strong>：1</p>
+</li>
+<li>
+<p>writing code</p>
+</li>
+</ul>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">Write <span class="hljs-keyword">a</span> code snippet <span class="hljs-keyword">in</span> Bash, which asks <span class="hljs-keyword">for</span> <span class="hljs-keyword">a</span> <span class="hljs-built_in">folder</span> name.<br>Then <span class="hljs-keyword">it</span> takes <span class="hljs-keyword">the</span> contents <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">folder</span> <span class="hljs-keyword">and</span> renames all <span class="hljs-keyword">the</span><br><span class="hljs-built_in">files</span> inside <span class="hljs-keyword">by</span> prepending <span class="hljs-keyword">the</span> name draft <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> <span class="hljs-built_in">file</span> name.<br></code></pre></td></tr></table></figure>
+<ul>
+<li>explain code</li>
+</ul>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">Explain <span class="hljs-keyword">to</span> <span class="hljs-keyword">me</span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">below</span> Bash code:<br></code></pre></td></tr></table></figure>
+<ul>
+<li>translating code</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">Translate</span> the below Bash <span class="hljs-selector-tag">code</span> <span class="hljs-selector-tag">to</span> <span class="hljs-selector-tag">a</span> Python snippet.<br></code></pre></td></tr></table></figure>
+<ul>
+<li>debug code</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs vim">The below Python code gives <span class="hljs-keyword">an</span> error:<br>Traceback (most recent <span class="hljs-keyword">call</span> <span class="hljs-keyword">last</span>):<br>File <span class="hljs-comment">&quot;/</span><br>Users/leeboonstra/Documents/test_folder/rename_files.<span class="hljs-keyword">py</span><span class="hljs-comment">&quot;, line</span><br><span class="hljs-number">7</span>, in <span class="hljs-symbol">&lt;module&gt;</span><br>text = toUpperCase(prefix)<br>NameError: name <span class="hljs-string">&#x27;toUpperCase&#x27;</span> <span class="hljs-keyword">is</span> not defined<br>Debug what<span class="hljs-string">&#x27;s wrong and explain how I can improve the code.</span><br></code></pre></td></tr></table></figure>
+<h2 id="7-最佳实践-Best-Practices">7 - 最佳实践 Best Practices</h2>
+<blockquote>
+<p>这个很有价值，一些很容易想到和验证的概念，但是 Google 帮你总结出来了</p>
+</blockquote>
+<h3 id="7-1-提供示例-Provide-examples">7.1 - 提供示例 (Provide examples)</h3>
+<p>最重要的原则是在提示中提供示例（one shot/few shot）。这是高效的方法，因为它能作为强大的教学工具。这些示例展示了期望的输出或类似的响应，让模型从中学习并相应地调整其生成内容，提高准确性、风格和语调。</p>
+<h3 id="7-2-设计简洁明了的提示-Design-with-Simplicity">7.2 - 设计简洁明了的提示 (Design with Simplicity)</h3>
+<p>提示应该简洁、清晰，易于你和模型理解。如果对你来说已经令人困惑，对模型来说也可能令人困惑。尽量不要使用复杂的语言，不要提供不必要的信息。</p>
+<p><strong>示例改进：</strong></p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">改进前：<br>I am visiting <span class="hljs-built_in">New</span> York right now, <span class="hljs-built_in">and</span> I<span class="hljs-comment">&#x27;d like to hear more about great locations. I am with two 3 year old kids. Where should we go during our vacation?</span><br><br>改进后：<br>Act <span class="hljs-keyword">as</span> a travel guide <span class="hljs-keyword">for</span> tourists. Describe great places <span class="hljs-keyword">to</span> visit <span class="hljs-keyword">in</span> <span class="hljs-built_in">New</span> York Manhattan <span class="hljs-keyword">with</span> a <span class="hljs-number">3</span> year old.<br></code></pre></td></tr></table></figure>
+<p>尝试使用描述动作的动词，例如: Act, Analyze, Categorize, Classify, Contrast, Compare, Create, Describe, Define, Evaluate, Extract, Find, Generate, Identify, List, Measure, Organize, Parse, Pick, Predict, Provide, Rank, Recommend, Return, Retrieve, Rewrite, Select, Show, Sort, Summarize, Translate, Write.</p>
+<h3 id="7-3-明确指定输出要求-Be-Specific-About-Output">7.3 - 明确指定输出要求 (Be Specific About Output)</h3>
+<p>要明确期望的输出内容。简洁的指令可能不足以引导LLM或过于笼统。在提示中提供具体细节（通过系统或上下文提示）可以帮助模型专注于相关内容，提高整体准确性。</p>
+<p><strong>推荐做法：</strong></p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">Generate a <span class="hljs-number">3</span> paragraph <span class="hljs-keyword">blog </span>post about the top <span class="hljs-number">5</span> video game consoles. The <span class="hljs-keyword">blog </span>post <span class="hljs-keyword">should </span><span class="hljs-keyword">be </span>informative <span class="hljs-keyword">and </span>engaging, <span class="hljs-keyword">and </span>it <span class="hljs-keyword">should </span><span class="hljs-keyword">be </span>written in a conversational style.<br></code></pre></td></tr></table></figure>
+<p><strong>不推荐的做法</strong>:</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">Generate</span> a blog <span class="hljs-keyword">post</span> <span class="hljs-keyword">about</span> video game consoles.<br></code></pre></td></tr></table></figure>
+<h3 id="7-4-使用指令而非约束-Use-Instructions-over-Constraints">7.4 - 使用指令而非约束 (Use Instructions over Constraints)</h3>
+<ul>
+<li>指令提供了关于期望格式、风格或内容的明确指导，<strong>指导模型应该做什么或生成什么</strong></li>
+<li>约束是对响应的一系列限制或边界，<strong>限制模型不应该做什么或避免什么</strong></li>
+</ul>
+<p>研究表明，在提示中专注于积极指令比过度依赖约束更有效。这与人类偏好积极指令而非列出不应做的事项的方式一致。</p>
+<p>指令直接传达期望的结果，而约束可能让模型猜测什么是允许的。指令在定义的边界内提供灵活性并鼓励创造力，而约束可能限制模型的潜力。此外，约束列表可能相互冲突。</p>
+<p>约束在某些情况下仍然有价值，例如防止模型生成有害或有偏见的内容，或当需要严格的输出格式或风格时。</p>
+<p>如果可能，使用积极指令：不要告诉模型不要做什么，而是告诉它应该做什么。这可以避免混淆并提高输出的准确性。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">DO:<br>Generate <span class="hljs-keyword">a</span> <span class="hljs-number">1</span> <span class="hljs-keyword">paragraph</span> blog <span class="hljs-built_in">post</span> about <span class="hljs-keyword">the</span> top <span class="hljs-number">5</span> video game consoles. Only discuss <span class="hljs-keyword">the</span> console, <span class="hljs-keyword">the</span> company who made <span class="hljs-keyword">it</span>, <span class="hljs-keyword">the</span> year, <span class="hljs-keyword">and</span> total sales.<br><br>DO NOT:<br>Generate <span class="hljs-keyword">a</span> <span class="hljs-number">1</span> <span class="hljs-keyword">paragraph</span> blog <span class="hljs-built_in">post</span> about <span class="hljs-keyword">the</span> top <span class="hljs-number">5</span> video game consoles. Do <span class="hljs-keyword">not</span> list video game names.<br></code></pre></td></tr></table></figure>
+<h3 id="7-5-控制最大token长度-Control-Max-Token-Length">7.5 - 控制最大token长度 (Control Max Token Length)</h3>
+<p>要控制生成的LLM响应的长度，你可以在配置中设置最大token限制，或在提示中明确要求特定长度。例如：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">&quot;<span class="hljs-keyword">Explain</span> quantum physics <span class="hljs-keyword">in</span> a tweet <span class="hljs-built_in">length</span> message.<span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure>
+<h3 id="7-6-在-Prompt-中使用变量-Use-Variables-in-Prompts">7.6 - 在 Prompt 中使用变量 (Use Variables in Prompts)</h3>
+<p>在提示中使用变量，可以针对不同输入而改变。例如，提供关于城市的事实的提示。与其在提示中硬编码城市名称，不如使用变量。变量可以通过避免重复自己来节省时间和精力。如果需要在多个提示中使用相同的信息，可以将其存储在变量中，然后在每个提示中引用该变量。在将提示集成到自己的应用程序中时，这非常有意义。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs applescript">PROMPT: You are a travel guide. Tell <span class="hljs-keyword">me</span> a fact <span class="hljs-keyword">about</span> <span class="hljs-keyword">the</span> city: &#123;city&#125;<br><br>VARIABLES: &#123;city&#125; = <span class="hljs-string">&quot;Amsterdam&quot;</span><br><br>OUTPUT: Amsterdam <span class="hljs-keyword">is</span> a beautiful city full <span class="hljs-keyword">of</span> canals, bridges, <span class="hljs-keyword">and</span> narrow streets. It&#x27;s a great place <span class="hljs-keyword">to</span> visit <span class="hljs-keyword">for</span> <span class="hljs-keyword">its</span> rich history, culture, <span class="hljs-keyword">and</span> nightlife.<br></code></pre></td></tr></table></figure>
+<h3 id="7-7-实验不同的输入格式和写作风格-Experiment-with-Input-Formats">7.7 - 实验不同的输入格式和写作风格 (Experiment with Input Formats)</h3>
+<p>不同的模型、模型配置、提示格式、词汇选择和提交方式可能产生不同的结果。因此，实验提示属性如风格、词汇选择和提示类型（零样本、少样本、系统提示）很重要。</p>
+<p>例如，对于一个目标是 “生成关于革命性视频游戏机Sega Dreamcast的文本” 的 Prompt，其可以表述为问题、陈述或指令，产生不同的输出：</p>
+<ul>
+<li>问题：Sega Dreamcast是什么，为什么它是如此革命性的游戏机？</li>
+<li>陈述：Sega Dreamcast是世嘉于1999年发布的第六代视频游戏机。它…</li>
+<li>指令：写一段描述Sega Dreamcast游戏机并解释为何它如此革命性的单段文字。</li>
+</ul>
+<h3 id="7-8-分类任务中混合类别-Mix-Classes-in-Few-shot">7.8 - 分类任务中混合类别 (Mix Classes in Few-shot)</h3>
+<p>一般来说，few-shot （少样本）示例的顺序不太重要。然而，在进行分类任务时，确保在few-shot示例中混合可能的响应类别。这是因为否则你可能会过度拟合到示例的特定顺序。通过混合可能的响应类别，你可以确保模型正在学习识别每个类别的关键特征，而不是简单地记住示例的顺序。这将导致在未见数据上更强健和可泛化的性能。</p>
+<p>一个好的经验法则是从6个few-shot 示例开始，并从那里开始测试准确性。</p>
+<h3 id="7-9-适应模型更新-Adapt-to-Model-Updates">7.9 - 适应模型更新 (Adapt to Model Updates)</h3>
+<p>跟踪模型架构变化、添加的数据和功能很重要。尝试更新的模型版本，并调整提示以更好地利用新的模型特性。</p>
+<h3 id="7-10-尝试不同的输出格式-Experiment-with-Output-Formats">7.10 - 尝试不同的输出格式 (Experiment with Output Formats)</h3>
+<p>例如，对于非创造性任务，如提取、选择、解析、排序、排名或分类数据，尝试让输出以结构化格式如JSON或XML返回。</p>
+<p>从提取数据的提示中返回JSON对象有一些好处。在真实应用中，我不需要手动创建JSON格式，可以直接以排序顺序返回数据（处理日期时间对象时非常方便），但最重要的是，通过提示要求JSON格式，它迫使模型创建结构并限制产生幻觉。</p>
+<p>使用JSON输出的好处总结：</p>
+<ul>
+<li>始终以相同风格返回</li>
+<li>专注于你想要接收的数据</li>
+<li>幻觉机会减少</li>
+<li>使其关系感知</li>
+<li>获得数据类型</li>
+<li>可以排序</li>
+</ul>
+<h3 id="7-11-关于思维链-CoT-的最佳实践-Chain-of-Thought-Best-Practices">7.11 - 关于思维链(CoT)的最佳实践 (Chain of Thought Best Practices)</h3>
+<p>对于CoT Prompt，将答案放在推理之后是必需的，因为推理的生成会改变模型在预测最终答案时获得的tokens。</p>
+<p>使用CoT和自我一致性时，你需要能够从提示中提取最终答案，与推理分开。</p>
+<p>对于CoT Prompt，将temperature设置为0。</p>
+<p>思维链提示基于贪婪解码，根据语言模型分配的最高概率预测序列中的下一个词。一般来说，使用推理来得出最终答案时，可能只有一个正确答案。因此，temperature始终应设置为0。</p>
+<h3 id="7-12-尝试与记录-Document-Prompt-Attempts">7.12 - 尝试与记录 (Document Prompt Attempts)</h3>
+<p>前面已经提到过，但我们再次强调：详细记录你的提示尝试，这样你可以随时了解哪些方法行之有效，哪些不行。</p>
+<p>提示输出可能在不同模型、不同采样设置，甚至同一模型的不同版本之间有所不同。此外，即使对同一模型的相同提示，输出句子格式和词汇选择也可能存在细微差异。（例如，如前所述，如果两个tokens具有相同的预测概率，则可能随机打破平局。这可能影响后续预测的tokens。）</p>
+<p>建议创建一个Google表格，使用模板记录：</p>
+<ul>
+<li>提示名称和版本</li>
+<li>目标（一句话解释这次尝试的目标）</li>
+<li>使用的模型名称和版本</li>
+<li>Temperature值（0-1之间）</li>
+<li>Token限制</li>
+<li>Top-K和Top-P值</li>
+<li>完整提示</li>
+<li>输出（或多个输出）</li>
+</ul>
+<p>还建议跟踪提示的版本（迭代），记录结果是否OK/NOT OK/SOMETIMES OK，以及反馈。如果有幸使用Vertex AI Studio，保存提示（使用与文档中相同的名称和版本），并在表格中跟踪保存的提示超链接。这样，你只需一次点击就可以重新运行提示。</p>
+<p>在使用检索增强生成系统时，还应捕获影响插入到提示中的内容的RAG系统的特定方面，包括查询、块设置、块输出和其他信息。</p>
+<p>一旦你觉得提示接近完美，将其带入项目代码库。在代码库中，将提示保存在与代码分开的文件中，这样更容易维护。最后，理想情况下，你的提示是一个可操作系统的一部分，作为提示工程师，你应该依靠自动化测试和评估程序来了解你的提示如何针对任务泛化。</p>
+<p>提示工程是一个迭代过程。制作并测试不同的提示，分析并记录结果。根据模型的表现改进你的提示。继续实验直到达到期望的输出。当更改模型或模型配置时，回去继续实验先前使用的提示。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
+      
+        <a href="/tags/Gemini/" class="print-no-link">#Gemini</a>
+      
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
+        <a href="/tags/Google/" class="print-no-link">#Google</a>
+      
+        <a href="/tags/Prompt/" class="print-no-link">#Prompt</a>
+      
+        <a href="/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D/" class="print-no-link">#提示词</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Google「提示词工程」白皮书阅读总结</div>
+      <div>https://moreality.net/posts/6318/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/30786/" title="天津天津">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">天津天津</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/28374/" title="vllm 的 cpu offload 参数卸载逻辑代码简析">
+                        <span class="hidden-mobile">vllm 的 cpu offload 参数卸载逻辑代码简析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
