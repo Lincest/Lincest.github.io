@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Allow: /posts/
+Allow: /archives/
+Allow: /categories/
+Allow: /tags/ 
+Allow: /resources/ 
+Allow: /about/ 
+Allow: /links/ 
+Allow: /atom.xml
+Allow: /rss2.xml
+Allow: /feed/
+
+Sitemap: https://moreality.net/sitemap.xml
+Sitemap: https://moreality.net/baidusitemap.xml

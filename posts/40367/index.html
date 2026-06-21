@@ -1,0 +1,1095 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="来源于一篇2002年asplos的论文, 题目是投机同步: 将线程级投机应用到并行程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多核并行体系结构-投机同步">
+<meta property="og:url" content="https://moreality.net/posts/40367/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="来源于一篇2002年asplos的论文, 题目是投机同步: 将线程级投机应用到并行程序">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-12T08:11:10.000Z">
+<meta property="article:modified_time" content="2024-06-16T17:28:03.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="体系结构">
+<meta property="article:tag" content="并行">
+<meta property="article:tag" content="同步">
+<meta property="article:tag" content="投机">
+<meta property="article:tag" content="synchronization">
+<meta property="article:tag" content="speculative">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>多核并行体系结构-投机同步 - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">多核并行体系结构-投机同步</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-12-12 16:11" pubdate>
+          2022年12月12日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">多核并行体系结构-投机同步</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2024年6月17日 凌晨
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <div class="note note-primary">
+            <p>文中内容来源于我这学期某门课程的presentation, 这里把ppt和讲稿稍作修改发出来留存下~</p><p>内容主要是包括这篇论文:</p><p><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.1145/635508.605400">论文: Speculative synchronization: applying thread-level speculation to explicitly parallel applications</a></p>
+          </div>
+<h2 id="为什么需要投机同步">为什么需要投机同步</h2>
+<p>同步屏障(Barrier), 锁(Lock)和标志(Flag)是程序员编写并行程序广泛使用的几类操作, 主要目的是使并行线程之间不发生竞争.</p>
+<p>简单回顾一下屏障, 锁和标志位的含义:</p>
+<ul>
+<li>
+<p>锁相信大家都很清楚了, 这里主要回顾一下屏障和标志</p>
+</li>
+<li>
+<p>同步屏障是多对多的同步, 在所有线程到达屏障之前, 任何先到达屏障的线程都必须等待, 为了实现屏障, 需要一个临界区来实现对线程数量的统计. <a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-hans/%E5%90%8C%E6%AD%A5%E5%B1%8F%E9%9A%9C">同步屏障 wiki</a></p>
+</li>
+<li>
+<p>而标志是指一对多的同步, 消费者接收到生产者对flag的置位之前将保持等待, 由于只有一个生产者, 故读写flag并不需要临界区的支持</p>
+</li>
+</ul>
+<p>大多数程序员为了并行程序的稳定性和安全性, 在同步操作的时候会显得过于保守, 即使有些竞争可能并不发生, 或者发生的概率非常小, 程序员也会进行加锁或者是设置屏障.</p>
+<p>典型的场景:</p>
+<ul>
+<li>难以分析的指针访问</li>
+<li>概率很小的哈希碰撞</li>
+</ul>
+<p>保守的同步策略将带来较大的性能损失, 因此我们希望引入一种硬件设计, 能让线程投机地跨越锁, 标志和屏障, 来继续执行之后的代码, 如果发生冲突, 再将线程回滚.</p>
+<h2 id="借鉴线程级投机的思想">借鉴线程级投机的思想</h2>
+<p>线程级投机主要通过提取串行程序中的并行性来进行投机, 其主要的思路是通过对线程进行排序, 一个线程在保证与前序线程无冲突的情况下提交该线程的状态.</p>
+<p>投机同步借鉴了很多在线程级投机的思想, 比如使用每个处理器的私有缓存保存投机数据, 始终维持安全线程的执行, 跟踪检测访存冲突和回滚等.</p>
+<p>在线程级投机中, 安全线程的定义是序号最小的线程(即最早开始执行的线程), 而在投机同步中, 不对线程进行排序, 对安全线程的定义如下</p>
+<ul>
+<li>对于锁而言, 安全线程是锁的持有者</li>
+<li>对于屏障而言, 安全线程是未到达屏障的线程</li>
+<li>对于标志而言, 安全线程是标志的置位者</li>
+</ul>
+<p>同时提出了一种叫投机同步单元(简称SSU)的硬件, 用于从处理器卸载对一个同步变量的操作, 以让线程投机的执行下去.</p>
+<h2 id="文中方案一些特性">文中方案一些特性</h2>
+<blockquote>
+<p>投机同步的核心思路其实在于希望用尽量简单的硬件方案实现较大的性能提升</p>
+</blockquote>
+<ul>
+<li>简化的硬件设计方案: 和TLS不同
+<ul>
+<li>投机同步不需要保证线程的顺序</li>
+<li>没有多版本的支持, 不仅检测RAW(写后读)冲突, 对于名称冲突WAW(写后写), WAR(读后写)等冲突也直接回滚投机线程</li>
+<li>没有伪共享的支持, 硬件设计都是对一个缓存行(cache line)的操作</li>
+<li>对于不同的同步方式具有统一的硬件支持</li>
+</ul>
+</li>
+<li>类似于OpenMP, 文中利用m4宏设计了一种高层的抽象, 能够让程序员像使用常规同步一样使用投机同步</li>
+<li>和传统同步方案保证兼容</li>
+</ul>
+<p>右图展示了常规同步的m4宏和投机同步的m4宏的区别, 这个在后文将详细说明, 这里可以看到加粗的部分是SSU提供的接口</p>
+<blockquote>
+<p>m4: 是一个通用的宏处理器, 是POSIX标准下的一部分</p>
+<p>OpenMP利用pragma预处理指令, 实现并行接口的抽象</p>
+</blockquote>
+<h2 id="投机锁的例子">投机锁的例子</h2>
+<blockquote>
+<p>首先讲一讲投机锁和投机屏障的例子, 用图先给大家一个概念, 然后我们再详细的介绍投机同步的硬件结构以及一些实现细节</p>
+<p>这时我们可以先不去思考如何进行冲突检测, 投机锁的获取和释放这些问题, 先简单的理解一下这个方案的思路</p>
+</blockquote>
+<p>在文章的剩余部分都将用黑色圆圈表示安全线程, 用红色圆圈表示投机线程, 同时用横杠表示同步点</p>
+<p>首先介绍一下投机锁的例子, 图中的 Acquire 和 Release 分别表示锁的获取和释放。</p>
+<ul>
+<li>
+<p>首先是所有线程都未进入临界区, 均为安全线程</p>
+</li>
+<li>
+<p>然后线程A首先获得锁并成为安全线程, 进入临界区</p>
+</li>
+<li>
+<p>之后线程B、E投机地进入临界区, 由于线程A已经获取了锁, 所以B, E是投机线程</p>
+</li>
+<li>
+<p>由于线程C、D尚未进入临界区，故C、D也是安全的</p>
+</li>
+<li>
+<p>然后线程E首先退出临界区，但此时线程E仍然可能和未退出临界区的安全线程A发生冲突，故在安全线程A退出临界区之前，线程E不能提交。</p>
+</li>
+<li>
+<p>当安全线程A退出临界区时，就可以将投机线程E提交了</p>
+</li>
+<li>
+<p>同时由于A释放锁, 投机线程B和C将争夺锁, 假设投机线程B得到锁，将由投机状态变为安全状态</p>
+</li>
+</ul>
+<p>这个大概就是整个投机锁的全过程</p>
+<h2 id="投机屏障的例子">投机屏障的例子</h2>
+<p>下面是投机屏障的例子，由于有了投机锁的概念，投机屏障相对容易理解</p>
+<ul>
+<li>
+<p>首先当所有线程都未到达屏障的时，所有线程都处于安全状态</p>
+</li>
+<li>
+<p>之后线程C投机地跨过屏障</p>
+</li>
+<li>
+<p>之后线程A投机地跨过屏障</p>
+</li>
+<li>
+<p>只有当最后一个线程到达屏障时，才可以提交所有的投机线程</p>
+</li>
+</ul>
+<h2 id="SSU硬件结构">SSU硬件结构</h2>
+<blockquote>
+<p>介绍完了两个例子后, 我们来说说它们的硬件是如何设计和实现的</p>
+</blockquote>
+<p>实现投机同步需要在常规体系结构上引入一个叫做投机同步单元 (Speculative Synchronization Unit, SSU)的模块</p>
+<p>SSU存在于共享内存的多处理器的每个处理器私有的缓存结构上，一般就是L1 Cache和L2 Cache</p>
+<p>SSU的作用是从处理器上卸载对一个同步变量的操作，让处理器可以向前投机执行代码</p>
+<p>SSU的组成包括:</p>
+<ol>
+<li>
+<p>扩展的缓存控制器</p>
+</li>
+<li>
+<p>在L1 cache上增加一个额外的缓存行, 该缓存行只能由ssu写入, 其他来自本地和远程的请求可以访问, 主要功能为:</p>
+<ol>
+<li>
+<p>保存同步变量</p>
+</li>
+<li>
+<p>增加状态位&quot;Acquire&quot;和&quot;Release&quot;, 当ssu获取到一个来自cpu的同步变量时, 这两个位将被置位</p>
+<p>（当投机线程退出临界区时，Release位将被清除。当SSU空闲时(即ssu释放了同步变量时)，Acquire位将被清除。）</p>
+</li>
+</ol>
+</li>
+<li>
+<p>为每一个缓存行(L1 + L2)增加一位&quot;投机位(Speculative bit)&quot;, 标志该缓存行是否是正在被投机写入或者读取</p>
+</li>
+</ol>
+<p>对于32KB的L1 Cache和 1MB的L2 Cache， SSU大约需要一共2KB的存储空间。</p>
+<h2 id="SSU-投机锁请求">SSU-投机锁请求</h2>
+<blockquote>
+<p>下面介绍一下在发生投机同步的时候, SSU是如何工作的</p>
+</blockquote>
+<p>首先是投机的锁请求</p>
+<p>该行为发生在已经有一个进入临界区的安全线程, 然后另一个线程投机的进入临界区的时刻</p>
+<p>文中使用的锁获取原语是T&amp;T&amp;S （test and test and set)，右图展示了使用该原语进行锁获取的汇编代码, 也完全可以换成其他的原语。</p>
+<p>当处理器执行到锁请求时，我们分CPU侧和SSU侧的行为进行讨论</p>
+<p>首先是CPU侧：</p>
+<ul>
+<li>CPU首先将锁的地址发送给SSU</li>
+<li>然后保存当前寄存器的状态 (checkpoint)</li>
+<li>然后继续投机地进入临界区，执行临界区的代码</li>
+</ul>
+<p>然后是SSU侧：</p>
+<ul>
+<li>SSU首先将Acquire位和Release位置位</li>
+<li>将CPU提供的锁变量提取到额外的缓存行(L1 Cache) 中</li>
+<li>然后SSU开启Test循环自旋，不断地尝试获取锁</li>
+<li>一旦Acquire位被置位，将CPU投机访存的部分置投机位</li>
+</ul>
+<p>这里需要注意的是，为了保证缓存行的安全副本，在第一次投机访问缓存脏行的时候，必须将该缓存行写回主存。</p>
+<h2 id="SSU-投机锁获取">SSU-投机锁获取</h2>
+<p>投机锁获取的行为发生在一个安全线程退出临界区，SSU获取到锁变量并成为安全线程的时候。</p>
+<p>在此之前，SSU一直在锁变量上自旋，当发现锁变量被释放时，SSU检查当前的Release位的状态，如果是置位状态，则认为当前投机线程仍然在临界区执行。</p>
+<p>此时SSU将通过T&amp;S获取到锁, 然后将清除缓存行上所有的投机位，提交缓存值，该线程成为安全线程，并且SSU变为空闲状态。</p>
+<p>之后的锁变量的释放操作就是常规的同步操作，由CPU完成。</p>
+<h2 id="SSU-投机锁释放">SSU-投机锁释放</h2>
+<p>投机锁释放的行为发生在投机线程先于安全线程退出临界区，然后才是安全线程退出临界区之后的时候。</p>
+<p>此时SSU的Release位应该是清空的状态，表示投机线程已经退出了临界区</p>
+<p>这时与投机锁获取的不同之处在于, 线程将直接跳过通过T&amp;S锁获取的操作, 直接提交投机线程, SSU变为空闲状态</p>
+<h2 id="SSU-冲突处理和回滚">SSU-冲突处理和回滚</h2>
+<blockquote>
+<p>底层的缓存一致性协议会检测访问冲突, 比如收到外部的invalid或者对脏行的read时, 故文中主要讨论SSU如何处理这些冲突</p>
+</blockquote>
+<ul>
+<li>我们将未标记投机位的缓存行称为安全行, 将标记了投机位的缓存行称为投机行</li>
+<li>当安全行接受到外部消息时, 就按照缓存一致性协议正常处理</li>
+<li>当投机行接受到外部消息时:
+<ul>
+<li>发出者可能是投机线程, 也可能是安全线程, 无论如何, 我们都将直接回滚接收线程 (由于设计上并没有为线程定义任何的顺序, 故所有对投机行的一致性消息都认为是冲突)</li>
+<li>回滚的策略具体按如下步骤:
+<ul>
+<li>首先将所有被投机位标记的脏行重新失效化处理, ( 如果缓存行不脏的话就无需失效缓存行)</li>
+<li>清除所有的投机行的投机位</li>
+<li>SSU强制让CPU恢复寄存器的检查点状态</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>这样就可以让线程快速回滚到进入临界区前的状态</p>
+<h2 id="SSU-缓存溢出">SSU-缓存溢出</h2>
+<blockquote>
+<p>当缓存不够需要发生缓存行替换时</p>
+</blockquote>
+<p>投机行永远不会被换出到主存</p>
+<ul>
+<li>因为首先不论是投机读还是投机写, 投机行都记录了过去的访问历史, 将用于可能的冲突检测</li>
+<li>如果是投机写(标记为脏)则更不能替换, 因为数据本身都不安全了</li>
+</ul>
+<p>所以替换时首先会选择安全行进行替换</p>
+<p>如果找不到安全行替换, 则该投机线程将暂停, 直到该线程成为安全线程, 即SSU拿到锁, 或者是发生冲突该线程回滚</p>
+<p>由于安全线程没有投机行, 因此缓存未命中时, 直接按照传统的缓存替换策略进行替换即可</p>
+<h2 id="对多重锁和嵌套锁的支持">对多重锁和嵌套锁的支持</h2>
+<p>在投机执行的时候, 可能会碰到两种情况</p>
+<ul>
+<li>第一种是投机线程已经执行完上一个临界区, 并即将进入下一个临界区, 而安全线程还停留在上一个临界区的情况, 即多重锁</li>
+<li>第二种是投机线程未退出临界区, 但是在临界区内部将获取另一把锁的情况, 即嵌套锁</li>
+</ul>
+<p>文中首先提供了一个程序接口, 可以暴露SSU的状态, 这时程序员可以选择自旋等待SSU变为空闲来手动处理这种情况</p>
+<p>如果采用第一种策略, 程序的性能不能得到完全的发挥, 另一种策略, 我们可以分情况讨论:</p>
+<ul>
+<li>如果获取的是不同的锁, 我们可以简单的将第二把锁视为投机的变量, 因为对锁的操作本质上也是读写操作, 然后可以用完全一致的冲突处理策略来进行冲突检测, 如果出现其他线程对锁变量的获取操作, 那么直接回滚该投机线程</li>
+<li>如果获取的是同一把锁, 则不能与前一个方式一致, 这时又可以分为两种情况:
+<ul>
+<li>如果投机线程已经退出了之前的临界区, 则直接合并两个临界区, 意味着Release位在第一个临界区退出时被清除, 然后在第二个临界区又被置位, 但是CPU无需为第二个临界区设置检查点, 如果发生冲突就直接回滚到第一个检查点上</li>
+<li>如果投机线程还没有退出之前的临界区, 这时投机线程只能等待其变为安全线程, 然后继续执行, 或者是等待本线程发生冲突并且回滚</li>
+</ul>
+</li>
+</ul>
+<h2 id="投机标志">投机标志</h2>
+<blockquote>
+<p>下面介绍一下投机标志和投机屏障, 投机标志可以直接由投机锁衍生而来, 而投机屏障又可以由投机标志衍生而来</p>
+</blockquote>
+<p>观察左图投机标志的情景可以看到其和&quot;投机锁释放&quot;的情形十分相似，仅仅是将锁变量改变成了Flag</p>
+<p>二者的共同之处在于都只需要在一个变量上进行自旋，当该变量达到某个值后（对于锁而言是检测到了cpu释放锁，对于flag而言是检测到了flag被设置为pass值），直接将投机线程提交。</p>
+<h2 id="投机屏障">投机屏障</h2>
+<p>由于同步屏障的本质就是锁 + 标志</p>
+<p>故投机屏障可以由传统锁 + 投机标志实现</p>
+<p>文中讨论的屏障实现方式是最常见的翻转感应集中式屏障 (这里不具体介绍各种屏障的实现, 可以参考《并行多核计算机体系结构基础》)（比如为什么代码中的<code>local_f</code>不改为一个特定的值, 而是采用翻转 -&gt; 特定的值会导致死锁）</p>
+<blockquote>
+<p>补充: 翻转感应集中式栅障</p>
+</blockquote>
+<p>在屏障的临界区中需要让SSU空闲，因为对锁的获取和对count的更新必然导致投机线程发生冲突</p>
+<p>所以这里的实现需要显式暴露SSU的状态，这个在后文的代码实现中会讲到</p>
+<h2 id="对软件接口-宏-的介绍">对软件接口(宏)的介绍</h2>
+<p>类似于OpenMP, 文中利用m4宏设计了一种高层的抽象, 能够让程序员像使用常规同步一样使用投机同步</p>
+<p>首先是<code>ssu_lock</code>的实现, 该实现对应投机锁的实现, 传入锁地址, 然后如果返回值为1表示ssu接受请求, 为0表示该请求失败, 在对应的宏实现中, 当ssu拒绝请求时, 该加锁即以常规的锁实现</p>
+<p>然后是<code>ssu_spin(addr, value)</code>其中addr表示flag的地址, 而value表示对应的pass值, 该操作对应投机标志的实现</p>
+<p>然后是<code>ssu_idle()</code>的实现, 在上一页ppt中我们提到需要显式暴露ssu的状态, 才能让程序在投机屏障的临界区中避免必然失败的投机, ssu_idle将提供这个接口, 该操作可以暴露ssu的当前状态, 对应的<code>SS_EXPOSE</code>宏实现表示自旋等待ssu的空闲, 然后下面的投机屏障中在进入临界区之前使用了这个SS_EXPOSE宏, 表示程序将等待SSU结束投机才进入对count变量更新的临界区</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" class="category-chain-item">体系结构</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" class="print-no-link">#体系结构</a>
+      
+        <a href="/tags/%E5%B9%B6%E8%A1%8C/" class="print-no-link">#并行</a>
+      
+        <a href="/tags/%E5%90%8C%E6%AD%A5/" class="print-no-link">#同步</a>
+      
+        <a href="/tags/%E6%8A%95%E6%9C%BA/" class="print-no-link">#投机</a>
+      
+        <a href="/tags/synchronization/" class="print-no-link">#synchronization</a>
+      
+        <a href="/tags/speculative/" class="print-no-link">#speculative</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>多核并行体系结构-投机同步</div>
+      <div>https://moreality.net/posts/40367/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年12月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/22665/" title="一个新服务器, 一些折腾">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">一个新服务器, 一些折腾</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/26194/" title="多核并行体系结构-缓存一致性">
+                        <span class="hidden-mobile">多核并行体系结构-缓存一致性</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,973 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="近期哪吒监控安全事件提醒我们，带远程执行能力的监控面板一旦暴露公网，风险远不止信息泄露。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哪吒监控安全事件 - 从中招到复盘">
+<meta property="og:url" content="https://moreality.net/posts/62186/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="近期哪吒监控安全事件提醒我们，带远程执行能力的监控面板一旦暴露公网，风险远不止信息泄露。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://youpai.roccoshi.top/img/202606211330489.png">
+<meta property="article:published_time" content="2026-06-21T05:10:00.000Z">
+<meta property="article:modified_time" content="2026-06-21T05:38:47.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="VPS">
+<meta property="article:tag" content="Nezha">
+<meta property="article:tag" content="安全">
+<meta property="article:tag" content="运维">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://youpai.roccoshi.top/img/202606211330489.png">
+  
+  
+  
+  <title>哪吒监控安全事件 - 从中招到复盘 - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">哪吒监控安全事件 - 从中招到复盘</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-06-21 13:10" pubdate>
+          2026年6月21日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">哪吒监控安全事件 - 从中招到复盘</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2026年6月21日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>这几天 VPS 圈子里，哪吒监控（Nezha）基本被刷屏了。</p>
+<p>有人说 CPU 被打满，有人发现机器里多了陌生 SSH 公钥，有人被云厂商发 abuse，还有人发现自己的小鸡被拿去挖矿、做代理、打流量。NodeSeek 上更直观，列表里隔几条就是一个哪吒相关帖子：求助、复盘、检测脚本、清理脚本、替代方案，什么都有。</p>
+<p>我一开始也以为这只是“面板密码太弱”或者“SSH 被爆破”。后来越查越觉得不对。很多机器并没有对应时间段的 SSH 成功登录记录，但后门却几乎同时落地。这个现象很说明问题：攻击者很可能不是一台一台登录，而是先拿到了哪吒 Dashboard，然后通过 Agent 批量下发命令。</p>
+<p>换句话说，平时的“集中管理”，出事时就变成了“集中沦陷”。</p>
+<p>这篇简单记一下这次事件。不会写太深的漏洞分析，主要讲清楚几件事：为什么哪吒不是普通探针，漏洞大概怎么串起来，社区里看到了哪些中招痕迹，以及现在还在用的人该先做什么。</p>
+<h2 id="哪吒不是只读探针">哪吒不是只读探针</h2>
+<p>很多人装哪吒，是为了看一个漂亮的服务器状态页。CPU、内存、流量、在线状态，一屏看完，确实舒服。</p>
+<p>但哪吒不是只读工具。Dashboard 和 Agent 之间有控制通道，面板里能做不少运维动作：</p>
+<ul>
+<li>Web 终端</li>
+<li>文件管理</li>
+<li>计划任务</li>
+<li>批量命令执行</li>
+<li>Agent 更新和配置下发</li>
+</ul>
+<p>这些功能平时很方便。问题是，权限也很重。</p>
+<p>如果 Dashboard 被接管，攻击者拿到的不是“看看监控”的权限，而是“让所有在线 Agent 执行命令”的权限。Agent 又通常是 root 跑的，所以面板里下发的一条命令，到了机器上可能就是 root 权限执行。</p>
+<p>这也是这次事件影响范围容易扩大的原因。</p>
+<h2 id="公开漏洞">公开漏洞</h2>
+<p>这次不是只有社区传言。哪吒官方已经有两个相关的 GitHub Security Advisory。</p>
+<p>第一个是 <code>GHSA-5c25-7vpj-9mqh</code>：<br>
+<a target="_blank" rel="noopener" href="https://github.com/nezhahq/nezha/security/advisories/GHSA-5c25-7vpj-9mqh">https://github.com/nezhahq/nezha/security/advisories/GHSA-5c25-7vpj-9mqh</a></p>
+<p>这个漏洞影响 <code>&lt; 2.0.13</code>。问题出在 Dashboard 的前端 fallback 路由处理上。旧版本判断 <code>/dashboard</code> 路径时不够严，攻击者可以构造类似这样的请求：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">/dashboard../data/config.yaml<br></code></pre></td></tr></table></figure>
+<p>默认部署下，这可能读到 <code>data/config.yaml</code>。里面有 <code>jwt_secret_key</code>、<code>agent_secret_key</code> 这些敏感配置。</p>
+<p>其中 <code>jwt_secret_key</code> 特别危险。旧版本里，攻击者拿到它之后，就可能自己签一个合法的 Dashboard 登录态。也就是说，强密码还在，但密码这关已经被绕过去了。</p>
+<p>第二个是 <code>GHSA-99gv-2m7h-3hh9</code>：<br>
+<a target="_blank" rel="noopener" href="https://github.com/nezhahq/nezha/security/advisories/GHSA-99gv-2m7h-3hh9">https://github.com/nezhahq/nezha/security/advisories/GHSA-99gv-2m7h-3hh9</a></p>
+<p>这个漏洞影响 <code>&gt;= 1.4.0, &lt; 2.0.8</code>。它和计划任务权限有关。低权限用户可能通过计划任务接口创建命令，并广播到所有服务器。Agent 收到后会执行，于是就变成了跨主机的远程命令执行。</p>
+<p>把这两件事放在一起，大概链路就是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">Dashboard 暴露公网<br>-&gt; 读取配置文件<br>-&gt; 拿到 JWT 密钥<br>-&gt; 伪造登录态<br>-&gt; 进入 Dashboard<br>-&gt; 创建恶意计划任务<br>-&gt; 所有在线 Agent 执行命令<br></code></pre></td></tr></table></figure>
+<p>所以很多人看到的是“所有机器一起出事”。这不是巧合。一个 Dashboard 后面挂了多少 Agent，攻击者就可能一次打到多少台。</p>
+<h2 id="时间线">时间线</h2>
+<p>这次比较容易让人误解的一点是：漏洞不是今天才修，但爆发却集中在这几天。</p>
+<p>按公开资料和社区反馈，大概是这样：</p>
+<ul>
+<li>2026-05-17：官方发布 <code>GHSA-99gv-2m7h-3hh9</code>，计划任务权限问题被披露，修复版本是 <code>2.0.8</code>。</li>
+<li>2026-05-31：官方发布 <code>GHSA-5c25-7vpj-9mqh</code>，路径穿越问题被披露，修复版本是 <code>2.0.13</code>。</li>
+<li>2026-06 上旬：社区里已经有人反馈异常 Agent、异常任务、陌生 SSH 公钥。</li>
+<li>2026-06 中下旬：更多 VPS 用户开始集中发现 CPU 异常、挖矿、流量代理、随机后缀 Agent 服务。</li>
+<li>2026-06-20 前后：哪吒主控最新版本已经到 <code>v2.2.6</code>，Agent 最新是 <code>v2.2.2</code>。</li>
+</ul>
+<p>这说明修复版本早就有了，但暴露在公网的旧面板并不会自动消失。攻击者可能早就扫过一轮，真正变现的时候，大家才看到 CPU 和流量异常。</p>
+<p>“养鱼”和“收网”这种说法听起来很戏剧化，我不想把它写成定论。能确认的是：漏洞公开存在，修复版本已经发布，社区里确实出现了批量中招。</p>
+<h2 id="为什么-SSH-强密码和-UFW-没挡住">为什么 SSH 强密码和 UFW 没挡住</h2>
+<p>很多人第一反应是：我 SSH 密码很强，甚至只开了密钥登录，为什么还会中？</p>
+<p>因为攻击可能根本没走 SSH。</p>
+<p>如果攻击者控制的是 Dashboard，那被控机器只要能主动连上 Dashboard 就行。UFW 通常拦的是入站连接，而 Agent 连 Dashboard 是出站连接。</p>
+<p>也就是说，攻击路径更像这样：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">攻击者 -&gt; Dashboard -&gt; Agent -&gt; 服务器本机执行命令<br></code></pre></td></tr></table></figure>
+<p>而不是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">攻击者 -&gt; SSH 登录每台服务器<br></code></pre></td></tr></table></figure>
+<p>所以 SSH 强密码、改端口、禁密码登录，这些都很重要，但它们防的是 SSH 这条路。这次的问题大概率是从控制面进来的。</p>
+<h2 id="社区里看到的中招痕迹">社区里看到的中招痕迹</h2>
+<p>不同人机器上的载荷不完全一样。下面这些是社区复盘里反复出现的现象，适合拿来做排查方向，但不要当成完整 IOC。</p>
+<p>有人从中招的 SQLite 数据库里提取到过恶意计划任务，内容包括：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">写入 /root/.ssh/authorized_keys<br>curl / wget 下载远程脚本并执行<br>拉取挖矿或代理变现程序<br></code></pre></td></tr></table></figure>
+<p>也有人发现机器上多了随机后缀的哪吒服务：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">nezha-agent-xxxxxxx.service<br>nazha-agent-xxxxxxx.service<br></code></pre></td></tr></table></figure>
+<p>对应的配置文件可能长这样：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">/opt/nezha/agent/config-xxxxx.yml<br></code></pre></td></tr></table></figure>
+<p>这种做法会增加清理难度。只停掉原本的 <code>nezha-agent.service</code> 不够，随机后缀的服务可能还在运行。</p>
+<p>还有一些机器出现了挖矿和流量套利程序，比如 XMRig、c3pool，或者一些代理/带宽变现容器。这类东西不一定马上把业务搞挂，但会悄悄吃 CPU、带宽和云厂商信用。</p>
+<p>更麻烦的是内存驻留进程。有些复盘提到伪装成 <code>kworker</code> 的用户态进程、<code>memfd</code> 内存马、执行路径显示为 <code>(deleted)</code> 的进程。查文件不一定能看到，得看 <code>/proc</code>、进程树和网络连接。</p>
+<p>我觉得比较实用的排查顺序是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">1. 查 Nezha 计划任务和 Dashboard 数据库<br>2. 查 systemd 服务，尤其是随机后缀服务<br>3. 查 crontab 和 /etc/cron*<br>4. 查 authorized_keys 是否多出陌生公钥<br>5. 查高 CPU 进程、挖矿进程和代理程序<br>6. 查 /tmp、/dev/shm、/opt、/root 下近期新增文件<br>7. 查 memfd、deleted exe、伪装 kworker 进程<br>8. 查 Docker 容器和镜像<br></code></pre></td></tr></table></figure>
+<p>一键清理脚本可以止血，但不能证明系统已经可信。机器被 root 权限控制过之后，更稳妥的处理方式仍然是重装系统，然后轮换所有可能泄露的凭据。</p>
+<h2 id="现在该做什么">现在该做什么</h2>
+<p>如果你用过受影响版本，或者 Dashboard 曾经暴露在公网，我会按这个顺序处理。</p>
+<ol>
+<li>
+<p>堵住入口</p>
+<p>先升级 Dashboard，不要让面板直接暴露公网。访问入口可以收敛到 WireGuard、Tailscale、Cloudflare Access、内网反代或 IP 白名单。随后轮换 <code>jwt_secret_key</code>、<code>agent_secret_key</code>，清理旧登录态和旧 token。</p>
+</li>
+<li>
+<p>检查控制面</p>
+<p>重点看 Nezha 计划任务、Dashboard 数据库里的异常任务、通知配置、Webhook、OAuth 设置，以及是否存在陌生用户或异常登录痕迹。</p>
+</li>
+<li>
+<p>逐台检查节点</p>
+<p>查随机后缀的 <code>nezha-agent-*.service</code>，查 <code>/opt/nezha/agent/config-*.yml</code>，查挖矿进程、代理容器、<code>/tmp</code>、<code>/dev/shm</code>。如果有条件，再查 <code>memfd</code>、<code>deleted exe</code>、伪装 <code>kworker</code> 这类更隐蔽的进程。</p>
+</li>
+<li>
+<p>轮换凭据</p>
+<p>SSH key、面板密码、云服务 API key、对象存储、邮件、支付、AI 服务等，只要这台机器上可能读到，都应该按泄露处理。</p>
+</li>
+</ol>
+<p>如果已经出现陌生 SSH key、挖矿进程、异常流量，或者你不确定机器到底被做过什么，别太相信“清理干净了”。备份必要业务数据后重装系统更稳。</p>
+<h2 id="以后还用不用这类面板">以后还用不用这类面板</h2>
+<p>这次事件不是简单的“哪吒能不能用”。真正的问题是，所有“监控 + 控制”一体化面板都要按高危入口对待。</p>
+<p>如果一个面板可以打开终端、管理文件、批量执行命令，那它就不只是监控面板，而是运维控制台。它不该直接暴露在公网，也不该和普通状态页一个安全级别。</p>
+<p>监控最好尽量只读。能不用远程执行，就不要开远程执行。能让 Agent 低权限运行，就不要 root。能放内网，就别放公网。</p>
+<p>说到底，漂亮 UI 不是安全边界。生产环境里，少一个控制入口，往往比多一个炫酷面板更值钱。</p>
+<div class="note note-info">
+            <p>Note: 本文大多数由 GPT 5.5 生成，因此 AI 味十足，不过本质就是一个事故复盘，重要的是信息准确，所以我也懒得改了。</p>
+          </div>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>
+<p>Aska あすか：哪吒监控安全事件复盘<br>
+<a target="_blank" rel="noopener" href="https://x.com/Asuka_Makina/article/2067017819099983926">https://x.com/Asuka_Makina/article/2067017819099983926</a></p>
+</li>
+<li>
+<p>NodeSeek：哪吒探针漏洞攻击全记录<br>
+<a target="_blank" rel="noopener" href="https://www.nodeseek.com/post-786371-1">https://www.nodeseek.com/post-786371-1</a></p>
+</li>
+<li>
+<p>NodeSeek：哪吒面板漏洞被批量植入后门全过程<br>
+<a target="_blank" rel="noopener" href="https://www.nodeseek.com/post-779143-1">https://www.nodeseek.com/post-779143-1</a></p>
+</li>
+<li>
+<p>GitHub Security Advisory：<code>GHSA-5c25-7vpj-9mqh</code><br>
+<a target="_blank" rel="noopener" href="https://github.com/nezhahq/nezha/security/advisories/GHSA-5c25-7vpj-9mqh">https://github.com/nezhahq/nezha/security/advisories/GHSA-5c25-7vpj-9mqh</a></p>
+</li>
+<li>
+<p>GitHub Security Advisory：<code>GHSA-99gv-2m7h-3hh9</code><br>
+<a target="_blank" rel="noopener" href="https://github.com/nezhahq/nezha/security/advisories/GHSA-99gv-2m7h-3hh9">https://github.com/nezhahq/nezha/security/advisories/GHSA-99gv-2m7h-3hh9</a></p>
+</li>
+</ul>
+<p><img src="https://youpai.roccoshi.top/img/202606211327954.png" alt=""></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/VPS/" class="print-no-link">#VPS</a>
+      
+        <a href="/tags/Nezha/" class="print-no-link">#Nezha</a>
+      
+        <a href="/tags/%E5%AE%89%E5%85%A8/" class="print-no-link">#安全</a>
+      
+        <a href="/tags/%E8%BF%90%E7%BB%B4/" class="print-no-link">#运维</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>哪吒监控安全事件 - 从中招到复盘</div>
+      <div>https://moreality.net/posts/62186/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年6月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/31742/" title="旅行日记·大同">
+                        <span class="hidden-mobile">旅行日记·大同</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
