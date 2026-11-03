@@ -1,0 +1,921 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="一篇关于 DNN 压缩方法的综述, 大概读了一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文略读: 综述 - A Survey on Deep Neural Network Compression: Challenges, Overview, and Solutions">
+<meta property="og:url" content="https://moreality.net/posts/53828/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="一篇关于 DNN 压缩方法的综述, 大概读了一下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://youpai.roccoshi.top/img/202311061448662.png">
+<meta property="article:published_time" content="2023-11-06T06:49:56.000Z">
+<meta property="article:modified_time" content="2025-01-17T03:47:10.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="paper">
+<meta property="article:tag" content="论文">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="DNN">
+<meta property="article:tag" content="Compression">
+<meta property="article:tag" content="量化">
+<meta property="article:tag" content="压缩">
+<meta property="article:tag" content="稀疏化 DNN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://youpai.roccoshi.top/img/202311061448662.png">
+  
+  
+  
+  <title>论文略读: 综述 - A Survey on Deep Neural Network Compression: Challenges, Overview, and Solutions - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">论文略读: 综述 - A Survey on Deep Neural Network Compression: Challenges, Overview, and Solutions</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-06 14:49" pubdate>
+          2023年11月6日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          873 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">论文略读: 综述 - A Survey on Deep Neural Network Compression: Challenges, Overview, and Solutions</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2025年1月17日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <ul>
+<li><a href="assets/DNN%E5%8E%8B%E7%BC%A9%E7%BB%BC%E8%BF%B0.pdf">A Survey on Deep Neural Network Compression: Challenges, Overview, and Solutions</a></li>
+<li>2020-10, <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.03954">arxiv</a>, 引用量-83</li>
+</ul>
+<p>其他类似的综述文章:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1710.09282">https://arxiv.org/abs/1710.09282</a>, 引用 1110, 2017年</li>
+<li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/8114708">https://ieeexplore.ieee.org/abstract/document/8114708</a>, 引用 2047, 2017年</li>
+</ul>
+<h1>A Survey on Deep Neural Network Compression: Challenges, Overview, and Solutions</h1>
+<ul>
+<li>DNN 模型对计算、能量和存储的巨大要求使得它们在资源受限的物联网设备上的部署受到限制。 因此，近年来提出了几种压缩技术来降低 DNN 模型的存储和计算要求。</li>
+<li>DNN 压缩技术利用了不同视角以最小的精度妥协来压缩 DNN</li>
+<li>在本文中，我们对有关压缩 DNN 模型的现有文献进行了全面回顾，以减少存储和计算需求。 基于压缩 DNN 模型的机制，我们将现有方法分为五类，即 <strong>网络剪枝(network pruning)、稀疏表示(sparse representation)、位精度(bits precision)、知识蒸馏(knowledge distillation)和其他杂项(miscellaneous)</strong>。 该论文还讨论了与每一类 DNN 压缩技术相关的挑战。 最后，我们快速总结了每个类别下的现有工作以及 DNN 压缩的未来方向</li>
+</ul>
+<p>DNN 压缩的主要好处有:</p>
+<ol>
+<li>减少存储空间 storage capacity</li>
+<li>减少计算量 computation requirements</li>
+<li>减少计算时间 earliness</li>
+<li>更好的隐私性 privacy</li>
+<li>减少能耗 enery compsumptioin</li>
+</ol>
+<p>整体的分类:</p>
+<p><img src="https://youpai.roccoshi.top/img/202311061448662.png" alt="img"></p>
+<h2 id="A-网络剪枝-network-pruning">A - 网络剪枝 network pruning</h2>
+<blockquote>
+<p>Deep network pruning is one of the popular techniques to reduce the size of a deep learning model by incorporating the removal of the inadequate components such as channels, filters, neurons, or layers to produce a lightweight model. The resultant lightweight model is a low power consuming, memory-efficient, and provides faster inference with minimal accuracy compromise. The adequacy of a component relies on the amount of loss incurred when a component is removed from the model. Sometimes pruning is also said to be a binary criterion to determine the removal or persistence of a component in the DNN. The pruning is performed on a pre-trained model iteratively, such that only inadequate components are pruned from the model. We further categorized the network pruning techniques into four parts, i.e., channel pruning, filter pruning, connection pruning, and layer pruning. It helps in reducing the storage and computation requirements of the DNN model.</p>
+</blockquote>
+<p><img src="https://youpai.roccoshi.top/img/202311061448678.png" alt="img"></p>
+<h3 id="1-通道剪枝-Channel-pruning">1 - 通道剪枝 (Channel pruning)</h3>
+<p>通道剪枝通过删除DNN模型中间层中冗余或不重要的通道,来降低模型的计算和存储需求,从而达到加速和压缩DNN模型的目的。</p>
+<h3 id="2-过滤器剪枝-Filter-pruning">2 - 过滤器剪枝 (Filter pruning)</h3>
+<p><img src="https://youpai.roccoshi.top/img/202311061448692.png" alt="img"></p>
+<h3 id="3-连接剪枝-Connection-pruning">3 - 连接剪枝 (Connection pruning)</h3>
+<p><img src="https://youpai.roccoshi.top/img/202311061448701.png" alt="img"></p>
+<h3 id="4-层剪枝-Layer-pruning">4 - 层剪枝  (Layer pruning)</h3>
+<p>通过从网络中删除一些选定的层以压缩 DNN 模型。</p>
+<h2 id="B-稀疏表示-Sparse-representation">B - 稀疏表示 Sparse representation</h2>
+<h3 id="1-量化-Quantization">1 - 量化 (Quantization)</h3>
+<p><img src="https://youpai.roccoshi.top/img/202311061448712.png" alt="img"></p>
+<p>一个四个神经元的量化方式举例</p>
+<h3 id="2-多路复用-Multiplexing">2 - 多路复用 (Multiplexing)</h3>
+<p>多路复用是一种通过替换相似权重来减少DNN模型存储需求的稀疏化方法。</p>
+<p>相关工作:</p>
+<ul>
+<li>通过多路复用多个轻量级模型来实现在移动设备上进行低资源预算推理。</li>
+<li>通过共享的backbone网络实现对不同任务的多路复用。</li>
+</ul>
+<h3 id="3-权重共享-Weight-sharing">3 - 权重共享 (Weight sharing)</h3>
+<p>权重共享是DNN模型压缩中一个重要的方法。设计高效简单的权重共享机制,既可减少存储需求,又可降低计算复杂度</p>
+<p>相关工作:</p>
+<ul>
+<li>使用k-means聚类算法识别每个层中可以共享的权重。属于同一簇的连接必须共享相同的权重。作者假设不同层之间不共享权重。</li>
+<li>共享训练数据的技术。数据(或权重)的共享为理解DNN的预测过程提供了帮助。但是训练时的数据共享也会导致隐私泄露。作者提出只公开少量训练数据来获取模型洞察,以减少泄露。</li>
+<li>实现多任务学习来训练共享的DNN,不同的任务共享隐层权重。</li>
+</ul>
+<h2 id="C-位精度-bits-precision">C - 位精度 bits precision</h2>
+<h3 id="1-整数估计-estimation-using-integer">1 - 整数估计 (estimation using integer)</h3>
+<p>直接使用整数计算替换浮点数计算</p>
+<h3 id="2-低精度表示-low-bits-representation">2 - 低精度表示 (low bits representation)</h3>
+<p>不限于 8bit 整数, 可以用任何 bit 来表示, 难点在于如何选择最佳的 bit 位数</p>
+<h3 id="3-二值化-binarization">3 - 二值化 (binarization)</h3>
+<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>b</mi><mo>=</mo><mi>S</mi><mi>i</mi><mi>g</mi><mi>n</mi><mo stretchy="false">(</mo><mi>r</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.16em" columnalign="center center" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>+</mo><mn>1</mn></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mrow><mtext> </mtext><mi mathvariant="normal">i</mi><mi mathvariant="normal">f</mi><mtext> </mtext></mrow><mi>r</mi><mo>≥</mo><mn>0</mn><mo separator="true">,</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>−</mo><mn>1</mn></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">w</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">e</mi></mrow><mi mathvariant="normal">.</mi></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">\left.b=Sign(r)=\left\{ \begin{matrix}+1&amp;\mathrm{~if~}r\geq0,\\-1&amp;\mathrm{otherwise}.\end{matrix}\right.\right.
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.4em;vertical-align:-0.95em;"></span><span class="minner"><span class="mopen nulldelimiter"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">n</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">{</span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">+</span><span class="mord">1</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mspace nobreak"> </span><span class="mord mathrm" style="margin-right:0.07778em;">if</span><span class="mspace nobreak"> </span></span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">0</span><span class="mpunct">,</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">otherwise</span></span><span class="mord">.</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<h2 id="D-知识蒸馏-knowledge-distillation">D - 知识蒸馏 (knowledge distillation)</h2>
+<p>主要提出了</p>
+<ol>
+<li>Logits transfer</li>
+<li>Teacher assistant</li>
+<li>Domain adaptation</li>
+</ol>
+<p>三种方式, 没仔细读</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%98%85%E8%AF%BB/" class="category-chain-item">阅读</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/paper/" class="print-no-link">#paper</a>
+      
+        <a href="/tags/%E8%AE%BA%E6%96%87/" class="print-no-link">#论文</a>
+      
+        <a href="/tags/Deep-Learning/" class="print-no-link">#Deep Learning</a>
+      
+        <a href="/tags/DNN/" class="print-no-link">#DNN</a>
+      
+        <a href="/tags/Compression/" class="print-no-link">#Compression</a>
+      
+        <a href="/tags/%E9%87%8F%E5%8C%96/" class="print-no-link">#量化</a>
+      
+        <a href="/tags/%E5%8E%8B%E7%BC%A9/" class="print-no-link">#压缩</a>
+      
+        <a href="/tags/%E7%A8%80%E7%96%8F%E5%8C%96-DNN/" class="print-no-link">#稀疏化 DNN</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>论文略读: 综述 - A Survey on Deep Neural Network Compression: Challenges, Overview, and Solutions</div>
+      <div>https://moreality.net/posts/53828/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

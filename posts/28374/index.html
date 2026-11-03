@@ -1,0 +1,909 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="最近在看 vllm 的代码，cpu offloading 这部分它的实现还是比较简单的，这里简单记录一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vllm 的 cpu offload 参数卸载逻辑代码简析">
+<meta property="og:url" content="https://moreality.net/posts/28374/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="最近在看 vllm 的代码，cpu offloading 这部分它的实现还是比较简单的，这里简单记录一下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://youpai.roccoshi.top/img/202503021710014.png">
+<meta property="article:published_time" content="2025-03-02T09:08:43.000Z">
+<meta property="article:modified_time" content="2025-03-02T09:49:49.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="vllm">
+<meta property="article:tag" content="LLM Serving">
+<meta property="article:tag" content="code analysis">
+<meta property="article:tag" content="cpu offloading">
+<meta property="article:tag" content="参数卸载">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://youpai.roccoshi.top/img/202503021710014.png">
+  
+  
+  
+  <title>vllm 的 cpu offload 参数卸载逻辑代码简析 - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">vllm 的 cpu offload 参数卸载逻辑代码简析</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-02 17:08" pubdate>
+          2025年3月2日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          937 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">vllm 的 cpu offload 参数卸载逻辑代码简析</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2025年3月2日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>最近在看 vllm 的代码，cpu offloading 这部分它的实现还是比较简单的，这里简单记录一下。</p>
+</blockquote>
+<p>由于大模型的参数量实在很大，所以如果想在单机上运行一般都需要跑量化蒸馏后的模型，但是有时又不想牺牲模型质量，于是CPU/SSD 卸载成为一种折衷方案，通过增加推理时间来降低内存需求。</p>
+<p>vllm 也实现了一个简单的 cpu offload 的机制，可以通过 <code>--cpu-offload-gb</code> 启用。</p>
+<ul>
+<li>官方文档: <a target="_blank" rel="noopener" href="https://docs.vllm.ai/en/latest/getting_started/examples/basic.html#cpu-offload">https://docs.vllm.ai/en/latest/getting_started/examples/basic.html#cpu-offload</a></li>
+</ul>
+<p>这里发现他的实现还是比较简单的，主要就是通过这个 <a target="_blank" rel="noopener" href="https://github.com/vllm-project/vllm/pull/6496">PR</a> ，添加了一个 func 叫 <code>maybe_offload_to_gpu</code>:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/vllm-project/vllm/blob/82fbeae92b86e404829a01441334a9505e8b190d/vllm/model_executor/models/utils.py#L487-L540">model_executor/models/utils.py#L487-L540</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">maybe_offload_to_cpu</span>(<span class="hljs-params">module: torch.nn.Module</span>) -&gt; torch.nn.Module:<br>    device = <span class="hljs-built_in">next</span>(module.parameters()).device<br><br>    <span class="hljs-keyword">if</span> device == torch.device(<span class="hljs-string">&quot;cpu&quot;</span>):<br>        <span class="hljs-keyword">return</span> module<br><br>    <span class="hljs-keyword">global</span> _CPU_OFFLOAD_MAX_BYTES, _CPU_OFFLOAD_BYTES<br>    <span class="hljs-keyword">if</span> _CPU_OFFLOAD_BYTES &gt;= _CPU_OFFLOAD_MAX_BYTES:<br>        <span class="hljs-keyword">return</span> module<br><br>    pin_memory = is_pin_memory_available()<br><br>    <span class="hljs-comment"># offload parameters to CPU</span><br>    <span class="hljs-comment"># use pin_memory if possible, which helps cudagraph capture speed</span><br>    offloaded_parameters = <span class="hljs-literal">False</span><br>    <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> module.parameters():<br>        <span class="hljs-keyword">if</span> _CPU_OFFLOAD_BYTES &gt;= _CPU_OFFLOAD_MAX_BYTES:<br>            <span class="hljs-comment"># we use per-parameter offloading</span><br>            <span class="hljs-comment"># one module might have some parameters offloaded and some not</span><br>            <span class="hljs-keyword">break</span><br><br>        <span class="hljs-comment"># `torch.empty_like` does not support `pin_memory` argument</span><br>        cpu_data = torch.empty_strided(size=p.data.size(),<br>                                       stride=p.data.stride(),<br>                                       dtype=p.data.dtype,<br>                                       layout=p.data.layout,<br>                                       device=<span class="hljs-string">&#x27;cpu&#x27;</span>,<br>                                       pin_memory=pin_memory)<br>        cpu_data.copy_(p.data)<br>        p.data = cpu_data<br>        _CPU_OFFLOAD_BYTES += p.data.numel() * p.data.element_size()<br>        offloaded_parameters = <span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">if</span> offloaded_parameters:<br>        original_forward = module.forward<br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">*args, **kwargs</span>):<br>            module.forward = original_forward<br>            device_state = &#123;<br>                <span class="hljs-comment"># here we blindly call `to(device)`</span><br>                <span class="hljs-comment"># if the parameter is already on the device, it will be a no-op</span><br>                k: v.to(device, non_blocking=<span class="hljs-literal">True</span>)<br>                <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> module.state_dict().items()<br>            &#125;<br>            output = functional_call(module,<br>                                     device_state,<br>                                     args=args,<br>                                     kwargs=kwargs)<br>            module.forward = forward<br>            <span class="hljs-keyword">return</span> output<br><br>        module.forward = forward<br><br>    <span class="hljs-keyword">return</span> module<br></code></pre></td></tr></table></figure>
+<p>这个函数只有一个地方调用了：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/vllm-project/vllm/blob/82fbeae92b86e404829a01441334a9505e8b190d/vllm/model_executor/models/utils.py#L556-L560">model_executor/models/utils.py#L556-L560</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">modules = torch.nn.ModuleList(<br>    [PPMissingLayer() <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(start_layer)] + [<br>        maybe_offload_to_cpu(layer_fn(prefix=<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;prefix&#125;</span>.<span class="hljs-subst">&#123;idx&#125;</span>&quot;</span>))<br>        <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(start_layer, end_layer)<br>    ] + [PPMissingLayer() <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(end_layer, num_hidden_layers)])<br></code></pre></td></tr></table></figure>
+<p>cpu offload 的整个流程可以概括为:</p>
+<ol>
+<li>将传入的 <code>cpu_offload_gb</code> 读取为<code> _CPU_OFFLOAD_MAX_BYTES</code>。</li>
+<li>然后在构建 Module 时对每个 Layer 里面的参数从前往后依次塞到 CPU 的 PIN_MEMORY 上，并累加参数大小 (<code>_CPU_OFFLOAD_BYTES += p.data.numel() * p.data.element_size()</code>, 即参数数量 x 字节大小) 到 <code>_CPU_OFFLOAD_BYTES</code>，直到超过用户配置的可 offload 大小。</li>
+<li>替换对应 Module 的 <code>forward</code> 函数，新的 forward 函数和原来的区别就是：<strong>在每次 forward 的时候，将 CPU 上的参数复制到 GPU 上，计算完后再释放</strong></li>
+</ol>
+<h2 id="一些可能的理解难点">一些可能的理解难点</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> offloaded_parameters:<br>    original_forward = module.forward<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">*args, **kwargs</span>):<br>        module.forward = original_forward<br>        device_state = &#123;<br>            <span class="hljs-comment"># here we blindly call `to(device)`</span><br>            <span class="hljs-comment"># if the parameter is already on the device, it will be a no-op</span><br>            k: v.to(device, non_blocking=<span class="hljs-literal">True</span>)<br>            <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> module.state_dict().items()<br>        &#125;<br>        output = functional_call(module,<br>                                 device_state,<br>                                 args=args,<br>                                 kwargs=kwargs)<br>        module.forward = forward<br>        <span class="hljs-keyword">return</span> output<br><br>    module.forward = forward<br></code></pre></td></tr></table></figure>
+<p>这里的 forward 替换设计挺有意思：</p>
+<ol>
+<li>
+<p>（<code>original_forward = module.forward</code>）：保存模块原始的前向传播函数到变量 <code>original_forward</code>，为后续恢复原始实现做准备。</p>
+</li>
+<li>
+<p>（在 <code>forward</code> 函数内的 <code>module.forward = original_forward</code>）：在自定义的 <code>forward</code> 函数内部首行，当函数被调用时，立即将模块的前向传播方法恢复为原始方法。这一步确保 <code>functional_call</code> 能够使用原始的前向传播逻辑，避免递归调用。</p>
+</li>
+<li>
+<p>（在 <code>forward</code> 函数内末尾的 <code>module.forward = forward</code>）：前向传播完成后，再次将模块的前向传播方法设置回自定义的 <code>forward</code> 函数，确保下次调用时仍能触发这个包含参数加载逻辑的自定义函数。</p>
+</li>
+<li>
+<p>（函数末尾的 <code>module.forward = forward</code>）：为了确保每次都能 hook 到 cpu -&gt; gpu 这部分的逻辑 (参考原 PR 的解释：<a target="_blank" rel="noopener" href="https://github.com/vllm-project/vllm/pull/6496/files#r1682069375">https://github.com/vllm-project/vllm/pull/6496/files#r1682069375</a>)</p>
+</li>
+</ol>
+<p>这里的核心是使用 <code>functional_call</code> 配合临时的 <code>device_state</code>，实现参数从 CPU 到 GPU 的动态加载。初看可能会疑惑为什么没有将参数从 GPU 释放回 CPU 的逻辑，其实这是因为 <code>device_state</code> 是个局部变量，函数执行完毕后其引用的 GPU 张量会自动被 Python 的垃圾回收机制释放。而原始参数依然保存在 CPU 内存中，从而实现了内存优化的目的。</p>
+<p>同时还有一个小知识点：</p>
+<ol>
+<li>对于 <code>nn.Module</code>, <code>.cuda()</code>, <code>.cpu()</code> 和 <code>.to(device)</code> 方法都是<strong>就地操作</strong>，因此可以直接 <code>model.cuda()</code></li>
+<li>而对于 <code>torch.Tensor</code> , <code>nn.Parameter</code> 这些，<code>.to(device)</code>, <code>.cpu()</code>, <code>.gpu()</code> 方法本质都是创建一个新的 Tensor，原始 Tensor 不变，因此也必须使用 <code>a = b.cuda()</code></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/vllm/" class="print-no-link">#vllm</a>
+      
+        <a href="/tags/LLM-Serving/" class="print-no-link">#LLM Serving</a>
+      
+        <a href="/tags/code-analysis/" class="print-no-link">#code analysis</a>
+      
+        <a href="/tags/cpu-offloading/" class="print-no-link">#cpu offloading</a>
+      
+        <a href="/tags/%E5%8F%82%E6%95%B0%E5%8D%B8%E8%BD%BD/" class="print-no-link">#参数卸载</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>vllm 的 cpu offload 参数卸载逻辑代码简析</div>
+      <div>https://moreality.net/posts/28374/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/6318/" title="Google「提示词工程」白皮书阅读总结">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Google「提示词工程」白皮书阅读总结</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/51437/" title="一个实现自动网页剪藏的工作流">
+                        <span class="hidden-mobile">一个实现自动网页剪藏的工作流</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

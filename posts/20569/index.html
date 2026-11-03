@@ -1,0 +1,912 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="https://youpai.roccoshi.top/img/favicon.ico">
+  <link rel="icon" href="https://youpai.roccoshi.top/img/favicon.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Moreality">
+  <meta name="keywords" content="roccoshi,moreality,blog,博客">
+  
+    <meta name="description" content="在论坛上看到一个枚举类数学问题, 看看各类 LLM 模型都是如何解答的.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单测试各类大模型对一个枚举类问题的回答">
+<meta property="og:url" content="https://moreality.net/posts/20569/index.html">
+<meta property="og:site_name" content="Moreality&#39;s Blog">
+<meta property="og:description" content="在论坛上看到一个枚举类数学问题, 看看各类 LLM 模型都是如何解答的.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://youpai.roccoshi.top/img/202412091515258.png">
+<meta property="article:published_time" content="2024-12-09T07:12:01.000Z">
+<meta property="article:modified_time" content="2025-01-17T03:47:10.000Z">
+<meta property="article:author" content="Moreality">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="GPT">
+<meta property="article:tag" content="Claude">
+<meta property="article:tag" content="Gemini">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://youpai.roccoshi.top/img/202412091515258.png">
+  
+  
+  
+  <title>简单测试各类大模型对一个枚举类问题的回答 - Moreality&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3596377_42fu34akht6.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"moreality.net","root":"/","version":"1.9.8","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"5r3km0WhBTec2QKKPcUxuTbs-gzGzoHsz","app_key":"6xi3nqCAhbseOBK4fAmjzGdf","server_url":"https://counter.roccoshi.top","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<!-- hexo injector head_end start --><meta name="baidu-site-verification" content="codeva-lSgUNYZbar" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Moreality's Blog" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Moreality's Blog" type="application/rss+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Moreality&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.travellings.cn/go.html " target="_self">
+                <i class="iconfont icon-train"></i>
+                <span>开往</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-rss-fill"></i>
+                <span></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/atom.xml" target="_self">
+                    
+                    <span>atom</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/rss2.xml" target="_self">
+                    
+                    <span>rss2</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://youpai.roccoshi.top/img/202409150112941.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">简单测试各类大模型对一个枚举类问题的回答</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-09 15:12" pubdate>
+          2024年12月9日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">简单测试各类大模型对一个枚举类问题的回答</h1>
+            
+              <p id="updated-time" class="note note-primary" style="">
+                
+                  
+                    本文最后更新于 2025年1月17日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="问题">问题</h2>
+<p>今天逛 <code>linux.do</code> 论坛的时候看到这样一个<a target="_blank" rel="noopener" href="https://linux.do/t/topic/261827/32">问题</a>:</p>
+<blockquote>
+<p>小李在纸上写了一个四位数A,把A的个位数字移到首位,得到另一个四位数 B,最后把A和B加起来得到和数C,并且C也是一个四位数。</p>
+<p>已知A的各位数字之和是20,C的百位和十位数学分别是0和4。</p>
+<p>那么C代表的四位数是?</p>
+</blockquote>
+<p>正确答案应该是 <code>8041</code>.</p>
+<p>刚好这几天 GPT 降智严重, 所以一直在对比 Claude, ChatGPT 和 Gemini Pro, 就用这个问题问了大概 7, 8 次各类模型, 看看都是如何回答的.</p>
+<p><img src="https://youpai.roccoshi.top/img/202412091521386.png" alt="img"></p>
+<h2 id="OpenAI-GPT-4o">OpenAI GPT-4o</h2>
+<h3 id="官网版本的-gpt4o">官网版本的 gpt4o</h3>
+<blockquote>
+<p>PS: 用的 IP 是 Oracle 的 IP, 实测 difficulty 值是 4 位数 (ref: <a target="_blank" rel="noopener" href="https://linux.do/t/topic/261968">https://linux.do/t/topic/261968</a>)</p>
+</blockquote>
+<p>问了 10 次左右, 大约 7 次可以通过正确的写出 python code 并运行得到正确结果.</p>
+<p><img src="https://youpai.roccoshi.top/img/202412091522336.png" alt="img"></p>
+<p>另外的三次就是类似这样的无 code 回复, 答案也大概率就是错的.</p>
+<p><img src="https://youpai.roccoshi.top/img/202412091532188.png" alt="img"></p>
+<h3 id="平台反代的-GPT-4o">平台反代的 GPT-4o</h3>
+<p>这个平台是之前一直合租的平台, 应该就是通过自己写了个镜像站来用多个 Pro 账号反代官网, 特征也很明显, 就是会用固定 IP 大量访问 GPT, 这一类的反代镜像站目前被 openai 限制的很严重, 我用的这个也因此停运了, 刚好在最后几天再通过这个问题测试一下.</p>
+<ol>
+<li>第一次, 直接没有通过程序求解, 并得出了错误的答案</li>
+</ol>
+<p><img src="https://youpai.roccoshi.top/img/202412091527698.png" alt="img"></p>
+<ol start="2">
+<li>又尝试了几次, 勉强在写错五次程序后给出了正确结果</li>
+</ol>
+<p><img src="https://youpai.roccoshi.top/img/202412091528123.png" alt="img"></p>
+<h2 id="Claude-3-5-sonnet">Claude 3.5 sonnet</h2>
+<p>同样的问题问了五次以上的 Claude 3.5 sonnet, 均通过正确的 JS 代码给出了答案和分析, 并且相比于 chatgpt, 还证明了答案的唯一性.</p>
+<p><img src="https://youpai.roccoshi.top/img/202412091534895.png" alt="img"></p>
+<h2 id="Gemini-1-5-和-Gemini-exp-1206">Gemini 1.5 和 Gemini-exp-1206</h2>
+<p>虽然 <a target="_blank" rel="noopener" href="https://lmarena.ai/?leaderboard">在 Chatbot Arena 上坐拥 rank1</a>, 但是 Gemini 在这个问题的表现居然是三个模型里最烂的:</p>
+<ol>
+<li>直接问原始问题, 无论是否加 <code>code execution</code> 的选项, Gemini 系均不会给出代码和执行求解, 而是通过大量的文本分析试图找到答案, 并且 Gemini 对于中文的支持挺糟糕的, 如果不在 Prompt 中明确指定, 即使问题是中文也很有可能输出英文解答:</li>
+</ol>
+<p><img src="https://youpai.roccoshi.top/img/202412091537305.png" alt="img"></p>
+<p>以下是模型的<strong>原始输出</strong>: (Gemini 1.5 pro 和 exp-1206 基本类似)</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><code class="hljs txt">Here&#x27;s how we can solve this problem step-by-step:<br><br>Understanding the Problem<br><br>We have a four-digit number, A.<br><br>Moving the last digit of A to the front creates a new four-digit number, B.<br><br>The sum of A and B is a four-digit number, C.<br><br>The sum of the digits in A is 20.<br><br>The hundreds digit of C is 0, and the tens digit of C is 4.<br><br>Let&#x27;s use variables:<br><br>Let the digits of A be represented as a, b, c, and d, where a is the thousands digit, b is the hundreds digit, c is the tens digit, and d is the units digit.<br><br>So, A = 1000a + 100b + 10*c + d<br><br>And B = 1000d + 100a + 10*b + c<br><br>Formulating Equations<br><br>Sum of digits of A: a + b + c + d = 20<br><br>Structure of C: C = 1000*_ + 100*0 + 10*4 + _ (We don&#x27;t know the thousands and units digits of C yet)<br><br>A + B = C:<br>(1000*a + 100*b + 10*c + d) + (1000*d + 100*a + 10*b + c) = C<br><br>Analyzing the Sum (A + B = C)<br><br>When we add A and B, let&#x27;s consider the possible carry-overs:<br><br>Units column: d + c results in the units digit of C. There might be a carry-over to the tens column.<br><br>Tens column: c + b plus any carry-over from the units column results in 4 (the tens digit of C). There might be a carry-over to the hundreds column.<br><br>Hundreds column: b + a plus any carry-over from the tens column results in 0 (the hundreds digit of C). This means there must be a carry-over of 1 to the thousands column (since b + a cannot be negative).<br><br>Thousands column: a + d plus the carry-over of 1 from the hundreds column results in the thousands digit of C.<br><br>Solving the Equations<br><br>Hundreds column: Since b + a plus a carry-over results in 0, and we know there&#x27;s a carry-over of 1 to the thousands column, we have:<br>b + a + 1 (carry-over) = 10<br>Therefore, a + b = 9<br><br>Tens column: We know c + b plus a possible carry-over from the units column results in 4. Let&#x27;s consider two cases:<br><br>Case 1: No carry-over from the units column:<br>c + b = 4<br>Since a + b = 9, and a + b + c + d = 20, then d = 7.<br>But if d = 7, then in the units column, d + c (7 + c) would need to result in a number greater than or equal to 10 to have a carry-over. This would make c at least 3, and c + b would be greater than 4, contradicting our assumption of no carry-over. Therefore, this case is not possible.<br><br>Case 2: Carry-over of 1 from the units column:<br>c + b + 1 = 4<br>Therefore, c + b = 3<br><br>From equations a + b = 9 and c + b = 3, and knowing a + b + c + d = 20, we can deduce:<br>a = 9-b, c = 3-b and 9 + 3 - b + d = 20, then b + d = 8<br><br>Units column: Since there&#x27;s a carry-over of 1 to the tens column, d + c must be greater than or equal to 10. Substituting c = 3-b, we get:<br>d + 3 - b &gt;= 10<br>d - b &gt;= 7<br><br>Combining d - b &gt;= 7 and d + b = 8, we find that the only possible values are:<br>d = 8, b = 0<br><br>With d = 8 and b = 0, we can find the other values:<br>a = 9, c = 3<br><br>Calculating C:<br>A = 9038<br>B = 8903<br>C = A + B = 17941<br><br>However, the problem states that C is a four-digit number. This means our initial assumption that A is a four-digit number was incorrect. Let&#x27;s adjust our approach.<br><br>Revised Approach: A as a Three-Digit Number<br><br>Let&#x27;s assume A is a three-digit number (abc) and B becomes a four-digit number (bca) when the units digit is moved to the front.<br><br>A = 100a + 10b + c<br><br>B = 1000c + 100a + 10b<br><br>A + B = C<br><br>a + b + c = 20<br><br>C = 1000*_ + 100*0 + 10*4 + _<br><br>Analyzing the Sum (A + B = C) - Revised<br><br>Units column: c + b results in the units digit of C. There might be a carry-over.<br><br>Tens column: b + a plus any carry-over results in 4. There might be a carry-over.<br><br>Hundreds column: a + c plus any carry-over results in 0. There must be a carry-over of 1.<br><br>Thousands column: The carry-over of 1 is the thousands digit of C.<br><br>Solving the Equations - Revised<br><br>Hundreds column: a + c + 1 (carry-over) = 10, so a + c = 9.<br><br>Tens column:<br><br>Case 1: No carry-over from the units column: a + b = 4. But since a + b + c = 20, this would mean c = 16, which is not possible.<br><br>Case 2: Carry-over of 1 from the units column: a + b + 1 = 4, so a + b = 3.<br><br>Combining a + b = 3 and a + c = 9 with a + b + c = 20, we get:<br>3 + c = 20<br>Therefore c = 17, still not possible.<br><br>The issue is that if C is a 4 digit number, then A cannot be a 3 digit number, because the only way to have a carry of 1 into the thousands column is if A is a 4 digit number as well.<br><br>Let&#x27;s try one more approach: a, b, c, d must not all be single digits<br><br>We know a+b = 9, c+b=3, and a+b+c+d=20. If b=0, then a=9, c=3, and d=8, which gives us C as 17941. This means that at least one of a, b, c, d must be greater than 9.<br><br>Since b is in both a+b=9 and c+b=3, we know that if b is a two-digit number, these equations cannot both be true. Therefore, b must be a single digit.<br><br>If c is a two digit number, then the addition of c+b in the tens column would need to be 4, but there is also a carry-over of 1 from the units column. This means that c+b=13, and if c=10, b=3, a=-1, d=8. This also doesn&#x27;t work.<br><br>If d is a two-digit number, then when added to c, there must be a carry-over of 1. If d=10, then 10+c &gt;= 10, which is true for any single-digit c. However, we know c=3-b, and if c is negative, then a must be greater than 9 to compensate, which we have already tested.<br><br>If c=0, then b=3, a=6, d=11. This gives us 6300+11, 360+11, and 6300+360+22 = 6682.<br><br>Answer<br>C represents the number 6682.<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>在 Prompt 中加入「通过运行程序给出答案」后, 回答精简了很多, 并且也可以通过写出 python 程序并执行找到答案:</li>
+</ol>
+<p><img src="https://youpai.roccoshi.top/img/202412091540905.png" alt="img"></p>
+<p><strong>但是</strong>, 多问几次后, 发现并不会每次都成功:</p>
+<p><img src="https://youpai.roccoshi.top/img/202412091541173.png" alt="Gemini: 自己写了两次无法运行的 code.."></p>
+<h2 id="总结">总结</h2>
+<p>就这道题的测试结果而言:</p>
+<ol>
+<li><code>Claude 3.5 sonnet</code> 仍然是目前输出最快, 最稳定, 最准确的 coding 和 math 类模型.</li>
+<li><code>OpenAI GPT</code> 很明显有能力做到和 Claude 类似, 但是估计是对 IP 的要求过高, 导致输出很不稳定, 而且对于同一个 IP, 甚至会出现随机降智.</li>
+<li><code>Gemini</code> 虽然目前排名很高, 但是感觉还是名不副实…</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8A%80%E6%9C%AF/" class="category-chain-item">技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%8A%80%E6%9C%AF/" class="print-no-link">#技术</a>
+      
+        <a href="/tags/GPT/" class="print-no-link">#GPT</a>
+      
+        <a href="/tags/Claude/" class="print-no-link">#Claude</a>
+      
+        <a href="/tags/Gemini/" class="print-no-link">#Gemini</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>简单测试各类大模型对一个枚举类问题的回答</div>
+      <div>https://moreality.net/posts/20569/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Moreality</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/12422/" title="Linux 系统 IPV4/IPV6 优先级配置 (gai.conf)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux 系统 IPV4/IPV6 优先级配置 (gai.conf)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/56316/" title="数据安全：一次 VPS 宿主机被入侵的事件记录">
+                        <span class="hidden-mobile">数据安全：一次 VPS 宿主机被入侵的事件记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"Lincest/Lincest.github.io","repo-id":"MDEwOlJlcG9zaXRvcnkyNzMyNTA0Njc=","category":"Announcements","category-id":"DIC_kwDOEEl4o84Cfnvn","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://roccoshi.top" target="_blank" rel="nofollow noopener"><span>Moreality</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
